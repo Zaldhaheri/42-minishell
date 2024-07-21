@@ -2,6 +2,18 @@
 
 int main()
 {
-    char *str = readline("minishell# ");
-    printf("%s\n", str);
+	char    *str;
+
+	str = readline("minishell# ");
+	while(str)
+	{
+		if (*str)
+			add_history(str);
+		str = readline("minishell# ");
+		printf("%s\n", );
+		//parse(str)
+		//execute(result)
+	}
+	
+	return (0);
 }

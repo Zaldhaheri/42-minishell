@@ -14,7 +14,7 @@ COMPILE = $(CC) $(CFLAGS) $(RLFLAG)
 all : $(NAME)
 
 $(NAME) : $(OBJ)
-	$(COMPILE) $(OBJ) -o $(NAME)
+	$(COMPILE) $(OBJ) -I/opt/vagrant/embedded/include -L/opt/vagrant/embedded/lib -lreadline -lhistory -o $(NAME)
 
 clean : 
 	rm -f $(OBJ)
