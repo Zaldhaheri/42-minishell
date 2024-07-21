@@ -8,12 +8,13 @@ int main()
 	while(str)
 	{
 		if (*str)
+        {
+            printf("%s", str);
 			add_history(str);
-		str = readline("minishell# ");
-		printf("%s\n", );
+        }
+        str = readline("minishell# ");
 		//parse(str)
 		//execute(result)
-	}
-	
+	}	
 	return (0);
 }

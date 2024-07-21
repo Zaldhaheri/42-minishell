@@ -6,6 +6,14 @@
 #include <readline/history.h>
 # include <unistd.h>
 
+#define ALPHA 10
+#define DIGIT 11
+#define WORD 12
+#define NUMBER 13
+#define COMMAND 14
+#define FLAG 15
+#define PIPE 16
+
 typedef struct s_token
 {
 	int type;
