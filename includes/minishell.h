@@ -16,18 +16,15 @@
 
 typedef struct s_token
 {
-	int type;
-	int c;
-	int	index;
+	char	*content;
+	int		type;
+	int		index;
 	struct s_token *next;	
 } t_token;
 
-typedef struct s_command
+typedef struct s_data
 {
-	char	*command;
-	char	**args;
-	int		type;
-	struct s_command *next;
-} t_command;
-
+	char *input;
+	
+} t_data;
 #endif

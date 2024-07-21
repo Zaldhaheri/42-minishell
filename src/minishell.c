@@ -2,19 +2,31 @@
 
 int main()
 {
-	char    *str;
+	t_data data;
 
-	str = readline("minishell# ");
-	while(str)
+	while(1)
 	{
-		if (*str)
-        {
-            printf("%s", str);
-			add_history(str);
-        }
-        str = readline("minishell# ");
-		//parse(str)
-		//execute(result)
-	}	
-	return (0);
+		data.input = readline("minishell# ");
+		if (!data.input)
+			break;
+		if (data.input[0] != 0)
+			add_history(data.input);
+		printf("input: %s\n", data.input);
+	}
+	printf("exit\n");
 }
+
+/*
+checker(*data)
+{
+	char *r;
+	int i = 0;
+	while(data->input[i])
+	{
+		r += *data->input;
+		if (isimportant(r))
+			r = 0;
+		data->input++;
+	}
+}
+*/
