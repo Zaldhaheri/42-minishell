@@ -4,9 +4,14 @@ int check_string(t_data *data)
 {
     printf(WHITE "%d: %s\n" RESET, data->i, data->checker);
     //example
-    if (ft_strrchr(data->checker, ' ') || ft_strlen(data->input) - 1 <= data->i)
+    if (ft_strrchr(data->checker, '<') || ft_strrchr(data->checker, '>'))
     {
-        printf(GREEN "COMMAND: %s\n" RESET, data->checker);
+        printf(BLUE "REDIRECT: %s\n" RESET, data->checker);
+        return (1);
+    }
+    else if (ft_strrchr(data->checker, ' ') || ft_strlen(data->input) - 1 <= data->i)
+    {
+        printf(GREEN "WORD: %s\n" RESET, data->checker);
         return (1);
     }
     return (0);
