@@ -12,7 +12,6 @@ while(str[i] isnt null)
 another idea:
 maybe take in the first character of the input then, from that we look at other possibilities.
 example input echo hello world
-
 read first character
 checker = "e";
 go to another function check other combination or commands that start with e

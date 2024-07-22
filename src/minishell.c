@@ -60,18 +60,3 @@ int main()
 	}
 	printf("exit\n");
 }
-
-/*
-checker(*data)
-{
-	char *r;
-	int i = 0;
-	while(data->input[i])
-	{
-		r += *data->input;
-		if (isimportant(r))
-			r = 0;
-		data->input++;
-	}
-}
-*/

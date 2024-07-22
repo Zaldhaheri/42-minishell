@@ -1,0 +1,14 @@
+Tokens are special types to describe the input of the user
+First step is to break down the input into smaller tokens
+create a current token and a linked list of tokens
+iterate through the input character by character and handle the combinations of the characters
+add the characters to the current token while iterating
+how to handle:
+spaces: if the character is a space add the token to the list and reset current token
+special characters: (>, <, >>, <<, $, |) add the current token, create another token and add the special character, reset the tokens
+other characters: just add to the current token
+
+During execution there will be a priority on which command starts first:
+1. $ always first
+2. >, <, >>, << redirections go second
+3. everything else
