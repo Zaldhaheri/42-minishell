@@ -1,4 +1,4 @@
-#include "../includes/minishell.h"
+#include "../inc/minishell.h"
 
 static int	is_sep_c(char c, char sep)
 {

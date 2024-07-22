@@ -1,5 +1,4 @@
-
-#include "../includes/minishell.h"
+#include "../inc/minishell.h"
 
 t_token	*ft_lstnew(char *word)
 {

@@ -1,0 +1,16 @@
+minishell# hello world
+0: h
+1: he
+2: hel
+3: hell
+4: hello
+5: hello 
+COMMAND: hello 
+6: w
+7: wo
+8: wor
+9: worl
+10: world
+COMMAND: world
+
+

@@ -1,0 +1,24 @@
+parsing idea:
+while(str[i] isnt null)
+{
+    r = ft_strcpy(r + 1, str[i]); //append last character to r
+    if (checkimportant(r)) //function returns value 1 if found, 0 if not found. ex: r = ls, returns 1
+    {
+        reset r;
+    }
+    i++;
+}
+
+another idea:
+maybe take in the first character of the input then, from that we look at other possibilities.
+example input echo hello world
+
+read first character
+checker = "e";
+go to another function check other combination or commands that start with e
+e->cho
+e->nv
+e->xit
+
+check the next characters in another function, else continue and add another character
+this might make the searching much more faster and efficient
