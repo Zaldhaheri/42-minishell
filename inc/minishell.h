@@ -25,12 +25,19 @@
 #define CYAN    "\033[36m"
 #define WHITE   "\033[37m"
 
+typedef struct s_args
+{
+	char *content;
+	struct s_args *next;
+} t_args;
+
 typedef struct s_token
 {
 	char	*content;
 	int		type;
 	int		index;
-	struct s_token *next;	
+	t_args	*arg;
+	struct s_token *next;
 } t_token;
 
 typedef struct s_data
