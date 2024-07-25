@@ -1,49 +1,4 @@
-#include <stdio.h>
-#include <stdlib.h>
-#include <readline/readline.h>
-#include <readline/history.h>
-# include <unistd.h>
-
-#define ALPHA 10
-#define DIGIT 11
-#define WORD 12
-#define NUMBER 13
-#define COMMAND 14
-#define FLAG 15
-#define PIPE 16
-
-#define RESET   "\033[0m"
-#define BLACK   "\033[30m"
-#define RED     "\033[31m"
-#define GREEN   "\033[32m"
-#define YELLOW  "\033[33m"
-#define BLUE    "\033[34m"
-#define MAGENTA "\033[35m"
-#define CYAN    "\033[36m"
-#define WHITE   "\033[37m"
-
-typedef struct s_args
-{
-	char *content;
-	struct s_args *next;
-} t_args;
-
-typedef struct s_token
-{
-	char	*content;
-	int		type;
-	int		index;
-	t_args	*arg;
-	struct s_token *next;
-} t_token;
-
-typedef struct s_data
-{
-	char *input;
-	char *checker; //the appender
-	char *temp; //temp string
-	unsigned int i;
-} t_data;
+#include "testShell.h"
 
 t_args	*ft_new_arg(char *word)
 {
@@ -78,16 +33,6 @@ void	ft_argadd_back(t_args **lst, t_args *new)
 	}
 }
 
-size_t	ft_strlen(const char *str);
-char	*ft_strdup(const char *str);
-void 	ft_strcpy(char *dst, const char *src);
-int		ft_strncmp(const char *s1, const char *s2, size_t n);
-char	*ft_strrchr(const char *str, int c);
-char	**ft_split(char const *s, char c);
-size_t	ft_strlcpy(char *dst, const char *src, size_t dstsize);
-t_token	*ft_lstnew(char *word);
-void	ft_lstclear(t_token **lst);
-void	ft_lstadd_back(t_token **lst, t_token *new);
 
 int	flag_index(char *line)
 {
@@ -104,33 +49,47 @@ int	flag_index(char *line)
 	return(i + 1);
 	
 }
+
+void print_args(t_args *args)
+{
+	t_args *temp;
+
+	temp = args;
+	printf("args: ");
+    while (temp)
+    {
+		printf("%s,", temp->content);
+        temp = temp->next;
+    }
+	printf("\n");
+}
+
 void print_list(t_token *lst)
 {
-	t_args *args;
-	while(lst)
-	{
-		if(lst->arg)
-			args = lst->arg;
-		if (lst->content)
-			printf(BLUE "command: %s\n" RESET,lst->content);
-		printf(CYAN "command + arguments: " RESET);
-		while(lst->arg && args)
-		{
-			printf("%s, ", args->content);
-			args =  args->next;
-		}
+    t_token *temp;
+
+	temp = lst;
+    while (temp != NULL)
+    {
+		if (temp->content)
+			printf("COMMAND: %s\n", temp->content);
+		if (temp->arg)
+			print_args(temp->arg);
+        if (temp->next == NULL)
+			break ;
+		temp = temp->next;
 		printf("\n");
-		lst = lst->next;
-	}
+    }
+	printf("\n");
 }
 
 
-void    parser(t_data *data)
+void parser(t_data *data, char **envp)
 {
 	t_token *cmd;
 	t_args	*c_arg;
-	char **splitted;
-	char *no_flag;
+	char	**splitted;
+	char	*no_flag;
 	int		i;
 	int		flag;
 
@@ -142,12 +101,14 @@ void    parser(t_data *data)
 	printf(GREEN "No flag: %s\n" RESET, no_flag);
 	splitted = ft_split(no_flag, ' ');
 	cmd = ft_lstnew(ft_strdup(splitted[i]));
+	cmd->next = NULL;
 	cmd->arg = ft_new_arg(ft_strdup(splitted[i]));;
 	i++;
 	while(splitted[i])
 	{
 		c_arg = ft_new_arg(ft_strdup(splitted[i]));
 		ft_argadd_back(&(cmd->arg), c_arg);
+		c_arg = NULL;
 		i++;
 	}
 	i = 0;
@@ -158,12 +119,20 @@ void    parser(t_data *data)
 	free(splitted);
 	free(no_flag);
 	print_list(cmd);
-	ft_lstclear(&cmd);
+	printf("DEBUG\n");
+	char *temp;
+	temp = ft_get_cmd_path(cmd->arg->content, envp);
+	if (temp)
+		printf("cmd_path: %s\n", temp);
+	//ft_lstclear(&cmd);
 }
 
-int main()
+int main(int argc, char **argv, char **envp)
 {
 	t_data data;
+	(void)argc;
+	(void)argv;
+	(void)envp;
 
 	while(1)
 	{
@@ -173,7 +142,7 @@ int main()
 		if (data.input[0] != 0)
 		{
 			add_history(data.input);
-			parser(&data);
+			parser(&data, envp);
 		}
 		printf("input: %s\n", data.input);
 	}
