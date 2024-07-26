@@ -1,5 +1,19 @@
 #include "../inc/minishell.h"
 
+void print_list(t_token *lst)
+{
+    t_token *temp;
+
+	temp = lst;
+    while (temp != NULL)
+    {
+		if (temp->content)
+			printf(RED "%s " RESET, temp->content);
+		temp = temp->next;;
+    }
+	printf("\n");
+}
+
 int check_string(t_data *data)
 {
     printf(WHITE "%d: %s\n" RESET, data->i, data->checker);
@@ -11,7 +25,9 @@ int check_string(t_data *data)
     }
     else if (ft_strrchr(data->checker, ' ') || ft_strlen(data->input) - 1 <= data->i)
     {
+        ft_lstadd_back(&data->tokens, ft_lstnew(data->checker));
         printf(GREEN "WORD: %s\n" RESET, data->checker);
+        print_list(data->tokens);
         return (1);
     }
     return (0);
@@ -21,6 +37,7 @@ void    parser(t_data *data)
 {
     data->i = 0;
     data->checker = ft_strdup(""); //malloc checker to empty
+    data->tokens = NULL;
     while(data->input[data->i])
     {
         data->temp = malloc(ft_strlen(data->checker) + 2); //create temp based on checker size

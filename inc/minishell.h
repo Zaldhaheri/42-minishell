@@ -25,26 +25,23 @@
 #define CYAN    "\033[36m"
 #define WHITE   "\033[37m"
 
-typedef struct s_args
-{
-	char *content;
-	struct s_args *next;
-} t_args;
+typedef struct s_token t_token;
 
-typedef struct s_token
+struct s_token
 {
 	char	*content;
 	int		type;
 	int		index;
-	t_args	*arg;
 	struct s_token *next;
-} t_token;
+};
 
 typedef struct s_data
 {
 	char *input;
 	char *checker; //the appender
 	char *temp; //temp string
+	t_token *tokens;
+	t_token *currtoken;
 	unsigned int i;
 } t_data;
 
@@ -53,5 +50,11 @@ char	*ft_strdup(const char *str);
 void ft_strcpy(char *dst, const char *src);
 int	ft_strncmp(const char *s1, const char *s2, size_t n);
 char	*ft_strrchr(const char *str, int c);
+
+//lst utils
+t_token	*ft_lstnew(char *word);
+t_token	*ft_lstlast(t_token *lst);
+void	ft_lstadd_back(t_token **lst, t_token *new);
+void	ft_lstclear(t_token **lst);
 
 #endif
