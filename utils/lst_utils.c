@@ -33,16 +33,15 @@ void	ft_lstadd_back(t_token **lst, t_token *new)
 	}
 }
 
-void	ft_lstclear(t_token **lst)
+void	ft_lstclear(t_data *lst)
 {
 	t_token	*temp;
 
-	while (*lst != NULL)
+	while(lst->tokens)
 	{
-		temp = *lst;
-		*lst = (*lst)->next;
+		temp = lst->tokens;
+		lst->tokens = lst->tokens->next;
 		free(temp->content);
 		free(temp);
 	}
-	*lst = NULL;
 }

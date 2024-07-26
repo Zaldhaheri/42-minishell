@@ -31,7 +31,6 @@ struct s_token
 {
 	char	*content;
 	int		type;
-	int		index;
 	struct s_token *next;
 };
 
@@ -50,11 +49,11 @@ char	*ft_strdup(const char *str);
 void ft_strcpy(char *dst, const char *src);
 int	ft_strncmp(const char *s1, const char *s2, size_t n);
 char	*ft_strrchr(const char *str, int c);
-
+char	*ft_strtrim(char const *s1, char const *set);
 //lst utils
 t_token	*ft_lstnew(char *word);
 t_token	*ft_lstlast(t_token *lst);
 void	ft_lstadd_back(t_token **lst, t_token *new);
-void	ft_lstclear(t_token **lst);
+void	ft_lstclear(t_data *lst);
 
 #endif

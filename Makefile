@@ -1,6 +1,6 @@
 NAME = minishell
 
-SRC = src/minishell.c utils/utils1.c utils/lst_utils.c\
+SRC = src/minishell.c utils/utils1.c utils/lst_utils.c utils/ft_strtrim.c\
 
 OBJ = $(SRC:.c=.o)
 
@@ -12,6 +12,9 @@ RLFLAG = -lreadline
 COMPILE = $(CC) $(CFLAGS) $(RLFLAG)
 
 all : $(NAME)
+
+leak: $(NAME)
+	valgrind --leak-check=full --show-leak-kinds=all  --suppressions=leaks.supp ./minishell
 
 $(NAME) : $(OBJ)
 	$(COMPILE) $(OBJ) -I/opt/vagrant/embedded/include -L/opt/vagrant/embedded/lib -lreadline -lhistory -o $(NAME)
