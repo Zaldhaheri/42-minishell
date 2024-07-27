@@ -44,6 +44,8 @@ typedef struct s_data
 	unsigned int i;
 } t_data;
 
+void print_list(t_token *lst);
+
 //parsing
 void    parser(t_data *data);
 int check_string(t_data *data);

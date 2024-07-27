@@ -1,6 +1,6 @@
 NAME = minishell
 
-SRC = src/minishell.c utils/utils1.c utils/lst_utils.c utils/ft_strtrim.c\
+SRC = src/minishell.c src/parsing.c utils/utils1.c utils/lst_utils.c utils/ft_strtrim.c\
 
 OBJ = $(SRC:.c=.o)
 
