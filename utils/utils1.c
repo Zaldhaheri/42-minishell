@@ -60,20 +60,22 @@ char	*ft_strrchr(const char *str, int c)
 	}
 	return (NULL);
 }
-
-size_t	ft_strlcpy(char *dst, const char *src, size_t dstsize)
+size_t	ft_strlcpy(char *dest, const char *src, size_t n)
 {
-	size_t		i;
+	size_t	i;
+	size_t	slen;
 
 	i = 0;
-	if (dstsize > 0)
+	slen = 0;
+	while (src[slen])
+		slen++;
+	if (n == 0)
+		return (slen);
+	while (src[i] && i < n - 1)
 	{
-		while (src[i] && i < dstsize - 1)
-		{
-			dst[i] = src[i];
-			i++;
-		}
-		dst[i] = '\0';
+		dest[i] = src[i];
+		i++;
 	}
-	return (ft_strlen(src));
+	dest[i] = '\0';
+	return (slen);
 }

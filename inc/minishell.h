@@ -66,6 +66,7 @@ void ft_strcpy(char *dst, const char *src);
 int	ft_strncmp(const char *s1, const char *s2, size_t n);
 char	*ft_strrchr(const char *str, int c);
 char	*ft_strtrim(char const *s1, char const *set);
+size_t	ft_strlcpy(char *dest, const char *src, size_t n);
 //lst utils
 t_token	*ft_lstnew(char *word);
 t_token	*ft_lstlast(t_token *lst);

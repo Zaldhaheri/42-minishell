@@ -1,20 +1,42 @@
 #include "../inc/minishell.h"
+#include <string.h>
+
+void    append_checker(t_data *data)
+{
+	data->temp = malloc(ft_strlen(data->checker) + 2); //create temp based on checker size
+	if (!data->temp)
+	{
+		perror("malloc");
+		exit(1);
+	}
+	ft_strcpy(data->temp, data->checker); //create cpy to temp
+	data->temp[ft_strlen(data->checker)] = data->input[data->i]; //add character
+	data->temp[ft_strlen(data->checker) + 1] = 0; //null terminate it
+	free(data->checker);
+	data->checker = data->temp;
+}
+
+int count_dquotes(t_data *data)
+{
+    int i;
+    int count;
+
+    i = 0;
+    count = 0;
+    while(data->input[i])
+    {
+        if (data->input[i] == '\"')
+            count++;
+        i++;
+    }
+    return (count);
+}
 
 void    parser(t_data *data)
 {
 	while(data->input[data->i])
 	{
-		data->temp = malloc(ft_strlen(data->checker) + 2); //create temp based on checker size
-		if (!data->temp)
-		{
-			perror("malloc");
-			exit(1);
-		}
-		ft_strcpy(data->temp, data->checker); //create cpy to temp
-		data->temp[ft_strlen(data->checker)] = data->input[data->i]; //add character
-		data->temp[ft_strlen(data->checker) + 1] = 0; //null terminate it
-		free(data->checker);
-		data->checker = data->temp;
+        append_checker(data);
 		if (check_string(data))
 		{
 			free(data->checker);
@@ -92,6 +114,46 @@ int parse_pipe(t_data *data)
 	return (1);
 }
 
+int parse_dquotes(t_data *data)
+{
+    int len;
+    int i;
+
+    i = 0;
+    printf(YELLOW "DQUOTES before: %s\n" RESET, data->checker);
+    data->checker[ft_strlen(data->checker) - 1] = '\0';
+    if (data->i > 0 && ft_strlen(data->checker) != 0 && data->input[data->i - 1] != ' ' && data->input[data->i - 1] != '\t')
+	{
+        printf(GREEN "WORD: %s\n" RESET, data->checker);
+        ft_lstadd_back(&data->tokens, ft_lstnew(data->checker));
+    }
+    free(data->checker);
+	data->checker = ft_strdup("");
+    len = count_dquotes(data);
+    printf(YELLOW "DQUOTES LEN: %d\n", len);
+    while(len > 0)
+    {
+        printf(WHITE "%d: %s.\n" RESET, data->i, data->checker);
+        if (data->checker[ft_strlen(data->checker) - 1] != '\"')
+        {
+            data->i++;
+            append_checker(data);
+        }
+        else
+        {
+            ft_strlcpy(data->temp, data->checker, ft_strlen(data->checker) - 1);
+            // free(data->checker);
+            // data->checker = data->temp;
+            len--;
+        }
+    }
+    data->checker[ft_strlen(data->checker) - 1] = '\0';
+    printf(YELLOW "DQUOTES after: %s\n" RESET, data->checker);
+    ft_lstadd_back(&data->tokens, ft_lstnew(data->checker));
+    print_list(data->tokens);
+    return (1);
+}
+
 int check_string(t_data *data)
 {
 	printf(WHITE "%d: %s.\n" RESET, data->i, data->checker);
@@ -105,5 +167,7 @@ int check_string(t_data *data)
 	else if (ft_strrchr(data->checker, ' ') || ft_strrchr(data->checker, '\t') || 
             ft_strlen(data->input) - 1 <= data->i)
         return (parse_space(data));
+    else if (ft_strrchr(data->checker, '\"'))
+        return (parse_dquotes(data));
 	return (0);
 }
