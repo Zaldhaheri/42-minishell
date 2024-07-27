@@ -23,10 +23,13 @@ void    data_init(t_data *data)
 	data->tokens = NULL;
 }
 
-int main()
+int main(int argc, char **argv, char **envp)
 {
 	t_data data;
 
+	(void)argc;
+	(void)argv;
+	(void)envp;
 	while(1)
 	{
 		data.input = readline("minishell# ");
@@ -39,6 +42,7 @@ int main()
         //something to clean spaces here
 		printf("input: %s\n", data.input);
 		set_type(&data);
+		//exec_line(&data, envp);
 		ft_lstclear(&data);
 	}
 	printf("exit\n");

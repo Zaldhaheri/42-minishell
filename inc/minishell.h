@@ -67,10 +67,17 @@ int	ft_strncmp(const char *s1, const char *s2, size_t n);
 char	*ft_strrchr(const char *str, int c);
 char	*ft_strtrim(char const *s1, char const *set);
 size_t	ft_strlcpy(char *dest, const char *src, size_t n);
+char	*ft_strjoin(char const *s1, char const *s2);
+char	**ft_split(char const *s, char c);
+
 //lst utils
 t_token	*ft_lstnew(char *word);
 t_token	*ft_lstlast(t_token *lst);
 void	ft_lstadd_back(t_token **lst, t_token *new);
 void	ft_lstclear(t_data *lst);
+//exec
+void exec_line(t_data *data, char **envp);
+void	free_args(char **args);
+char	*ft_get_cmd_path(char *cmd, char **envp);
 
 #endif

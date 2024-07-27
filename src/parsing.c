@@ -92,8 +92,8 @@ int parse_space(t_data *data)
     if (ft_strlen(data->checker) == 1 &&
         (ft_strrchr(data->checker, ' ') || ft_strrchr(data->checker, '\t')))
         return (1);
-    if (ft_strlen(data->input) - 1 > data->i)
-        data->checker[ft_strlen(data->checker) - 1] = '\0';
+    if (ft_strlen(data->input) - 1 > data->i){
+        data->checker[ft_strlen(data->checker) - 1] = '\0';}
 	ft_lstadd_back(&data->tokens, ft_lstnew(data->checker));
 	printf(GREEN "WORD: %s\n" RESET, data->checker);
 	print_list(data->tokens);
@@ -117,10 +117,9 @@ int parse_pipe(t_data *data)
 int parse_dquotes(t_data *data)
 {
     int len;
-    int i;
 
     t_token *new;
-    i = 0;
+
     printf(YELLOW "DQUOTES before: %s\n" RESET, data->checker);
     data->checker[ft_strlen(data->checker) - 1] = '\0';
     if (data->i > 0 && ft_strlen(data->checker) != 0 && data->input[data->i - 1] != ' ' && data->input[data->i - 1] != '\t')
@@ -173,9 +172,11 @@ int check_string(t_data *data)
     else if (ft_strrchr(data->checker, '|'))
         return (parse_pipe(data));
 	else if (ft_strrchr(data->checker, ' ') || ft_strrchr(data->checker, '\t') || 
-            ft_strlen(data->input) - 1 <= data->i)
+            ft_strlen(data->input) - 1 <= data->i){
         return (parse_space(data));
-    else if (ft_strrchr(data->checker, '\"'))
+            }
+    else if (ft_strrchr(data->checker, '\"')){
         return (parse_dquotes(data));
+    }
 	return (0);
 }

@@ -30,12 +30,12 @@ static int	check_if_command(t_data *data, t_token *curr)
 {
 	t_token	*temp;
 	int		command_flag;
-	int		pipe_flag;
+	// int		pipe_flag;
 
 	if (curr->type)
 		return 2;
 	command_flag = 0;
-	pipe_flag = 0;
+	// pipe_flag = 0;
 	temp = data->tokens;
 	while(temp && temp != curr)
 	{
@@ -43,7 +43,7 @@ static int	check_if_command(t_data *data, t_token *curr)
 			command_flag = 1;
 		else if(temp->type == PIPE)
 		{
-			pipe_flag = 1;
+			// pipe_flag = 1;
 			command_flag = 0;
 		}
 		temp = temp->next;

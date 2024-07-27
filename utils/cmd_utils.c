@@ -6,11 +6,11 @@
 /*   By: nalkhate <nalkhate@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/25 19:00:43 by nalkhate          #+#    #+#             */
-/*   Updated: 2024/07/25 20:18:40 by nalkhate         ###   ########.fr       */
+/*   Updated: 2024/07/27 23:42:19 by nalkhate         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../src/testShell.h"
+#include "../inc/minishell.h"
 
 void	free_args(char **args)
 {
