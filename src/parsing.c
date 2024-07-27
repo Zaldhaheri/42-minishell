@@ -131,23 +131,28 @@ int parse_dquotes(t_data *data)
 	data->checker = ft_strdup("");
     len = count_dquotes(data);
     printf(YELLOW "DQUOTES LEN: %d\n", len);
+    //len--;
     while(len > 0)
     {
         printf(WHITE "%d: %s.\n" RESET, data->i, data->checker);
-        if (data->checker[ft_strlen(data->checker) - 1] != '\"')
+        if (data->i < ft_strlen(data->input) && data->input[data->i] != '\"') //data->checker[ft_strlen(data->checker) - 1] != '\"'
         {
-            data->i++;
             append_checker(data);
         }
         else
         {
-            ft_strlcpy(data->temp, data->checker, ft_strlen(data->checker) - 1);
-            // free(data->checker);
-            // data->checker = data->temp;
+            printf(YELLOW"len--\n"RESET);
             len--;
         }
+        data->i++;
     }
-    data->checker[ft_strlen(data->checker) - 1] = '\0';
+    //data->checker[ft_strlen(data->checker) - 1] = '\0'
+    data->i--;
+    if (data->checker[0] == '\0')
+    {
+        print_list(data->tokens);
+        return (1);
+    }
     printf(YELLOW "DQUOTES after: %s\n" RESET, data->checker);
     ft_lstadd_back(&data->tokens, ft_lstnew(data->checker));
     print_list(data->tokens);
