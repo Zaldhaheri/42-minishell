@@ -8,6 +8,7 @@ t_token	*ft_lstnew(char *word)
 		return (NULL);
 	node->content = ft_strdup(word);
 	node->next = NULL;
+	node->type = 0;
 	return (node);
 }
 

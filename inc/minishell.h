@@ -21,6 +21,7 @@
 #define DOLLAR 21
 #define DECLARE 22
 #define BCOMMAND 23 //builtin
+#define FLAG 24
 
 
 #define RESET   "\033[0m"
@@ -57,6 +58,7 @@ void print_list(t_token *lst);
 //parsing
 void    parser(t_data *data);
 int check_string(t_data *data);
+void	set_type(t_data *data);
 //utils
 size_t	ft_strlen(const char *str);
 char	*ft_strdup(const char *str);

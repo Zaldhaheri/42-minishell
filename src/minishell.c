@@ -38,6 +38,7 @@ int main()
 		parser(&data);
         //something to clean spaces here
 		printf("input: %s\n", data.input);
+		set_type(&data);
 		ft_lstclear(&data);
 	}
 	printf("exit\n");
