@@ -1,23 +1,10 @@
-parsing idea:
-while(str[i] isnt null)
-{
-    r = ft_strcpy(r + 1, str[i]); //append last character to r
-    if (checkimportant(r)) //function returns value 1 if found, 0 if not found. ex: r = ls, returns 1
-    {
-        reset r;
-    }
-    i++;
-}
+Parsing:
+do the single quotes parsing similiar to double quotes
+clean up the double quotes parsing and the parsing.c file
 
-another idea:
-maybe take in the first character of the input then, from that we look at other possibilities.
-example input echo hello world
-read first character
-checker = "e";
-go to another function check other combination or commands that start with e
-e->cho
-e->nv
-e->xit
+this thing also:
+//bash-3.2$ ec""""ho hel"a"lo
+//helalo
 
-check the next characters in another function, else continue and add another character
-this might make the searching much more faster and efficient
+set_types:
+dollar sign and declaration, as well as the quotes and quoted files etc.
