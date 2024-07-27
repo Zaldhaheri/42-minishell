@@ -44,6 +44,10 @@ typedef struct s_data
 	unsigned int i;
 } t_data;
 
+//parsing
+void    parser(t_data *data);
+int check_string(t_data *data);
+//utils
 size_t	ft_strlen(const char *str);
 char	*ft_strdup(const char *str);
 void ft_strcpy(char *dst, const char *src);
