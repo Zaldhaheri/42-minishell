@@ -119,6 +119,7 @@ int parse_dquotes(t_data *data)
     int len;
     int i;
 
+    t_token *new;
     i = 0;
     printf(YELLOW "DQUOTES before: %s\n" RESET, data->checker);
     data->checker[ft_strlen(data->checker) - 1] = '\0';
@@ -154,7 +155,9 @@ int parse_dquotes(t_data *data)
         return (1);
     }
     printf(YELLOW "DQUOTES after: %s\n" RESET, data->checker);
-    ft_lstadd_back(&data->tokens, ft_lstnew(data->checker));
+    new = ft_lstnew(data->checker);
+    new->type = DQUOTES;
+    ft_lstadd_back(&data->tokens, new);
     print_list(data->tokens);
     return (1);
 }

@@ -39,7 +39,7 @@ static int	check_if_command(t_data *data, t_token *curr)
 	temp = data->tokens;
 	while(temp && temp != curr)
 	{
-		if (temp->type == COMMAND)
+		if (temp->type == COMMAND || temp->type == BCOMMAND)
 			command_flag = 1;
 		else if(temp->type == PIPE)
 		{
@@ -64,6 +64,30 @@ void print_type(t_data *data)
 	}
 	printf("\n");
 }
+void	check_if_bcommand(t_token *temp)
+{
+	int	c_len;
+
+	if (temp->type)
+		return ;
+	c_len = ft_strlen(temp->content);
+	if (!ft_strncmp(temp->content, "echo", c_len))
+		temp->type = BCOMMAND;
+	else if (!ft_strncmp(temp->content, "cd", c_len))
+		temp->type = BCOMMAND;
+	else if (!ft_strncmp(temp->content, "cd", c_len))
+		temp->type = BCOMMAND;
+	else if (!ft_strncmp(temp->content, "pwd", c_len))
+		temp->type = BCOMMAND;
+	else if (!ft_strncmp(temp->content, "export", c_len))
+		temp->type = BCOMMAND;
+	else if (!ft_strncmp(temp->content, "unset", c_len))
+		temp->type = BCOMMAND;
+	else if (!ft_strncmp(temp->content, "env", c_len))
+		temp->type = BCOMMAND;
+	else if (!ft_strncmp(temp->content, "exit", c_len))
+		temp->type = BCOMMAND;
+}
 
 void	set_type(t_data *data)
 {
@@ -75,6 +99,7 @@ void	set_type(t_data *data)
 		if (!temp->type)
 		{
 			check_fd_type(temp);
+			check_if_bcommand(temp);
 			if (!ft_strncmp(temp->content,"|",1) && ft_strlen(temp->content) == 1)
 				temp->type = PIPE;
 			else if (check_if_command(data, temp) == 1)
