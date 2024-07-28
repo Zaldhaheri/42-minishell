@@ -92,10 +92,11 @@ int parse_space(t_data *data)
     if (ft_strlen(data->checker) == 1 &&
         (ft_strrchr(data->checker, ' ') || ft_strrchr(data->checker, '\t')))
         return (1);
-    if (ft_strlen(data->input) - 1 > data->i){
+    if (ft_strlen(data->input) - 1 > data->i || data->input[data->i] == ' ' ||
+        data->input[data->i] == '\t'){
         data->checker[ft_strlen(data->checker) - 1] = '\0';}
 	ft_lstadd_back(&data->tokens, ft_lstnew(data->checker));
-	printf(GREEN "WORD: %s\n" RESET, data->checker);
+	printf(GREEN "WORD: %s.\n" RESET, data->checker);
 	print_list(data->tokens);
     return (1);
 }
