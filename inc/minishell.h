@@ -55,6 +55,14 @@ typedef struct s_data
 	unsigned int i;
 } t_data;
 
+typedef struct s_command
+{
+	char **command;
+	size_t	c_len;
+	struct s_command *next;
+	struct s_command *prev;
+} t_command;
+
 void print_list(t_token *lst);
 
 //parsing
