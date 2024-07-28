@@ -115,25 +115,74 @@ int parse_pipe(t_data *data)
 	return (1);
 }
 
+// int parse_dquotes(t_data *data)
+// {
+//     int len;
+
+//     t_token *new;
+//     printf(YELLOW "DQUOTES before: %s\n" RESET, data->checker);
+//     if (ft_strlen(data->checker) > 1)
+//         printf(YELLOW "DQUOTES IS CLOSED\n" RESET);
+//     data->checker[ft_strlen(data->checker) - 1] = '\0';
+//     len = count_dquotes(data);
+//     printf(YELLOW "DQUOTES LEN: %d\n", len);
+//     printf(YELLOW "DQUOTES char: %c\n", data->input[data->i]);
+//     if (data->input[data->i] == '\"' && data->input[data->i + 1] == '\"')
+//     {
+//         data->i++;
+//         return (0);
+//     }
+//     while(len > 0)
+//     {
+//         printf(WHITE "%d: %s.\n" RESET, data->i, data->checker);
+//         if (data->i < ft_strlen(data->input) && data->input[data->i] != '\"') //data->checker[ft_strlen(data->checker) - 1] != '\"'
+//         {
+//             append_checker(data);
+//         }
+//         else
+//         {
+//             printf(YELLOW"len--\n"RESET);
+//             len--;
+//         }
+//         data->i++;
+//     }
+//     if (data->checker[0] == '\0')
+//     {
+//         print_list(data->tokens);
+//         return (1);
+//     }
+//     printf(YELLOW "DQUOTES char: %c\n", data->input[data->i]);
+//     while(data->input[data->i] != ' ' && data->input[data->i] != '\t' && ft_strlen(data->input) > data->i)
+//     {
+//         append_checker(data);
+//         data->i++;
+//     }
+//     printf(YELLOW "DQUOTES after: %s\n" RESET, data->checker);
+//     new = ft_lstnew(data->checker);
+//     new->type = DQUOTES;
+//     ft_lstadd_back(&data->tokens, new);
+//     print_list(data->tokens);
+//     data->i--;
+//     return (1);
+// }
+
 int parse_dquotes(t_data *data)
 {
     int len;
 
     t_token *new;
-
     printf(YELLOW "DQUOTES before: %s\n" RESET, data->checker);
     data->checker[ft_strlen(data->checker) - 1] = '\0';
-    if (data->i > 0 && ft_strlen(data->checker) != 0 && data->input[data->i - 1] != ' ' && data->input[data->i - 1] != '\t')
-	{
-        printf(GREEN "WORD: %s\n" RESET, data->checker);
-        ft_lstadd_back(&data->tokens, ft_lstnew(data->checker));
-    }
-    free(data->checker);
-	data->checker = ft_strdup("");
+    data->i++;
     len = count_dquotes(data);
     printf(YELLOW "DQUOTES LEN: %d\n", len);
-    //len--;
-    while(len > 0)
+    printf(YELLOW "DQUOTES char: %c\n", data->checker[ft_strlen(data->checker) - 1]);
+    if (data->input[data->i] == '\"' && data->input[data->i + 1] == '\"')
+    {
+        data->i += 2;
+        return (0);
+    }
+    while(1)
     {
         printf(WHITE "%d: %s.\n" RESET, data->i, data->checker);
         if (data->i < ft_strlen(data->input) && data->input[data->i] != '\"') //data->checker[ft_strlen(data->checker) - 1] != '\"'
@@ -142,37 +191,51 @@ int parse_dquotes(t_data *data)
         }
         else
         {
-            printf(YELLOW"len--\n"RESET);
-            len--;
+            printf(YELLOW"\" found\n"RESET);
+            break ;
         }
         data->i++;
     }
-    //data->checker[ft_strlen(data->checker) - 1] = '\0'
-    data->i--;
     if (data->checker[0] == '\0')
     {
         print_list(data->tokens);
         return (1);
+    }
+    printf(YELLOW "DQUOTES char: %c\n" RESET, data->input[data->i]);
+    data->i++;
+    while(data->input[data->i] != ' ' && data->input[data->i] != '>' &&
+        ft_strlen(data->input) > data->i && data->input[data->i] != '\"')
+    {
+        printf(WHITE "a%d: %s.\n" RESET, data->i, data->checker);
+        append_checker(data);
+        data->i++;
+    }
+    if (data->input[data->i] == '\"')
+    {
+        printf(YELLOW "current char \"\n" RESET);
+        data->i--;
+        print_list(data->tokens);
+        return (0);
     }
     printf(YELLOW "DQUOTES after: %s\n" RESET, data->checker);
     new = ft_lstnew(data->checker);
     new->type = DQUOTES;
     ft_lstadd_back(&data->tokens, new);
     print_list(data->tokens);
+    data->i--;
     return (1);
 }
 
 int check_string(t_data *data)
 {
 	printf(WHITE "%d: %s.\n" RESET, data->i, data->checker);
-	//example
 	if (ft_strrchr(data->checker, '<'))
 		return (parse_in(data));
     else if (ft_strrchr(data->checker, '>'))
         return (parse_out(data));
     else if (ft_strrchr(data->checker, '|'))
         return (parse_pipe(data));
-	else if (ft_strrchr(data->checker, ' ') || ft_strrchr(data->checker, '\t') || 
+	else if (data->input[data->i] == ' ' || data->input[data->i] == '\t' || 
             ft_strlen(data->input) - 1 <= data->i){
         return (parse_space(data));
             }

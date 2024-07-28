@@ -8,3 +8,14 @@ this thing also:
 
 set_types:
 dollar sign and declaration, as well as the quotes and quoted files etc.
+
+Double quotes:
+double quotes and single quotes work in a way where its " open the " close, and concats everything next to
+it if its not considered a special character.
+ex: ec"h"o
+
+double quotes semi works, some cases dont work like:
+"e" """c" "h o" hello
+e-- h--o hello
+i believe the problem is the "" quotes then " after it.
+but for simpler cases it should work i think.
