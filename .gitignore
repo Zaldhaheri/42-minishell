@@ -1,0 +1,11 @@
+# Ignore macOS specific system files
+.DS_Store
+
+# Ignore all object files
+*.o
+
+# Ignore all output files
+*.out
+
+# executable
+minishell
