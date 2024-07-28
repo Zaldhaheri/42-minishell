@@ -5,7 +5,9 @@
 #include <stdlib.h>
 #include <readline/readline.h>
 #include <readline/history.h>
-# include <unistd.h>
+#include <unistd.h>
+#include <sys/types.h>
+#include <sys/wait.h>
 
 #define WORD 10
 #define COMMAND 11 //execve

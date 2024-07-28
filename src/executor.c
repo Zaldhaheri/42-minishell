@@ -7,8 +7,8 @@ char **exec_command(t_token *curr, char **envp)
 	int		no_of_strings;
 	char	**args;
 	int		i;
-	pid_t	forked;
-
+	pid_t	pid;
+	int		status;
 	no_of_strings = 0;
 	count = curr;
 	i = 0;
@@ -45,12 +45,14 @@ char **exec_command(t_token *curr, char **envp)
 		curr = curr->next;
 	}
 	args[i] = NULL;
-	forked = fork();
-	if (forked == 0)
+	pid = fork();
+	if (pid == 0)
 	{
-		execve(args[0], args, NULL);
+		execve(args[0], args, envp);
+		exit(0);
+		
 	}
-	
+	waitpid(pid, &status, 0);
 	free_args(args);
 	return args;
 }
@@ -60,11 +62,13 @@ void exec_line(t_data *data, char **envp)
 	char	**exec_arg;
 	t_token	*temp;
 
+	(void)exec_arg;
 	temp = data->tokens;
-	while(temp)
-	{
-		exec_arg = exec_command(temp, envp);
-		temp = temp->next;
-	}
+	exec_arg = exec_command(temp, envp);
+	// while(temp)
+	// {
+	// 	exec_arg = exec_command(temp, envp);
+	// 	temp = temp->next;
+	// }
 
 }

@@ -36,14 +36,17 @@ int main(int argc, char **argv, char **envp)
 		if (!data.input)
 			break;
 		if (data.input[0] != 0)
+		{
+			printf("input: %s\n", data.input);
 			add_history(data.input);
-        data_init(&data);
-		parser(&data);
-        //something to clean spaces here
-		printf("input: %s\n", data.input);
-		set_type(&data);
-		//exec_line(&data, envp);
-		ft_lstclear(&data);
+        	data_init(&data);
+			parser(&data);
+        	//something to clean spaces here
+			set_type(&data);
+			exec_line(&data, envp);
+			ft_lstclear(&data);
+		}
+
 	}
 	printf("exit\n");
 }
