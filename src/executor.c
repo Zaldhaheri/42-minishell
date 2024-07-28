@@ -1,7 +1,7 @@
 #include "../inc/minishell.h"
 
 
-char **exec_command(t_token *curr, char **envp)
+char **exec_command(t_data *data, t_token *curr, char **envp)
 {
 	t_token *count;
 	int		no_of_strings;
@@ -49,7 +49,9 @@ char **exec_command(t_token *curr, char **envp)
 	if (pid == 0)
 	{
 		execve(args[0], args, envp);
-		exit(0);
+		free_args(args);
+		ft_lstclear(data);
+		exit(1);
 		
 	}
 	waitpid(pid, &status, 0);
@@ -64,11 +66,11 @@ void exec_line(t_data *data, char **envp)
 
 	(void)exec_arg;
 	temp = data->tokens;
-	exec_arg = exec_command(temp, envp);
-	// while(temp)
-	// {
-	// 	exec_arg = exec_command(temp, envp);
-	// 	temp = temp->next;
-	// }
+	// exec_arg = exec_command(temp, envp);
+	while(temp)
+	{
+		exec_arg = exec_command(data, temp, envp);
+		temp = temp->next;
+	}
 
 }
