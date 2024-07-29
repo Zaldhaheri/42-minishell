@@ -16,7 +16,6 @@
 //     return (count);
 // }
 
-
 void parser(t_data *data)
 {
     while (data->input[data->i])
