@@ -66,8 +66,16 @@ typedef struct s_command
 void print_list(t_token *lst);
 
 //parsing
-void    parser(t_data *data);
+void parser(t_data *data);
+void append_checker(t_data *data);
 int check_string(t_data *data);
+void add_token_from_checker(t_data *data);
+int parse_double_quotes(t_data *data);
+int parse_in(t_data *data);
+int parse_out(t_data *data);
+int parse_space(t_data *data);
+int parse_pipe(t_data *data);
+
 void	set_type(t_data *data);
 //utils
 size_t	ft_strlen(const char *str);

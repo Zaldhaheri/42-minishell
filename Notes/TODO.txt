@@ -19,3 +19,7 @@ double quotes semi works, some cases dont work like:
 e-- h--o hello
 i believe the problem is the "" quotes then " after it.
 but for simpler cases it should work i think.
+
+i think parsing for the double quotes is done, single quotes next, then add functions to set types while parsing
+for some of the cases.
+lesgo
