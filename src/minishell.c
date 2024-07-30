@@ -21,6 +21,7 @@ void    data_init(t_data *data)
     data->i = 0;
 	data->checker = ft_strdup(""); //malloc checker to empty
 	data->tokens = NULL;
+	data->typeflag = WORD; //set type flag to WORD
 }
 
 int main(int argc, char **argv, char **envp)

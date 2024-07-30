@@ -7,29 +7,32 @@ int parse_double_quotes(t_data *data)
     {
         append_checker(data);
         data->i++;
+        printf(YELLOW "Append DQUOTES: %s\n" RESET, data->checker);
     }
-    if (data->input[data->i] == '\"')
-        data->i++; 
+    printf(YELLOW "DQUOTES INPUT CHAR: .%c.\n" RESET, data->input[data->i]);
+    data->typeflag = DQUOTES;
     return (1);
 }
-
 
 int parse_in(t_data *data)
 {
     printf(BLUE "REDIRECT: %s\n" RESET, data->checker);
     data->checker[ft_strlen(data->checker) - 1] = '\0';
     if (data->i > 0 && ft_strlen(data->checker) != 0 && data->input[data->i - 1] != ' ' && data->input[data->i - 1] != '\t')
-    {
-        printf(GREEN "WORD: %s\n" RESET, data->checker);
-        ft_lstadd_back(&data->tokens, ft_lstnew(data->checker));
-    }
+        add_token_from_checker(data, WORD, data->checker);
     if (data->input[data->i + 1] == '<')
     {
         data->i++;
-        ft_lstadd_back(&data->tokens, ft_lstnew("<<"));
+        free(data->checker);
+        data->checker = ft_strdup("<<");
+        add_token_from_checker(data, HEREDOC, data->checker);
     }
     else
-        ft_lstadd_back(&data->tokens, ft_lstnew("<"));
+    {
+        free(data->checker);
+        data->checker = ft_strdup("<");
+        add_token_from_checker(data, FD_IN, data->checker);
+    }
     return (1);
 }
 
@@ -38,17 +41,20 @@ int parse_out(t_data *data)
     printf(BLUE "REDIRECT: %s\n" RESET, data->checker);
     data->checker[ft_strlen(data->checker) - 1] = '\0';
     if (data->i > 0 && ft_strlen(data->checker) != 0 && data->input[data->i - 1] != ' ' && data->input[data->i - 1] != '\t')
-    {
-        printf(GREEN "WORD: %s\n" RESET, data->checker);
-        ft_lstadd_back(&data->tokens, ft_lstnew(data->checker));
-    }
+        add_token_from_checker(data, WORD, data->checker);
     if (data->input[data->i + 1] == '>')
     {
         data->i++;
-        ft_lstadd_back(&data->tokens, ft_lstnew(">>"));
+        free(data->checker);
+        data->checker = ft_strdup(">>");
+        add_token_from_checker(data, APPEND, data->checker);
     }
     else
-        ft_lstadd_back(&data->tokens, ft_lstnew(">"));
+    {
+        free(data->checker);
+        data->checker = ft_strdup(">");
+        add_token_from_checker(data, FD_OUT, data->checker);
+    }
     return (1);
 }
 
@@ -56,11 +62,18 @@ int parse_space(t_data *data)
 {
     if (ft_strlen(data->checker) == 1 &&
         (ft_strrchr(data->checker, ' ') || ft_strrchr(data->checker, '\t')))
-        return (1);
+    {
+        printf(GREEN "Single space\n" RESET);
+        free(data->checker);
+        data->checker = ft_strdup("");
+        return (0);
+    }
     if (ft_strlen(data->input) - 1 > data->i || data->input[data->i] == ' ' ||
-        data->input[data->i] == '\t'){
-        data->checker[ft_strlen(data->checker) - 1] = '\0';}
-    ft_lstadd_back(&data->tokens, ft_lstnew(data->checker));
+        data->input[data->i] == '\t')
+    {
+        printf("balls\n");
+        data->checker[ft_strlen(data->checker) - 1] = '\0';
+    }
     printf(GREEN "WORD: %s.\n" RESET, data->checker);
     return (1);
 }
@@ -72,7 +85,7 @@ int parse_pipe(t_data *data)
     if (data->i > 0 && ft_strlen(data->checker) != 0 && data->input[data->i - 1] != ' ' && data->input[data->i - 1] != '\t')
     {
         printf(GREEN "WORD: %s\n" RESET, data->checker);
-        ft_lstadd_back(&data->tokens, ft_lstnew(data->checker));
+        add_token_from_checker(data, WORD, data->checker);
     }
     ft_lstadd_back(&data->tokens, ft_lstnew("|"));
     return (1);

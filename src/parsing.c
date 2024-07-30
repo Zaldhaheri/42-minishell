@@ -1,21 +1,5 @@
 #include "../inc/minishell.h"
 
-// int count_dquotes(t_data *data)
-// {
-//     int i;
-//     int count;
-
-//     i = 0;
-//     count = 0;
-//     while (data->input[i])
-//     {
-//         if (data->input[i] == '\"')
-//             count++;
-//         i++;
-//     }
-//     return (count);
-// }
-
 void parser(t_data *data)
 {
     while (data->input[data->i])
@@ -29,15 +13,19 @@ void parser(t_data *data)
             append_checker(data);
             if (check_string(data))
             {
-                print_list(data->tokens);
-                free(data->checker);
-                data->checker = ft_strdup("");
+                // print_list(data->tokens);
+                // free(data->checker);
+                // data->checker = ft_strdup("");
+                printf("we in\n");
+                add_token_from_checker(data, data->typeflag, data->checker);
             }
-            data->i++;
         }
+        data->i++;
     }
-    add_token_from_checker(data);
-    free(data->checker);
+    printf("we out\n");
+    add_token_from_checker(data, data->typeflag, data->checker);
+    print_list(data->tokens);
+    print_type(data);
 }
 
 void append_checker(t_data *data)
@@ -53,26 +41,32 @@ void append_checker(t_data *data)
     data->temp[ft_strlen(data->checker) + 1] = 0;
     free(data->checker);
     data->checker = data->temp;
+    printf(WHITE "a%d: %s.\n" RESET, data->i, data->checker);
 }
 
-void add_token_from_checker(t_data *data)
+void add_token_from_checker(t_data *data, int type, char *str)
 {
-    if (ft_strlen(data->checker) > 0)
+    t_token *curr;
+
+    if (ft_strlen(str) > 0)
     {
-        ft_lstadd_back(&data->tokens, ft_lstnew(ft_strdup(data->checker)));
-        free(data->checker);
-        data->checker = ft_strdup("");
+        printf(BLUE "Adding: %s, Type: %d\n" RESET, str, type);
+        curr = ft_lstnew(ft_strdup(str));
+        curr->type = type;
+        ft_lstadd_back(&data->tokens, curr);
+        free(str);
+        str = ft_strdup("");
+        data->typeflag = WORD;
     }
 }
 
 int check_string(t_data *data)
 {
-    printf(WHITE "%d: %s.\n" RESET, data->i, data->checker);
-    if (ft_strrchr(data->checker, '<'))
+    if (data->input[data->i] == '<')
         return (parse_in(data));
-    else if (ft_strrchr(data->checker, '>'))
+    else if (data->input[data->i] == '>')
         return (parse_out(data));
-    else if (ft_strrchr(data->checker, '|'))
+    else if (data->input[data->i] == '|')
         return (parse_pipe(data));
     else if (data->input[data->i] == ' ' || data->input[data->i] == '\t' || 
             ft_strlen(data->input) - 1 <= data->i)

@@ -50,6 +50,7 @@ typedef struct s_data
 	char *input;
 	char *checker; //the appender
 	char *temp; //temp string
+	int typeflag;
 	t_token *tokens;
 	t_token *currtoken;
 	unsigned int i;
@@ -64,12 +65,13 @@ typedef struct s_command
 } t_command;
 
 void print_list(t_token *lst);
+void print_type(t_data *data);
 
 //parsing
 void parser(t_data *data);
 void append_checker(t_data *data);
 int check_string(t_data *data);
-void add_token_from_checker(t_data *data);
+void add_token_from_checker(t_data *data, int type, char *str);
 int parse_double_quotes(t_data *data);
 int parse_in(t_data *data);
 int parse_out(t_data *data);
