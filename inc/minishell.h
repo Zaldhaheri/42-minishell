@@ -9,7 +9,8 @@
 #include <sys/types.h>
 #include <sys/wait.h>
 
-#define WORD 10
+// #define WORD 10
+#define WORD 0
 #define COMMAND 11 //execve
 #define FD_IN 12
 #define FD_OUT 13
@@ -59,7 +60,6 @@ typedef struct s_data
 typedef struct s_command
 {
 	char **command;
-	size_t	c_len;
 	struct s_command *next;
 	struct s_command *prev;
 } t_command;

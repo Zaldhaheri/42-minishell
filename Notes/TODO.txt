@@ -23,3 +23,9 @@ but for simpler cases it should work i think.
 i think parsing for the double quotes is done, single quotes next, then add functions to set types while parsing
 for some of the cases.
 lesgo
+
+
+Piping works more or less for standard fds
+	- need to address user files
+	- MUST ADDRESS LEAKS!!!
+	- Clean up code for Norminette
