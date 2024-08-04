@@ -26,7 +26,6 @@
 #define BCOMMAND 23 //builtin
 #define FLAG 24
 
-
 #define RESET   "\033[0m"
 #define BLACK   "\033[30m"
 #define RED     "\033[31m"
@@ -38,6 +37,12 @@
 #define WHITE   "\033[37m"
 
 typedef struct s_token t_token;
+
+struct s_env
+{
+	char *key;
+	char *value;
+} t_env;
 
 struct s_token
 {
@@ -73,6 +78,7 @@ void append_checker(t_data *data);
 int check_string(t_data *data);
 void add_token_from_checker(t_data *data, int type, char *str);
 int parse_double_quotes(t_data *data);
+int parse_single_quotes(t_data *data);
 int parse_in(t_data *data);
 int parse_out(t_data *data);
 int parse_space(t_data *data);

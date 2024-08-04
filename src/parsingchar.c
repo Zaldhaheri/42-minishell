@@ -14,6 +14,21 @@ int parse_double_quotes(t_data *data)
     return (1);
 }
 
+int parse_single_quotes(t_data *data)
+{
+    printf(YELLOW "SQUOTES\n");
+    data->i++;
+    while (data->input[data->i] && data->input[data->i] != '\'')
+    {
+        append_checker(data);
+        data->i++;
+        printf(YELLOW "Append SQUOTES: %s\n" RESET, data->checker);
+    }
+    printf(YELLOW "SQUOTES INPUT CHAR: .%c.\n" RESET, data->input[data->i]);
+    data->typeflag = SQUOTES;
+    return (1);
+}
+
 int parse_in(t_data *data)
 {
     printf(BLUE "REDIRECT: %s\n" RESET, data->checker);

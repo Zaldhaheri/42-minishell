@@ -5,9 +5,9 @@ void parser(t_data *data)
     while (data->input[data->i])
     {
         if (data->input[data->i] == '\"')
-        {
             parse_double_quotes(data);
-        }
+        else if (data->input[data->i] == '\'')
+            parse_single_quotes(data);
         else
         {
             append_checker(data);
@@ -30,7 +30,9 @@ void parser(t_data *data)
 
 void append_checker(t_data *data)
 {
-    data->temp = malloc(ft_strlen(data->checker) + 2);
+    size_t checker_len = ft_strlen(data->checker);
+    size_t new_size = checker_len + 2; // +1 for new char, +1 for null terminator
+    data->temp = malloc(new_size);
     if (!data->temp)
     {
         perror("malloc");
