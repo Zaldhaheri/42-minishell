@@ -37,12 +37,15 @@
 #define WHITE   "\033[37m"
 
 typedef struct s_token t_token;
+typedef struct s_env t_env;
 
-// struct s_env
-// {
-// 	char *key;
-// 	char *value;
-// } t_env;
+struct s_env
+{
+	char *content; //A=1
+	char *key; //A
+	char *value; //1
+	struct s_env *next;
+};
 
 struct s_token
 {
@@ -57,6 +60,8 @@ typedef struct s_data
 	char *checker; //the appender
 	char *temp; //temp string
 	int typeflag;
+	char **envp; //original envp
+	t_env	*myenv; //our env
 	t_token *tokens;
 	t_token *currtoken;
 	unsigned int i;
@@ -72,6 +77,9 @@ typedef struct s_command
 void print_list(t_token *lst);
 void print_type(t_data *data);
 
+//initializing
+void    data_init(t_data *data, char **envp);
+
 //parsing
 void parser(t_data *data);
 void append_checker(t_data *data);
@@ -85,6 +93,7 @@ int parse_space(t_data *data);
 int parse_pipe(t_data *data);
 
 void	set_type(t_data *data);
+
 //utils
 size_t	ft_strlen(const char *str);
 char	*ft_strdup(const char *str);
@@ -101,6 +110,7 @@ t_token	*ft_lstnew(char *word);
 t_token	*ft_lstlast(t_token *lst);
 void	ft_lstadd_back(t_token **lst, t_token *new);
 void	ft_lstclear(t_data *lst);
+
 //exec
 void exec_line(t_data *data, char **envp);
 void	free_args(char **args);

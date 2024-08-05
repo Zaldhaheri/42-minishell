@@ -16,21 +16,12 @@ void print_list(t_token *lst)
 	printf("\n");
 }
 
-void    data_init(t_data *data)
-{
-    data->i = 0;
-	data->checker = ft_strdup(""); //malloc checker to empty
-	data->tokens = NULL;
-	data->typeflag = WORD; //set type flag to WORD
-}
-
 int main(int argc, char **argv, char **envp)
 {
 	t_data data;
 
 	(void)argc;
 	(void)argv;
-	(void)envp;
 	while(1)
 	{
 		data.input = readline("minishell# ");
@@ -40,7 +31,7 @@ int main(int argc, char **argv, char **envp)
 		{
 			printf("input: %s\n", data.input);
 			add_history(data.input);
-        	data_init(&data);
+        	data_init(&data, envp);
 			parser(&data);
 			//set_type(&data);
 			//exec_line(&data, envp);
