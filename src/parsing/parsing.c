@@ -1,4 +1,4 @@
-#include "../inc/minishell.h"
+#include "../../inc/minishell.h"
 
 void parser(t_data *data)
 {
@@ -26,6 +26,8 @@ void parser(t_data *data)
     add_token_from_checker(data, data->typeflag, data->checker);
     print_list(data->tokens);
     print_type(data);
+    //ft_lstclear(data);
+    free(data->checker);
 }
 
 void append_checker(t_data *data)
@@ -39,9 +41,10 @@ void append_checker(t_data *data)
         exit(1);
     }
     ft_strcpy(data->temp, data->checker);
-    data->temp[ft_strlen(data->checker)] = data->input[data->i];
-    data->temp[ft_strlen(data->checker) + 1] = 0;
-    free(data->checker);
+    data->temp[checker_len] = data->input[data->i];
+    data->temp[checker_len + 1] = 0;
+    if (data->checker)
+        free(data->checker);
     data->checker = data->temp;
     printf(WHITE "a%d: %s.\n" RESET, data->i, data->checker);
 }
@@ -56,7 +59,8 @@ void add_token_from_checker(t_data *data, int type, char *str)
         curr = ft_lstnew(ft_strdup(str));
         curr->type = type;
         ft_lstadd_back(&data->tokens, curr);
-        free(str);
+        if (str)
+            free(str);
         str = ft_strdup("");
         data->typeflag = WORD;
     }

@@ -38,11 +38,11 @@
 
 typedef struct s_token t_token;
 
-struct s_env
-{
-	char *key;
-	char *value;
-} t_env;
+// struct s_env
+// {
+// 	char *key;
+// 	char *value;
+// } t_env;
 
 struct s_token
 {
