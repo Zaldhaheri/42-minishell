@@ -83,7 +83,7 @@ void    data_init(t_data *data, char **envp)
 	data->tokens = NULL;
 	data->typeflag = WORD; //set type flag to WORD
 	data->envp = envp;
-	//data->myenv = NULL;
+	data->myenv = NULL;
     env_init(data);
     print_env(data->myenv);
 }
