@@ -9,23 +9,6 @@ typedef struct s_child_params
 	int	is_first;
 }	t_child_params;
 
-
-void	child_free_exit(t_data *head, t_child_params *params, int isError)
-{
-	if (isError == 1)
-		ft_lstclear(head);
-	if (params->fd[0] != -1)
-		close(params->fd[0]);
-	if (params->fd[1] != -1)
-		close(params->fd[1]);
-	if (params->fd_in != -1)
-		close(params->fd_in);
-	if (params->fd_out != -1)
-		close(params->fd_out);
-	if (isError == 1)
-		exit(EXIT_FAILURE);
-}
-
 t_command	*cmd_lstlast(t_command *lst)
 {
 	if (!lst)
@@ -49,7 +32,7 @@ void	cmd_add_back(t_command **lst, t_command *new)
 	}
 }
 
-t_command *new_command(char **cmd)
+t_command *new_command(char **cmd, int fd, int fd_type)
 {
 	t_command *new;
 
@@ -61,6 +44,8 @@ t_command *new_command(char **cmd)
 	}
 	new->command = cmd;
 	new->next = NULL;
+	new->cmd_fd = fd;
+	new->fd_type = fd_type;
 	return(new);
 }
 void	create_pipe(t_child_params *params)
@@ -72,44 +57,6 @@ void	create_pipe(t_child_params *params)
 	}
 }
 
-
-void	start_child(t_command *temp, t_child_params *params,
-	t_data *data, char **envp)
-{
-	if (temp == NULL || temp->command == NULL)
-		child_free_exit(data, params, 1);
-	if (params->is_first && params->fd_in == -1)
-		child_free_exit(data, params, 1);
-	if (temp->next)
-	{
-		dup2(params->fd[1], STDOUT_FILENO);
-	}
-	else
-	{
-		if (params->fd_out == -1)
-			child_free_exit(data, params, 1);
-		if (params->fd_out > 2)
-			dup2(params->fd_out, STDOUT_FILENO);
-	}
-	close(params->fd[0]);
-	close(params->fd[1]);
-	//child_free_exit(data, params, 0);
-	if (execve(temp->command[0], temp->command, envp) == -1)
-	{
-		//ft_putstr_fd("command not found: ", STDERR_FILENO);
-		perror(temp->command[0]);
-		exit(1);
-		//child_free_exit(data, params, 1);
-	}
-}
-
-void	continue_parent(t_child_params *params)
-{
-	close(params->fd[1]);
-	dup2(params->fd[0], STDIN_FILENO);
-	close(params->fd[0]);
-	params->is_first = 0;
-}
 
 void exec_cmd(t_command *cmd, t_data *data, char **envp) {
     pid_t pid;
@@ -133,11 +80,17 @@ void exec_cmd(t_command *cmd, t_data *data, char **envp) {
         }
 
         if (pid == 0) {
-            // Child process
+            if (cmd->fd_type == FD_OUT || cmd->fd_type == APPEND)
+                	dup2(cmd->cmd_fd,  STDOUT_FILENO);
             if (cmd->next) {
-                dup2(params.fd[1], STDOUT_FILENO);
+				if (cmd->fd_type == FD_OUT || cmd->fd_type == APPEND)
+                	dup2(cmd->cmd_fd,  STDOUT_FILENO);
+				else
+					dup2(params.fd[1], STDOUT_FILENO);
             }
-            if (!params.is_first) {
+			if (cmd->fd_type == FD_IN)
+				dup2(cmd->cmd_fd, STDIN_FILENO);
+            else if (!params.is_first) {
                 dup2(params.fd_in, STDIN_FILENO);
             }
             close(params.fd[0]);
@@ -152,7 +105,10 @@ void exec_cmd(t_command *cmd, t_data *data, char **envp) {
             waitpid(pid, &status, 0); // Wait for the current child process to finish
             if (cmd->next) {
                 close(params.fd[1]);
-                params.fd_in = params.fd[0];
+				if (cmd->fd_type == FD_IN)
+					params.fd_in = cmd->cmd_fd;
+				else
+                	params.fd_in = params.fd[0];
             }
             params.is_first = 0;
             cmd = cmd->next;
@@ -165,39 +121,40 @@ void exec_cmd(t_command *cmd, t_data *data, char **envp) {
     }
 }
 
-// void	exec_cmd(t_command *cmd, t_data *data, char **envp)
-// {
-// 	pid_t	pid;
-// 	int		status;
-// 	t_child_params	params;
-	
-// 	params.fd_in = STDIN_FILENO;
-// 	params.fd_out = STDOUT_FILENO;
-// 	params.is_first = 1;
-// 	while(cmd)
-// 	{
-// 		if (cmd->next)
-// 			create_pipe(&params);
-// 		printf("cmd: %s\n", cmd->command[0]);
-// 		pid = fork();
-// 		if (pid == -1)
-// 			return ((perror("fork"), exit(EXIT_FAILURE)));
-// 		if (pid == 0)
-// 			start_child(cmd, &params, data, envp);
-// 		else
-// 			continue_parent(&params);
-// 		cmd = cmd->next;
-// 	}
-// 	//waitpid(pid, &status, 0);
-// 	while (wait(&status) > 0);
-// 	//ft_lstclear(data);
-	
-// }
+int open_file(char *filename, int open_type)
+{
+	int ret_fd;
+
+	ret_fd = 0;
+	if (open_type == FD_IN)
+	{
+		ret_fd = open(filename, O_RDONLY);
+		if (ret_fd == -1)
+			perror(filename);
+	}
+	else if (open_type == FD_OUT)
+	{
+		ret_fd = open(filename, O_WRONLY | O_CREAT | O_TRUNC, 0644);
+		if (ret_fd == -1)
+			perror(filename);
+	}
+	else if (open_type == APPEND)
+	{
+		ret_fd = open(filename, O_WRONLY | O_CREAT | O_APPEND, 0644);
+		if (ret_fd == -1)
+			perror(filename);
+	}
+	return (ret_fd);
+}
 
 t_command *set_command(char **command,  t_token **temp, char **envp)
 {
 	int	i;
+	int cmd_fd;
+	int fd_type;
 
+	fd_type = NO_FD;
+	cmd_fd = NO_FD;
 	i = 0;
 	t_command *cmd;
 	cmd = NULL;
@@ -218,12 +175,19 @@ t_command *set_command(char **command,  t_token **temp, char **envp)
 			}
 			i++;
 		}
+		else if ((*temp)->type == FD_IN || (*temp)->type == FD_OUT 
+		|| (*temp)->type == APPEND)
+		{
+			if ((*temp)->next)
+				cmd_fd = open_file((*temp)->next->content, (*temp)->type);
+			fd_type = (*temp)->type;
+		}
 		(*temp) = (*temp)->next;
 	}
 	if ((*temp) && (*temp)->type == PIPE)
 		(*temp) = (*temp)->next;
 	command[i] = NULL;
-	cmd = new_command(command);
+	cmd = new_command(command, cmd_fd, fd_type);
 	return (cmd);
 }
 
@@ -255,7 +219,6 @@ char	**cmd_size_init(t_token *temp)
 
 void exec_line(t_data *data, char **envp)
 {
-	// t_token	*temp;
 	t_command *command;
 	t_command *head;
 	t_token *temp;
@@ -264,9 +227,10 @@ void exec_line(t_data *data, char **envp)
 	head = NULL;
 	while(temp){
 	
-	cmd = cmd_size_init(temp);
-	command = set_command(cmd, &temp, envp);
-	cmd_add_back(&head, command);
+		cmd = cmd_size_init(temp);
+		command = set_command(cmd, &temp, envp);
+		printf("hello my fire d\n");
+		cmd_add_back(&head, command);
 	}
 	printf("in temp\n");
 
