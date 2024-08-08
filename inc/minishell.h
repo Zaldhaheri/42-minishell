@@ -109,6 +109,7 @@ void	set_type(t_data *data);
 size_t	ft_strlen(const char *str);
 char	*ft_strdup(const char *str);
 void ft_strcpy(char *dst, const char *src);
+int	ft_strcmp(const char *s1, const char *s2);
 int	ft_strncmp(const char *s1, const char *s2, size_t n);
 char	*ft_strrchr(const char *str, int c);
 char	*ft_strtrim(char const *s1, char const *set);

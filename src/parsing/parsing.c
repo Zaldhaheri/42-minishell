@@ -27,11 +27,37 @@ void parser(t_data *data)
     //ft_lstclear(data);
     if (data->checker)
         free(data->checker);
+    printf(BLUE "Leaving parser\n" RESET);
+}
+
+int check_env_dupes(t_data *data)
+{
+    int flag;
+    char **split;
+    t_env *curr;
+
+    curr = data->myenv;
+    flag = 1;
+    split = ft_split(data->checker, '=');
+    data->temp = split[0];
+    printf("temp: .%s.\n", data->temp);
+    while(curr)
+    {
+        if (!ft_strcmp(data->temp, curr->key))
+        {
+            curr->value = split[1];
+            flag = 0;
+            break ;
+        }
+        curr = curr->next;
+    }
+    return (flag);
 }
 
 void add_token_to_env(t_data *data)
 {
-    ft_envadd_back(&data->myenv, data->checker);
+    if (check_env_dupes(data))
+        ft_envadd_back(&data->myenv, data->checker);
     if (data->checker)
         free(data->checker);
     data->checker = ft_strdup("");
