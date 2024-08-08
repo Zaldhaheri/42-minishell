@@ -13,23 +13,29 @@ void parser(t_data *data)
             append_checker(data);
             if (check_string(data))
             {
-                // print_list(data->tokens);
-                // if (data->checker)
-                // free(data->checker);
-                // data->checker = ft_strdup("");
-                printf("we in\n");
-                add_token_from_checker(data, data->typeflag, data->checker);
+                if (ft_strrchr(data->checker, '='))
+                    add_token_to_env(data);
+                else
+                    add_token_from_checker(data, data->typeflag, &data->checker);
             }
         }
         data->i++;
     }
-    printf("we out\n");
-    add_token_from_checker(data, data->typeflag, data->checker);
+    add_token_from_checker(data, data->typeflag, &data->checker);
     print_list(data->tokens);
     print_type(data);
     //ft_lstclear(data);
     if (data->checker)
         free(data->checker);
+}
+
+void add_token_to_env(t_data *data)
+{
+    ft_envadd_back(&data->myenv, data->checker);
+    if (data->checker)
+        free(data->checker);
+    data->checker = ft_strdup("");
+    print_env(data->myenv);
 }
 
 void append_checker(t_data *data)
@@ -52,20 +58,19 @@ void append_checker(t_data *data)
     printf(WHITE "a%d: %s.\n" RESET, data->i, data->checker);
 }
 
-//double free happens here
-void add_token_from_checker(t_data *data, int type, char *str)
+void add_token_from_checker(t_data *data, int type, char **str)
 {
     t_token *curr;
 
-    if (ft_strlen(str) > 0)
+    if (ft_strlen(*str) > 0)
     {
-        printf(BLUE "Adding: %s, Type: %d\n" RESET, str, type);
-        curr = ft_lstnew(ft_strdup(str));
+        printf(BLUE "Adding: %s, Type: %d\n" RESET, *str, type);
+        curr = ft_lstnew(ft_strdup(*str));
         curr->type = type;
         ft_lstadd_back(&data->tokens, curr);
-        if (str)
-            free(str);
-        str = ft_strdup("");
+        if (*str)
+            free(*str);
+        *str = ft_strdup("");
         data->typeflag = WORD;
     }
 }

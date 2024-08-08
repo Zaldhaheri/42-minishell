@@ -76,15 +76,22 @@ typedef struct s_command
 
 void print_list(t_token *lst);
 void print_type(t_data *data);
+void print_env(t_env *env);
 
 //initializing
-void    data_init(t_data *data, char **envp);
+void    data_init(t_data *data);
+void    pre_init(t_data *data, char **envp);
+void	env_init(t_data *data);
+t_env	*ft_envlast(t_env *lst);
+t_env	*ft_envnew(char *word);
+void    ft_envadd_back(t_env **lst, char *s);
 
 //parsing
 void parser(t_data *data);
 void append_checker(t_data *data);
 int check_string(t_data *data);
-void add_token_from_checker(t_data *data, int type, char *str);
+void add_token_from_checker(t_data *data, int type, char **str);
+void add_token_to_env(t_data *data);
 int parse_double_quotes(t_data *data);
 int parse_single_quotes(t_data *data);
 int parse_in(t_data *data);

@@ -24,18 +24,6 @@ i think parsing for the double quotes is done, single quotes next, then add func
 for some of the cases.
 lesgo
 
-for inputs like: aaaaaaaaaaaaaaaaaa
-we get:
-WORD: aaaaaaaaaaaaaaaaaa.
-we in
-Adding: aaaaaaaaaaaaaaaaaa, Type: 10
-we out
-Adding: aaaaaaaaaaaaaaaaaa, Type: 10
-aaaaaaaaaaaaaaaaaa--aaaaaaaaaaaaaaaaaa
-NODE: aaaaaaaaaaaaaaaaaa Type: 10 NODE: aaaaaaaaaaaaaaaaaa Type: 10 
-NODE: aaaaaaaaaaaaaaaaaa Type: 10 NODE: aaaaaaaaaaaaaaaaaa Type: 10
-theres some kind of error with large inputs, not sure how to fix it.
-
 Piping works more or less for standard fds
 	- need to address user files
 	- MUST ADDRESS LEAKS!!!
@@ -47,3 +35,6 @@ When we add a value like a=2, we will add this using ft_lstadd_back. the struct 
 A=2
 key: A
 value: 2
+
+When looping through "", if we find a $, we expand it there, then continue parsing.
+if looping through '' we dont expand it.

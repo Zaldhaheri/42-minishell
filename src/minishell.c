@@ -22,6 +22,7 @@ int main(int argc, char **argv, char **envp)
 
 	(void)argc;
 	(void)argv;
+	pre_init(&data, envp);
 	while(1)
 	{
 		data.input = readline("minishell# ");
@@ -31,7 +32,7 @@ int main(int argc, char **argv, char **envp)
 		{
 			printf("input: %s\n", data.input);
 			add_history(data.input);
-        	data_init(&data, envp);
+        	data_init(&data);
 			parser(&data);
 			//set_type(&data);
 			//exec_line(&data, envp);

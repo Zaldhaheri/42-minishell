@@ -76,14 +76,18 @@ void	env_init(t_data *data)
     data->i = 0;
 }
 
-void    data_init(t_data *data, char **envp)
+void    pre_init(t_data *data, char **envp)
+{
+    data->envp = envp;
+    data->myenv = NULL;
+    env_init(data);
+    print_env(data->myenv);
+}
+
+void    data_init(t_data *data)
 {
     data->i = 0;
 	data->checker = ft_strdup(""); //malloc checker to empty
 	data->tokens = NULL;
 	data->typeflag = WORD; //set type flag to WORD
-	data->envp = envp;
-	data->myenv = NULL;
-    env_init(data);
-    print_env(data->myenv);
 }
