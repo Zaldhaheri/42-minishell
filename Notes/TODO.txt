@@ -38,3 +38,5 @@ value: 2
 
 When looping through "", if we find a $, we expand it there, then continue parsing.
 if looping through '' we dont expand it.
+
+HEREDOC test fd_in and fd_out. Norminette and leaks ;( 
