@@ -14,6 +14,7 @@ void parser(t_data *data)
             if (check_string(data))
             {
                 // print_list(data->tokens);
+                // if (data->checker)
                 // free(data->checker);
                 // data->checker = ft_strdup("");
                 printf("we in\n");
@@ -27,7 +28,8 @@ void parser(t_data *data)
     print_list(data->tokens);
     print_type(data);
     //ft_lstclear(data);
-    free(data->checker);
+    if (data->checker)
+        free(data->checker);
 }
 
 void append_checker(t_data *data)
@@ -44,11 +46,13 @@ void append_checker(t_data *data)
     data->temp[checker_len] = data->input[data->i];
     data->temp[checker_len + 1] = 0;
     if (data->checker)
-        free(data->checker);
+        if (data->checker)
+            free(data->checker);
     data->checker = data->temp;
     printf(WHITE "a%d: %s.\n" RESET, data->i, data->checker);
 }
 
+//double free happens here
 void add_token_from_checker(t_data *data, int type, char *str)
 {
     t_token *curr;

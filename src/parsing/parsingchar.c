@@ -38,13 +38,15 @@ int parse_in(t_data *data)
     if (data->input[data->i + 1] == '<')
     {
         data->i++;
-        free(data->checker);
+        if (data->checker)
+            free(data->checker);
         data->checker = ft_strdup("<<");
         add_token_from_checker(data, HEREDOC, data->checker);
     }
     else
     {
-        free(data->checker);
+        if (data->checker)
+            free(data->checker);
         data->checker = ft_strdup("<");
         add_token_from_checker(data, FD_IN, data->checker);
     }
@@ -60,13 +62,15 @@ int parse_out(t_data *data)
     if (data->input[data->i + 1] == '>')
     {
         data->i++;
-        free(data->checker);
+        if (data->checker)
+            free(data->checker);
         data->checker = ft_strdup(">>");
         add_token_from_checker(data, APPEND, data->checker);
     }
     else
     {
-        free(data->checker);
+        if (data->checker)
+    free(data->checker);
         data->checker = ft_strdup(">");
         add_token_from_checker(data, FD_OUT, data->checker);
     }
@@ -79,7 +83,8 @@ int parse_space(t_data *data)
         (ft_strrchr(data->checker, ' ') || ft_strrchr(data->checker, '\t')))
     {
         printf(GREEN "Single space\n" RESET);
-        free(data->checker);
+        if (data->checker)
+            free(data->checker);
         data->checker = ft_strdup("");
         return (0);
     }
