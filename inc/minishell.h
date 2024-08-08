@@ -8,6 +8,7 @@
 #include <unistd.h>
 #include <sys/types.h>
 #include <sys/wait.h>
+# include <fcntl.h> 
 
 // #define WORD 10
 #define WORD 0
@@ -25,6 +26,7 @@
 #define DECLARE 22
 #define BCOMMAND 23 //builtin
 #define FLAG 24
+#define NO_FD -10
 
 #define RESET   "\033[0m"
 #define BLACK   "\033[30m"
@@ -70,6 +72,7 @@ typedef struct s_data
 typedef struct s_command
 {
 	char **command;
+	int cmd_fd;
 	struct s_command *next;
 	struct s_command *prev;
 } t_command;
