@@ -14,7 +14,7 @@ void parser(t_data *data)
             if (check_string(data))
             {
                 if (ft_strrchr(data->checker, '=') && ft_strlen(data->checker) > 1
-                    && data->checker[0] != '=')
+                    && data->checker[0] != '=' && data->typeflag != DOLLAR)
                     add_token_to_env(data);
                 else
                     add_token_from_checker(data, data->typeflag, &data->checker);
@@ -167,7 +167,10 @@ int parse_dollar(t_data *data)
     }
     data->i--;
     printf(YELLOW "Curr input: %c\n" RESET, data->input[data->i]);
-    return (1);
+    data->typeflag = DOLLAR;
+    if (data->input[data->i + 1] == ' ')
+        return (1);
+    return (0);
 }
 
 int check_string(t_data *data)
