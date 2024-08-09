@@ -13,7 +13,8 @@ void parser(t_data *data)
             append_checker(data);
             if (check_string(data))
             {
-                if (ft_strrchr(data->checker, '='))
+                if (ft_strrchr(data->checker, '=') && ft_strlen(data->checker) > 1
+                    && data->checker[0] != '=')
                     add_token_to_env(data);
                 else
                     add_token_from_checker(data, data->typeflag, &data->checker);
@@ -56,6 +57,7 @@ int check_env_dupes(t_data *data)
 
 void add_token_to_env(t_data *data)
 {
+    printf(RED "is env\n" RESET);
     if (check_env_dupes(data))
         ft_envadd_back(&data->myenv, data->checker);
     if (data->checker)
@@ -101,6 +103,73 @@ void add_token_from_checker(t_data *data, int type, char **str)
     }
 }
 
+char *get_env(t_data *data, char *key)
+{
+    t_env *curr;
+
+    curr = data->myenv;
+    while(curr)
+    {
+        if (!ft_strcmp(key, curr->key))
+            return (curr->value);
+        curr = curr->next;
+    }
+    return (NULL);
+}
+
+void append_checker_char(t_data *data, int c)
+{
+    size_t checker_len = ft_strlen(data->checker);
+    size_t new_size = checker_len + 2; // +1 for new char, +1 for null terminator
+    data->temp = malloc(new_size);
+    if (!data->temp)
+    {
+        perror("malloc");
+        exit(1);
+    }
+    ft_strcpy(data->temp, data->checker);
+    data->temp[checker_len] = c;
+    data->temp[checker_len + 1] = 0;
+    if (data->checker)
+        if (data->checker)
+            free(data->checker);
+    data->checker = data->temp;
+    printf(WHITE "env: %s.\n" RESET, data->checker);
+}
+
+int parse_dollar(t_data *data)
+{
+    char *key;
+    char *value;
+    int j;
+
+    j = 0;
+    key = malloc(256); //large value
+    value = malloc(256);
+    data->i++;
+    data->checker[ft_strlen(data->checker) - 1] = '\0';
+    printf(YELLOW "CHECKER: %s\n" RESET, data->checker);
+    while(data->input[data->i] && (ft_isalnum(data->input[data->i]) || data->input[data->i] == '_'))
+    {
+        key[j++] = data->input[data->i++];
+        printf(YELLOW "KEY: %s\n" RESET, key);
+    }
+    key[j] = 0;
+    value = get_env(data, key);
+    printf(YELLOW "VALUE: %s\n" RESET, value);
+    if (value)
+    {
+        while (*value)
+        {
+            append_checker_char(data, *value);
+            value++;
+        }
+    }
+    data->i--;
+    printf(YELLOW "Curr input: %c\n" RESET, data->input[data->i]);
+    return (1);
+}
+
 int check_string(t_data *data)
 {
     if (data->input[data->i] == '<')
@@ -109,6 +178,8 @@ int check_string(t_data *data)
         return (parse_out(data));
     else if (data->input[data->i] == '|')
         return (parse_pipe(data));
+    else if (data->input[data->i] == '$')
+        return (parse_dollar(data));
     else if (data->input[data->i] == ' ' || data->input[data->i] == '\t' || 
             ft_strlen(data->input) - 1 <= data->i)
         return (parse_space(data));

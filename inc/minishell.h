@@ -106,6 +106,7 @@ int parse_pipe(t_data *data);
 void	set_type(t_data *data);
 
 //utils
+int	ft_isalnum(int c);
 size_t	ft_strlen(const char *str);
 char	*ft_strdup(const char *str);
 void ft_strcpy(char *dst, const char *src);
