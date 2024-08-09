@@ -18,6 +18,24 @@ t_command	*cmd_lstlast(t_command *lst)
 	return (lst);
 }
 
+void	free_commands(t_command **lst)
+{
+	t_command *temp;
+
+	while(*lst)
+	{
+		temp = *lst;
+		*lst = (*lst)->next;
+		if (temp->cmd_fd > -1)
+		{
+			close(temp->cmd_fd);
+		}
+		free_args(temp->command);
+		free(temp);
+	}
+	*lst = NULL;
+}
+
 void	cmd_add_back(t_command **lst, t_command *new)
 {
 	t_command	*temp;
@@ -80,10 +98,17 @@ void exec_cmd(t_command *cmd, t_data *data, char **envp) {
         }
 
         if (pid == 0) {
-			if (cmd->fd_type != FD_OUT && cmd->fd_type != APPEND && !cmd->next && params.is_first) {
-				    if (execve(cmd->command[0], cmd->command, envp) == -1) {
+			if (!cmd->next && params.is_first)
+			{
+				if (cmd->fd_type == FD_OUT || cmd->fd_type == APPEND)
+                	dup2(cmd->cmd_fd,  STDOUT_FILENO);
+				if (cmd->fd_type == FD_IN)
+					dup2(cmd->cmd_fd, STDIN_FILENO);
+				if (execve(cmd->command[0], cmd->command, envp) == -1) {
                 	perror(cmd->command[0]);
-                exit(EXIT_FAILURE);
+					free_commands(&cmd);
+					ft_lstclear(data);
+                	exit(EXIT_FAILURE);
             }
 			}
             if (cmd->fd_type == FD_OUT || cmd->fd_type == APPEND)
@@ -105,6 +130,8 @@ void exec_cmd(t_command *cmd, t_data *data, char **envp) {
 
             if (execve(cmd->command[0], cmd->command, envp) == -1) {
                 perror(cmd->command[0]);
+				free_commands(&cmd);
+				ft_lstclear(data);
                 exit(EXIT_FAILURE);
             }
         } else {
@@ -242,9 +269,9 @@ void exec_line(t_data *data, char **envp)
 	}
 	printf("in temp\n");
 
-	if (head && cmd && command)
+	if (head && *cmd != NULL && command)
 		exec_cmd(head, data, envp);
 
-	
+	free_commands(&head);
 }
 
