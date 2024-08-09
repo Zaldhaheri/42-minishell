@@ -80,21 +80,28 @@ void exec_cmd(t_command *cmd, t_data *data, char **envp) {
         }
 
         if (pid == 0) {
+			if (cmd->fd_type != FD_OUT && cmd->fd_type != APPEND && !cmd->next && params.is_first) {
+				    if (execve(cmd->command[0], cmd->command, envp) == -1) {
+                	perror(cmd->command[0]);
+                exit(EXIT_FAILURE);
+            }
+			}
             if (cmd->fd_type == FD_OUT || cmd->fd_type == APPEND)
                 	dup2(cmd->cmd_fd,  STDOUT_FILENO);
+            else if (cmd->next) {	
+				dup2(params.fd[1], STDOUT_FILENO);
+            }
+            if (!params.is_first) {
+				if (cmd->fd_type == FD_IN)
+					dup2(cmd->cmd_fd, STDIN_FILENO);
+                else
+					dup2(params.fd_in, STDIN_FILENO);
+            }
             if (cmd->next) {
-				if (cmd->fd_type == FD_OUT || cmd->fd_type == APPEND)
-                	dup2(cmd->cmd_fd,  STDOUT_FILENO);
-				else
-					dup2(params.fd[1], STDOUT_FILENO);
+                close(params.fd[0]);
             }
-			if (cmd->fd_type == FD_IN)
-				dup2(cmd->cmd_fd, STDIN_FILENO);
-            else if (!params.is_first) {
-                dup2(params.fd_in, STDIN_FILENO);
-            }
-            close(params.fd[0]);
             close(params.fd[1]);
+
 
             if (execve(cmd->command[0], cmd->command, envp) == -1) {
                 perror(cmd->command[0]);
@@ -102,7 +109,7 @@ void exec_cmd(t_command *cmd, t_data *data, char **envp) {
             }
         } else {
             // Parent process
-            waitpid(pid, &status, 0); // Wait for the current child process to finish
+             // Wait for the current child process to finish
             if (cmd->next) {
                 close(params.fd[1]);
 				if (cmd->fd_type == FD_IN)
@@ -119,6 +126,7 @@ void exec_cmd(t_command *cmd, t_data *data, char **envp) {
     if (params.fd_in != STDIN_FILENO) {
         close(params.fd_in);
     }
+	waitpid(pid, &status, 0);
 }
 
 int open_file(char *filename, int open_type)
