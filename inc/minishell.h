@@ -9,6 +9,7 @@
 #include <sys/types.h>
 #include <sys/wait.h>
 # include <fcntl.h> 
+# include <limits.h>
 
 // #define WORD 10
 #define WORD 0
@@ -128,5 +129,20 @@ void	ft_lstclear(t_data *lst);
 void exec_line(t_data *data, char **envp);
 void	free_args(char **args);
 char	*ft_get_cmd_path(char *cmd, char **envp);
+
+//getnext line
+# ifndef BUFFER_SIZE
+#  define BUFFER_SIZE 42
+# endif
+
+char	*get_next_line(int fd);
+
+typedef struct s_list
+{
+	char			*content;
+	struct s_list	*next;
+}			t_list;
+char	*concatenate_list(t_list **lst);
+void	ft_gnlclear(t_list **lst);
 
 #endif

@@ -1,7 +1,8 @@
 NAME = minishell
 
 SRC = src/minishell.c src/initializing/init.c src/parsing/parsing.c src/parsing/parsingchar.c utils/utils1.c utils/lst_utils.c utils/ft_strtrim.c src/type.c\
-		src/executor.c utils/cmd_utils.c utils/ft_split.c
+		src/executor.c utils/cmd_utils.c utils/ft_split.c get_next_line/get_next_line.c \
+		get_next_line/get_next_line_utils.c
 
 OBJ = $(SRC:.c=.o)
 
