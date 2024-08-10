@@ -149,7 +149,7 @@ int parse_dollar(t_data *data)
     data->i++;
     data->checker[ft_strlen(data->checker) - 1] = '\0';
     printf(YELLOW "CHECKER: %s\n" RESET, data->checker);
-    while(data->input[data->i] && (ft_isalnum(data->input[data->i]) || data->input[data->i] == '_'))
+    while(data->input[data->i] && (ft_isalnum(data->input[data->i]) || data->input[data->i] == '_' || data->input[data->i] == '?'))
     {
         key[j++] = data->input[data->i++];
         printf(YELLOW "KEY: %s\n" RESET, key);

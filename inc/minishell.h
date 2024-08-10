@@ -11,7 +11,6 @@
 # include <fcntl.h> 
 # include <limits.h>
 
-// #define WORD 10
 #define WORD 0
 #define COMMAND 11 //execve
 #define FD_IN 12
@@ -104,6 +103,7 @@ int parse_in(t_data *data);
 int parse_out(t_data *data);
 int parse_space(t_data *data);
 int parse_pipe(t_data *data);
+int parse_dollar(t_data *data);
 
 void	set_type(t_data *data);
 

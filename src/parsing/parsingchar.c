@@ -6,8 +6,14 @@ int parse_double_quotes(t_data *data)
     while (data->input[data->i] && data->input[data->i] != '\"')
     {
         append_checker(data);
+        if (data->input[data->i] == '$' && data->input[data->i + 1] != ' ' && data->input[data->i + 1] != '\"' )
+        {
+            printf(GREEN "$ sign found\n" RESET);
+            parse_dollar(data);
+        }
         data->i++;
         printf(YELLOW "Append DQUOTES: %s\n" RESET, data->checker);
+        
     }
     printf(YELLOW "DQUOTES INPUT CHAR: .%c.\n" RESET, data->input[data->i]);
     data->typeflag = DQUOTES;
