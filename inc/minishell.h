@@ -68,6 +68,7 @@ typedef struct s_data
 	t_token *tokens;
 	t_token *currtoken;
 	unsigned int i;
+	int status;
 } t_data;
 
 typedef struct s_command
