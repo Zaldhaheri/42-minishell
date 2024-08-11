@@ -6,7 +6,7 @@
 /*   By: nalkhate <nalkhate@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/11 16:24:22 by nalkhate          #+#    #+#             */
-/*   Updated: 2024/08/11 20:05:02 by nalkhate         ###   ########.fr       */
+/*   Updated: 2024/08/11 21:11:30 by nalkhate         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,10 +26,6 @@ void exec_child(t_command *cmd, t_data *data, char **envp)
 
 void start_child(t_command *cmd, t_data *data, char **envp, t_child_params	*params)
 {
-	// if (cmd->fd_type == HEREDOC){
-	// 	cmd->cmd_fd = heredoc(cmd->limiter);
-	// 	cmd->fd_type = FD_IN;
-	// }
 	if (!cmd->next && params->is_first)
 	{
 		if (cmd->fd_type == FD_OUT || cmd->fd_type == APPEND)
@@ -38,7 +34,6 @@ void start_child(t_command *cmd, t_data *data, char **envp, t_child_params	*para
 			dup2(cmd->cmd_fd, STDIN_FILENO);
 		exec_child(cmd, data, envp);
 	}
-	
     if (cmd->fd_type == FD_OUT || cmd->fd_type == APPEND)
         dup2(cmd->cmd_fd,  STDOUT_FILENO);
     else if (cmd->next)
