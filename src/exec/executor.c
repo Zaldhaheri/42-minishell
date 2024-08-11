@@ -6,7 +6,7 @@
 /*   By: nalkhate <nalkhate@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/11 16:25:03 by nalkhate          #+#    #+#             */
-/*   Updated: 2024/08/11 19:44:15 by nalkhate         ###   ########.fr       */
+/*   Updated: 2024/08/11 20:09:33 by nalkhate         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,9 +48,7 @@ t_command *set_command(char **command,  t_token **temp, char **envp)
 	int			cmd_fd;
 	int			fd_type;
 	t_command	*cmd;
-	char	*limiter;
 
-	limiter = NULL;
 	fd_type = NO_FD;
 	cmd_fd = NO_FD;
 	i = 0;	
@@ -78,7 +76,8 @@ t_command *set_command(char **command,  t_token **temp, char **envp)
 				cmd_fd = open_file((*temp)->next->content, (*temp)->type);
 			else if ((*temp)->next && (*temp)->type == HEREDOC)
 			{
-				limiter = ft_strdup((*temp)->next->content);
+				cmd_fd = heredoc(ft_strdup((*temp)->next->content));
+				(*temp)->type = FD_IN;
 			}
 			fd_type = (*temp)->type;
 		}
@@ -88,7 +87,7 @@ t_command *set_command(char **command,  t_token **temp, char **envp)
 	if ((*temp) && (*temp)->type == PIPE)
 		(*temp) = (*temp)->next;
 	command[i] = NULL;
-	cmd = new_command(command, cmd_fd, fd_type, limiter);
+	cmd = new_command(command, cmd_fd, fd_type);
 	return (cmd);
 }
 

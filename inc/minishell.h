@@ -75,7 +75,6 @@ typedef struct s_command
 	char **command;
 	int cmd_fd;
 	int fd_type;
-	char *limiter;
 	struct s_command *next;
 	struct s_command *prev;
 } t_command;

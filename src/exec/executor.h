@@ -6,7 +6,7 @@
 /*   By: nalkhate <nalkhate@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/11 16:24:18 by nalkhate          #+#    #+#             */
-/*   Updated: 2024/08/11 19:19:37 by nalkhate         ###   ########.fr       */
+/*   Updated: 2024/08/11 20:06:52 by nalkhate         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ typedef struct s_child_params
 t_command	*cmd_lstlast(t_command *lst);
 void	free_commands(t_command **lst);
 void	cmd_add_back(t_command **lst, t_command *new);
-t_command *new_command(char **cmd, int fd, int fd_type, char *limiter);
+t_command *new_command(char **cmd, int fd, int fd_type);
 void	create_pipe(t_child_params *params);
 void exec_child(t_command *cmd, t_data *data, char **envp);
 void start_child(t_command *cmd, t_data *data, char **envp, t_child_params	*params);
