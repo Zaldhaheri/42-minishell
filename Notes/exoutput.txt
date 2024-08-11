@@ -13,4 +13,27 @@ COMMAND: hello
 10: world
 COMMAND: world
 
-
+-------------------------
+minishell# a b "c" d e $USER
+a--b--c--d--e--zaldhahe
+NODE: a Type: 0 NODE: b Type: 0 NODE: c Type: 19 NODE: d Type: 0 NODE: e Type: 0 NODE: zaldhahe Type: 21
+Leaving parser
+NODE: a Type: 11 NODE: b Type: 24 NODE: c Type: 19 NODE: d Type: 24 NODE: e Type: 23 NODE: zaldhahe Type: 24
+first cmd: a
+flag : b
+flag : c
+flag : d
+flag : e
+flag : zaldhahe
+hello my fire d
+in temp
+cmd: a
+a: No such file or directory
+minishell(56207,0x10f90adc0) malloc: Incorrect checksum for freed object 0x7fed64d05680: probably modified after being freed.
+Corrupt value: 0x0
+minishell(56207,0x10f90adc0) malloc: *** set a breakpoint in malloc_error_break to debug
+status 6
+minishell(56111,0x10f90adc0) malloc: Incorrect checksum for freed object 0x7fed64d05680: probably modified after being freed.
+Corrupt value: 0x0
+minishell(56111,0x10f90adc0) malloc: *** set a breakpoint in malloc_error_break to debug
+zsh: abort      ./minishell
