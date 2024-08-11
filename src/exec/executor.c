@@ -6,7 +6,7 @@
 /*   By: nalkhate <nalkhate@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/11 16:25:03 by nalkhate          #+#    #+#             */
-/*   Updated: 2024/08/11 20:09:33 by nalkhate         ###   ########.fr       */
+/*   Updated: 2024/08/11 21:07:41 by nalkhate         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,7 @@ t_command *set_command(char **command,  t_token **temp, char **envp)
 	while (*temp && (*temp)->type != PIPE)
 	{
 		if ((*temp)->type == COMMAND || (*temp)->type == FLAG 
-		|| (*temp)->type == BCOMMAND || (*temp)->type == DQUOTES)
+		|| (*temp)->type == BCOMMAND || (*temp)->type == DQUOTES || (*temp)->type == SQUOTES)
 		{
 			if (i == 0)
 			{
