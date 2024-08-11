@@ -9,3 +9,6 @@
 
 # executable
 minishell
+
+.vscode
+.vscode/*

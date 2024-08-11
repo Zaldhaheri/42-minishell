@@ -12,6 +12,7 @@ static void	check_fd_type(t_token *temp)
 		temp->type = APPEND;
 	else if(!ft_strncmp(temp->content,"<<",2))
 		temp->type = HEREDOC;
+	
 }
 
 static int	check_if_command(t_data *data, t_token *curr)
@@ -83,6 +84,8 @@ void	set_type(t_data *data)
 	temp = data->tokens;
 	while(temp)
 	{
+		if (temp->type == DOLLAR)
+			temp->type = WORD;
 		if (!temp->type)
 		{
 			check_fd_type(temp);

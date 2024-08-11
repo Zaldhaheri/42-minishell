@@ -23,7 +23,7 @@ int main(int argc, char **argv, char **envp)
 	(void)argc;
 	(void)argv;
 	(void)envp;
-	//pre_init(&data, envp);
+	pre_init(&data, envp);
 	while(1)
 	{
 		data.input = readline("minishell# ");
