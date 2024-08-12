@@ -41,7 +41,6 @@ int main(int argc, char **argv, char **envp)
 			ft_lstclear(&data);
 		}
 	}
-	free(data.checker);
 	ft_envclear(&data.myenv);
 	printf("exit\n");
 }

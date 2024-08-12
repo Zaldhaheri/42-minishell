@@ -69,7 +69,7 @@ void add_token_to_env(t_data *data)
 void append_checker(t_data *data)
 {
     size_t checker_len = ft_strlen(data->checker);
-    size_t new_size = checker_len + 2; // +1 for new char, +1 for null terminator
+    size_t new_size = checker_len + 2;
     data->temp = malloc(new_size);
     if (!data->temp)
     {
@@ -80,8 +80,7 @@ void append_checker(t_data *data)
     data->temp[checker_len] = data->input[data->i];
     data->temp[checker_len + 1] = 0;
     if (data->checker)
-        if (data->checker)
-            free(data->checker);
+        free(data->checker);
     data->checker = data->temp;
     printf(WHITE "a%d: %s.\n" RESET, data->i, data->checker);
 }
@@ -93,7 +92,7 @@ void add_token_from_checker(t_data *data, int type, char **str)
     if (ft_strlen(*str) > 0)
     {
         printf(BLUE "Adding: %s, Type: %d\n" RESET, *str, type);
-        curr = ft_lstnew(ft_strdup(*str));
+        curr = ft_lstnew(*str);
         curr->type = type;
         ft_lstadd_back(&data->tokens, curr);
         if (*str)
