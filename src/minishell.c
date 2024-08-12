@@ -16,13 +16,14 @@ void print_list(t_token *lst)
 	printf("\n");
 }
 
+
 int main(int argc, char **argv, char **envp)
 {
 	t_data data;
 
 	(void)argc;
 	(void)argv;
-	(void)envp;
+	//(void)envp;
 	pre_init(&data, envp);
 	while(1)
 	{
@@ -35,10 +36,12 @@ int main(int argc, char **argv, char **envp)
 			add_history(data.input);
         	data_init(&data);
 			parser(&data);
-			set_type(&data);
-			exec_line(&data, envp);
+			//set_type(&data);
+			//exec_line(&data, envp);
 			ft_lstclear(&data);
 		}
 	}
+	free(data.checker);
+	ft_envclear(&data.myenv);
 	printf("exit\n");
 }

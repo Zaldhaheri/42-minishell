@@ -34,6 +34,34 @@ t_env	*ft_envlast(t_env *lst)
 	return (lst);
 }
 
+//free split index from and up
+void free_split_from(char **split, int from)
+{
+    while(split[from])
+    {
+        free(split[from]);
+        from++;
+    }
+    free(split);
+}
+
+void ft_envclear(t_env **lst)
+{
+    t_env *curr;
+    t_env *temp;
+
+    curr = *lst;
+    while (curr)
+    {
+        temp = curr;
+        free(curr->key);
+        free(curr->value);
+        curr = curr->next;
+        free(temp); 
+    }
+    *lst = NULL; 
+}
+
 t_env	*ft_envnew(char *word)
 {
 	t_env *node;
@@ -46,6 +74,7 @@ t_env	*ft_envnew(char *word)
     node->key = split[0];
     node->value = split[1];
 	node->next = NULL;
+    free_split_from(split, 2);
 	return (node);
 }
 
@@ -80,6 +109,7 @@ void    pre_init(t_data *data, char **envp)
 {
     data->envp = envp;
     data->myenv = NULL;
+    data->i = 0;
     env_init(data);
     print_env(data->myenv);
 }
@@ -87,7 +117,7 @@ void    pre_init(t_data *data, char **envp)
 void    data_init(t_data *data)
 {
     data->i = 0;
-	data->checker = ft_strdup(""); //malloc checker to empty
+	data->checker = ft_strdup("");
 	data->tokens = NULL;
-	data->typeflag = WORD; //set type flag to WORD
+	data->typeflag = WORD;
 }

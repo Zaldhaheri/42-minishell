@@ -90,6 +90,7 @@ void	env_init(t_data *data);
 t_env	*ft_envlast(t_env *lst);
 t_env	*ft_envnew(char *word);
 void    ft_envadd_back(t_env **lst, char *s);
+void    ft_envclear(t_env **lst);
 
 //parsing
 void parser(t_data *data);
