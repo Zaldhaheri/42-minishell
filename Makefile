@@ -17,7 +17,7 @@ COMPILE = $(CC) $(CFLAGS) $(RLFLAG)
 all : $(NAME)
 
 leak: $(NAME)
-	valgrind --leak-check=full --show-leak-kinds=all  --suppressions=leaks.supp ./minishell
+	valgrind --leak-check=full --show-leak-kinds=all --trace-children=yes --track-fds=yes --suppressions=leaks.supp ./minishell
 
 $(NAME) : $(OBJ)
 	$(COMPILE) $(OBJ) -I/opt/vagrant/embedded/include -L/opt/vagrant/embedded/lib -lreadline -lhistory -o $(NAME)
