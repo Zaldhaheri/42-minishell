@@ -17,3 +17,6 @@ When looping through "", if we find a $, we expand it there, then continue parsi
 if looping through '' we dont expand it.
 
 HEREDOC test fd_in and fd_out. Norminette and leaks
+
+leaks for normal inputs with "",'',spaces found and cleared
+leaks found when using = and $ will clear soon.
