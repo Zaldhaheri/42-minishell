@@ -19,6 +19,7 @@ void exec_child(t_command *cmd, t_data *data, char **envp)
 	{
         perror(cmd->command[0]);
 		free_commands(&cmd);
+		ft_envclear(&data->myenv);
 		ft_lstclear(data);
         exit(EXIT_FAILURE);
     }

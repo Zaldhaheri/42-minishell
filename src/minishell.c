@@ -36,11 +36,12 @@ int main(int argc, char **argv, char **envp)
 			add_history(data.input);
         	data_init(&data);
 			parser(&data);
-			//set_type(&data);
-			//exec_line(&data, envp);
+			set_type(&data);
+			exec_line(&data, envp);
 			ft_lstclear(&data);
 		}
 	}
 	ft_envclear(&data.myenv);
+	ft_lstclear(&data);
 	printf("exit\n");
 }

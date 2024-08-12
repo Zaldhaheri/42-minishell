@@ -32,9 +32,9 @@ void	free_commands(t_command **lst)
 		if (temp->cmd_fd > -1)
 		{
 			close(temp->cmd_fd);
-			free_args(temp->command);
+			
 		}
-		
+		free_args(temp->command);
 		free(temp);
 	}
 	*lst = NULL;

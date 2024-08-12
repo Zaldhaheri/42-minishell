@@ -36,8 +36,6 @@ int heredoc(char *limiter)
     if (line)
         free(line);
     line = NULL;
-    free(limiter);
-    limiter = NULL;
     close(fd[1]);
     return (fd[0]);
 }
@@ -76,7 +74,7 @@ t_command *set_command(char **command,  t_token **temp, char **envp)
 				cmd_fd = open_file((*temp)->next->content, (*temp)->type);
 			else if ((*temp)->next && (*temp)->type == HEREDOC)
 			{
-				cmd_fd = heredoc(ft_strdup((*temp)->next->content));
+				cmd_fd = heredoc((*temp)->next->content);
 				(*temp)->type = FD_IN;
 			}
 			fd_type = (*temp)->type;
