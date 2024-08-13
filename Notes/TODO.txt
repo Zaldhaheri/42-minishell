@@ -24,3 +24,5 @@ leaks found when using = and $ will clear soon.
 need to add $? for non exec cases such us no file found or no file argument
 e.g having < without a file name or file not found
 basically where ever we have perror
+
+make function to set exit status, return myenvp as char**.
