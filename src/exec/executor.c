@@ -6,7 +6,7 @@
 /*   By: nalkhate <nalkhate@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/11 16:25:03 by nalkhate          #+#    #+#             */
-/*   Updated: 2024/08/13 18:14:39 by nalkhate         ###   ########.fr       */
+/*   Updated: 2024/08/13 21:04:08 by nalkhate         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -147,9 +147,11 @@ void exec_line(t_data *data, char **envp)
 	{
 		cmd = cmd_size_init(temp);
 		command = set_command(cmd, &temp, envp);
-		if (!command)
-			break ;
-		cmd_add_back(&head, command);
+		if (command)
+			cmd_add_back(&head, command);
+		else
+			while(temp && temp->type != PIPE)
+				temp = temp->next;
 	}
 	if (head && *cmd != NULL && command)
 		exec_cmd(head, data, envp);
