@@ -6,7 +6,7 @@
 /*   By: nalkhate <nalkhate@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/11 16:25:03 by nalkhate          #+#    #+#             */
-/*   Updated: 2024/08/13 17:19:55 by nalkhate         ###   ########.fr       */
+/*   Updated: 2024/08/13 18:14:39 by nalkhate         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,7 +89,7 @@ t_command *set_command(char **command,  t_token **temp, char **envp)
 			}
 			else if(!(*temp)->next)
 			{
-				printf("minishell: syntax error near unexpected token `newline'\n");
+				ft_putstr_fd("minishell: syntax error near unexpected token `newline'\n", 2);
 				if  (i > 0)
 				{
 					command[i] = NULL;

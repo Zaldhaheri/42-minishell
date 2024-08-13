@@ -6,18 +6,27 @@
 /*   By: nalkhate <nalkhate@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/11 16:24:22 by nalkhate          #+#    #+#             */
-/*   Updated: 2024/08/13 17:01:52 by nalkhate         ###   ########.fr       */
+/*   Updated: 2024/08/13 18:25:56 by nalkhate         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 
 #include "executor.h"
+#include <errno.h>
+
 
 void exec_child(t_command *cmd, t_data *data, char **envp)
 {
 	if (cmd && cmd->command[0])
 		execve(cmd->command[0], cmd->command, envp);
-    perror(cmd->command[0]);
+
+	if (errno == ENOENT)
+	{
+		ft_putstr_fd(cmd->command[0], STDERR_FILENO);
+		ft_putstr_fd(": command not found\n", STDERR_FILENO);
+	}
+	else 
+        perror(cmd->command[0]);
 	free_commands(&cmd);
 	ft_envclear(&data->myenv);
 	ft_lstclear(data);

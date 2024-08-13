@@ -95,3 +95,15 @@ int	ft_isalnum(int c)
 {
 	return (((c >= 97 && c <= 122) || (c >= 65 && c <= 90)) || (c >= 48 && c <= 57));
 }
+
+void	ft_putstr_fd(char *s, int fd)
+{
+	if (s)
+	{
+		while (*s)
+		{
+			write(fd, s, 1);
+			s++;
+		}
+	}
+}
