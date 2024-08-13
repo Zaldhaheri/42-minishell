@@ -91,6 +91,7 @@ t_env	*ft_envlast(t_env *lst);
 t_env	*ft_envnew(char *word);
 void    ft_envadd_back(t_env **lst, char *s);
 void    ft_envclear(t_env **lst);
+void free_split_from(char **split, int from);
 
 //parsing
 void parser(t_data *data);
@@ -98,6 +99,7 @@ void append_checker(t_data *data);
 int check_string(t_data *data);
 void add_token_from_checker(t_data *data, int type, char **str);
 void add_token_to_env(t_data *data);
+int check_env_dupes(t_data *data, char *str);
 int parse_double_quotes(t_data *data);
 int parse_single_quotes(t_data *data);
 int parse_in(t_data *data);
@@ -121,6 +123,7 @@ size_t	ft_strlcpy(char *dest, const char *src, size_t n);
 char	*ft_strjoin(char const *s1, char const *s2);
 char	**ft_split(char const *s, char c);
 void	ft_putstr_fd(char *s, int fd);
+char	*ft_itoa(int n);
 
 //lst utils
 t_token	*ft_lstnew(char *word);

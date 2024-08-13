@@ -31,7 +31,7 @@ void parser(t_data *data)
     printf(BLUE "Leaving parser\n" RESET);
 }
 
-int check_env_dupes(t_data *data)
+int check_env_dupes(t_data *data, char *str)
 {
     int flag;
     char **split;
@@ -39,26 +39,27 @@ int check_env_dupes(t_data *data)
 
     curr = data->myenv;
     flag = 1;
-    split = ft_split(data->checker, '=');
+    split = ft_split(str, '=');
     data->temp = split[0];
     printf("temp: .%s.\n", data->temp);
     while(curr)
     {
         if (!ft_strcmp(data->temp, curr->key))
         {
-            curr->value = split[1];
+            curr->value = ft_strdup(split[1]);
             flag = 0;
             break ;
         }
         curr = curr->next;
     }
+    free_split_from(split, 0);
     return (flag);
 }
 
 void add_token_to_env(t_data *data)
 {
     printf(RED "is env\n" RESET);
-    if (check_env_dupes(data))
+    if (check_env_dupes(data, data->checker))
         ft_envadd_back(&data->myenv, data->checker);
     if (data->checker)
         free(data->checker);
@@ -102,7 +103,7 @@ void add_token_from_checker(t_data *data, int type, char **str)
     }
 }
 
-char *get_env(t_data *data, char *key)
+char *get_env_value(t_data *data, char *key)
 {
     t_env *curr;
 
@@ -154,7 +155,7 @@ int parse_dollar(t_data *data)
         printf(YELLOW "KEY: %s\n" RESET, key);
     }
     key[j] = 0;
-    value = get_env(data, key);
+    value = get_env_value(data, key);
     printf(YELLOW "VALUE: %s\n" RESET, value);
     if (value)
     {

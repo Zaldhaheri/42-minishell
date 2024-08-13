@@ -117,6 +117,23 @@ void	env_init(t_data *data)
     data->i = 0;
 }
 
+//ex: str: ?=1
+void    add_to_myenv(t_data *data, char *str)
+{
+    if (check_env_dupes(data, str))
+        ft_envadd_back(&data->myenv, str);
+    if (str)
+        free(str);
+}
+
+// void    set_exitstatus(t_data *data)
+// {
+//     //key = ?
+//     //value = ft_itoa(data->status)
+//     //make it str="key=value"
+//     //add_to_myenv(data, str)
+// }
+
 void    pre_init(t_data *data, char **envp)
 {
     data->envp = envp;
@@ -124,6 +141,7 @@ void    pre_init(t_data *data, char **envp)
     data->tokens = NULL;
     data->i = 0;
     env_init(data);
+    add_to_myenv(data, ft_strdup("?=0"));
     print_env(data->myenv);
 }
 
