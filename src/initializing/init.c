@@ -54,10 +54,16 @@ void ft_envclear(t_env **lst)
     while (curr)
     {
         temp = curr;
-        free(curr->key);
-        free(curr->value);
+        if (curr->key && curr->value)
+        {
+            free(curr->value);
+            free(curr->key);
+        }
         curr = curr->next;
-        free(temp); 
+        if (temp)
+        {
+            free(temp); 
+        }
     }
     *lst = NULL; 
 }
@@ -67,13 +73,18 @@ t_env	*ft_envnew(char *word)
 	t_env *node;
     char **split;
 	node = (t_env *)malloc(sizeof(t_env));
+    node->key = NULL;
+    node->value = NULL;
 	if (!node)
 		return (NULL);
 	split = ft_split(word, '=');
     node->content = word;
-    node->key = ft_strdup(split[0]);
-    node->value = ft_strdup(split[1]);
-	node->next = NULL;
+    if (split[0] && split[1])
+    {
+        node->key = ft_strdup(split[0]);
+        node->value = ft_strdup(split[1]);
+    }
+    node->next = NULL;
     printf("envnew\n");
     free_split_from(split, 0);
 	return (node);
