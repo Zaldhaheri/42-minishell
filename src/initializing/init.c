@@ -71,10 +71,11 @@ t_env	*ft_envnew(char *word)
 		return (NULL);
 	split = ft_split(word, '=');
     node->content = word;
-    node->key = split[0];
-    node->value = split[1];
+    node->key = ft_strdup(split[0]);
+    node->value = ft_strdup(split[1]);
 	node->next = NULL;
-    free_split_from(split, 2);
+    printf("envnew\n");
+    free_split_from(split, 0);
 	return (node);
 }
 
