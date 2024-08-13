@@ -42,7 +42,11 @@ void	ft_lstclear(t_data *lst)
 	{
 		temp = lst->tokens;
 		lst->tokens = lst->tokens->next;
-		free(temp->content);
-		free(temp);
+		if (temp->content)
+			free(temp->content);
+		if (temp)
+			free(temp);
+		temp = NULL;
 	}
+	lst->tokens = NULL;
 }
