@@ -6,7 +6,7 @@
 /*   By: nalkhate <nalkhate@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/11 16:25:03 by nalkhate          #+#    #+#             */
-/*   Updated: 2024/08/11 21:07:41 by nalkhate         ###   ########.fr       */
+/*   Updated: 2024/08/13 17:19:55 by nalkhate         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,12 +70,32 @@ t_command *set_command(char **command,  t_token **temp, char **envp)
 		else if ((*temp)->type == FD_IN || (*temp)->type == FD_OUT 
 		|| (*temp)->type == APPEND || (*temp)->type == HEREDOC)
 		{
-			if ((*temp)->next && (*temp)->type != HEREDOC)
+			if ((*temp)->next && (*temp)->type != HEREDOC){
 				cmd_fd = open_file((*temp)->next->content, (*temp)->type);
+				if  (cmd_fd == -1 && i > 0)
+				{
+					command[i] = NULL;
+					free_args(command);
+					return (NULL);
+				}
+				else if (cmd_fd == -1)
+					return (NULL);
+				
+			}
 			else if ((*temp)->next && (*temp)->type == HEREDOC)
 			{
 				cmd_fd = heredoc((*temp)->next->content);
 				(*temp)->type = FD_IN;
+			}
+			else if(!(*temp)->next)
+			{
+				printf("minishell: syntax error near unexpected token `newline'\n");
+				if  (i > 0)
+				{
+					command[i] = NULL;
+					free_args(command);
+				}
+				return (NULL);
 			}
 			fd_type = (*temp)->type;
 		}
@@ -127,11 +147,12 @@ void exec_line(t_data *data, char **envp)
 	{
 		cmd = cmd_size_init(temp);
 		command = set_command(cmd, &temp, envp);
+		if (!command)
+			break ;
 		cmd_add_back(&head, command);
 	}
 	if (head && *cmd != NULL && command)
 		exec_cmd(head, data, envp);
-
 	free_commands(&head);
 }
 

@@ -6,7 +6,7 @@
 /*   By: nalkhate <nalkhate@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/11 16:24:22 by nalkhate          #+#    #+#             */
-/*   Updated: 2024/08/11 21:11:30 by nalkhate         ###   ########.fr       */
+/*   Updated: 2024/08/13 17:01:52 by nalkhate         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,14 +15,15 @@
 
 void exec_child(t_command *cmd, t_data *data, char **envp)
 {
-	if (execve(cmd->command[0], cmd->command, envp) == -1)
-	{
-        perror(cmd->command[0]);
-		free_commands(&cmd);
-		ft_envclear(&data->myenv);
-		ft_lstclear(data);
-        exit(EXIT_FAILURE);
-    }
+	if (cmd && cmd->command[0])
+		execve(cmd->command[0], cmd->command, envp);
+    perror(cmd->command[0]);
+	free_commands(&cmd);
+	ft_envclear(&data->myenv);
+	ft_lstclear(data);
+    exit(EXIT_FAILURE);
+	
+
 }
 
 void start_child(t_command *cmd, t_data *data, char **envp, t_child_params	*params)
@@ -94,6 +95,7 @@ void exec_cmd(t_command *cmd, t_data *data, char **envp)
 	}
 	waitpid(pid, &(data->status), 0);
 	printf("status %d\n", data->status);
+	printf("exit status: %d\n", WEXITSTATUS(data->status));
 	if (data->status== 11)
 		printf("Seg fault\n");
 }
