@@ -132,7 +132,7 @@ void    pre_init(t_data *data, char **envp)
     data->tokens = NULL;
     data->i = 0;
     env_init(data);
-    //add_to_myenv(data, "?=0");
+    add_to_myenv(data, ft_strdup("?=0"));
     print_env(data->myenv);
 }
 

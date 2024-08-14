@@ -111,7 +111,7 @@ int parse_out(t_data *data);
 int parse_space(t_data *data);
 int parse_pipe(t_data *data);
 int parse_dollar(t_data *data);
-
+int is_valid_key(char *str);
 void	set_type(t_data *data);
 
 //utils
