@@ -4,13 +4,6 @@ void print_env(t_env *env)
 {
     t_env *temp;
 
-	temp = env;
-	while (temp != NULL)
-	{
-		if (temp->content)
-			printf(CYAN "%s\n" RESET, temp->content);
-		temp = temp->next;
-	}
     temp = env;
     while(temp)
     {
@@ -78,14 +71,12 @@ t_env	*ft_envnew(char *word)
 	if (!node)
 		return (NULL);
 	split = ft_split(word, '=');
-    node->content = word;
     if (split[0] && split[1])
     {
         node->key = ft_strdup(split[0]);
         node->value = ft_strdup(split[1]);
     }
     node->next = NULL;
-    printf("envnew\n");
     free_split_from(split, 0);
 	return (node);
 }
@@ -141,7 +132,7 @@ void    pre_init(t_data *data, char **envp)
     data->tokens = NULL;
     data->i = 0;
     env_init(data);
-    add_to_myenv(data, ft_strdup("?=0"));
+    //add_to_myenv(data, "?=0");
     print_env(data->myenv);
 }
 

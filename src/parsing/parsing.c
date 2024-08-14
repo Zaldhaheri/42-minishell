@@ -44,15 +44,18 @@ int check_env_dupes(t_data *data, char *str)
     printf("temp: .%s.\n", data->temp);
     while(curr)
     {
-        if (!ft_strcmp(data->temp, curr->key))
+        if (curr->key && !ft_strcmp(data->temp, curr->key))
         {
+            printf("key found\n");
+            free(curr->value);
             curr->value = ft_strdup(split[1]);
             flag = 0;
             break ;
         }
         curr = curr->next;
     }
-    free_split_from(split, 0);
+    if (split)
+        free_split_from(split, 0);
     return (flag);
 }
 
@@ -108,9 +111,11 @@ char *get_env_value(t_data *data, char *key)
     t_env *curr;
 
     curr = data->myenv;
+    if (!key)
+        return(NULL);
     while(curr)
     {
-        if (!ft_strcmp(key, curr->key))
+        if (curr->key && !ft_strcmp(key, curr->key))
             return (curr->value);
         curr = curr->next;
     }
@@ -141,11 +146,12 @@ int parse_dollar(t_data *data)
 {
     char *key;
     char *value;
+    char *temp;
     int j;
 
     j = 0;
     key = malloc(256); //large value
-    value = malloc(256);
+    memset(key, 0, 256);
     data->i++;
     data->checker[ft_strlen(data->checker) - 1] = '\0';
     printf(YELLOW "CHECKER: %s\n" RESET, data->checker);
@@ -155,19 +161,24 @@ int parse_dollar(t_data *data)
         printf(YELLOW "KEY: %s\n" RESET, key);
     }
     key[j] = 0;
+    printf("getting value\n");
     value = get_env_value(data, key);
-    printf(YELLOW "VALUE: %s\n" RESET, value);
+    printf("we got value\n");
     if (value)
     {
-        while (*value)
+        printf(YELLOW "VALUE: %s\n" RESET, value);
+        temp = value;
+        while (*temp)
         {
-            append_checker_char(data, *value);
-            value++;
+            append_checker_char(data, *temp);
+            temp++;
         }
     }
     data->i--;
     printf(YELLOW "Curr input: %c\n" RESET, data->input[data->i]);
     data->typeflag = DOLLAR;
+    if (key)
+        free(key);
     if (data->input[data->i + 1] == ' ')
         return (1);
     return (0);
