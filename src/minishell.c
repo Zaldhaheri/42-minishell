@@ -15,6 +15,11 @@ void print_list(t_token *lst)
 	}
 	printf("\n");
 }
+void signal_handler(int signo) 
+{
+    (void)signo;
+
+}
 
 
 int main(int argc, char **argv, char **envp)
@@ -25,6 +30,7 @@ int main(int argc, char **argv, char **envp)
 	(void)argv;
 	//(void)envp;
 	pre_init(&data, envp);
+	signal(SIGQUIT, SIG_IGN);
 	while(1)
 	{
 		data.input = readline("minishell# ");

@@ -10,6 +10,10 @@
 #include <sys/wait.h>
 # include <fcntl.h> 
 # include <limits.h>
+#include <signal.h>
+//temp
+#include <string.h>
+#include <termios.h>
 
 #define WORD 0
 #define COMMAND 11 //execve
