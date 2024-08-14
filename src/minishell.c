@@ -1,5 +1,7 @@
 #include "../inc/minishell.h"
 
+int	g_exit_code = 0;
+
 void print_list(t_token *lst)
 {
 	t_token *temp;
@@ -17,7 +19,13 @@ void print_list(t_token *lst)
 }
 void signal_handler(int signo) 
 {
-    (void)signo;
+    	if (signo == SIGINT)
+	{
+		 rl_on_new_line();
+		 rl_redisplay();
+		//l_replace_line("", 0);
+		 
+	}
 
 }
 
@@ -31,6 +39,7 @@ int main(int argc, char **argv, char **envp)
 	//(void)envp;
 	pre_init(&data, envp);
 	signal(SIGQUIT, SIG_IGN);
+	signal(SIGINT, signal_handler);
 	while(1)
 	{
 		data.input = readline("minishell# ");
