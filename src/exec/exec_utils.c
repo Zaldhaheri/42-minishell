@@ -6,7 +6,7 @@
 /*   By: nalkhate <nalkhate@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/11 16:24:22 by nalkhate          #+#    #+#             */
-/*   Updated: 2024/08/13 18:25:56 by nalkhate         ###   ########.fr       */
+/*   Updated: 2024/08/14 17:53:20 by nalkhate         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 #include <errno.h>
 
 
-void exec_child(t_command *cmd, t_data *data, char **envp)
+void exec_child(t_command *cmd, t_data *data, char **envp, int *fd)
 {
 	if (cmd && cmd->command[0])
 		execve(cmd->command[0], cmd->command, envp);
@@ -30,6 +30,11 @@ void exec_child(t_command *cmd, t_data *data, char **envp)
 	free_commands(&cmd);
 	ft_envclear(&data->myenv);
 	ft_lstclear(data);
+	if (fd[0] > -1)
+		close(fd[0]);
+	if (fd[1] > -1)
+		close(fd[1]);
+	
     exit(EXIT_FAILURE);
 	
 
@@ -43,7 +48,7 @@ void start_child(t_command *cmd, t_data *data, char **envp, t_child_params	*para
          	dup2(cmd->cmd_fd,  STDOUT_FILENO);
 		if (cmd->fd_type == FD_IN)
 			dup2(cmd->cmd_fd, STDIN_FILENO);
-		exec_child(cmd, data, envp);
+		exec_child(cmd, data, envp, params->fd);
 	}
     if (cmd->fd_type == FD_OUT || cmd->fd_type == APPEND)
         dup2(cmd->cmd_fd,  STDOUT_FILENO);
@@ -59,7 +64,7 @@ void start_child(t_command *cmd, t_data *data, char **envp, t_child_params	*para
     if (cmd->next)
         close(params->fd[0]);
     close(params->fd[1]);
-	exec_child(cmd, data, envp);
+	exec_child(cmd, data, envp, params->fd);
 }
 
 void	parent_pid(t_command *cmd, t_child_params	*params)
@@ -83,6 +88,8 @@ void exec_cmd(t_command *cmd, t_data *data, char **envp)
     params.fd_in = STDIN_FILENO;
     params.fd_out = STDOUT_FILENO;
     params.is_first = 1;
+	params.fd[0] = -10;
+	params.fd[1] = -10;
     while (cmd)
 	{
         if (cmd->next)

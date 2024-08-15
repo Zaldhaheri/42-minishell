@@ -6,7 +6,7 @@
 /*   By: nalkhate <nalkhate@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/11 16:24:18 by nalkhate          #+#    #+#             */
-/*   Updated: 2024/08/11 20:06:52 by nalkhate         ###   ########.fr       */
+/*   Updated: 2024/08/14 17:53:43 by nalkhate         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ void	free_commands(t_command **lst);
 void	cmd_add_back(t_command **lst, t_command *new);
 t_command *new_command(char **cmd, int fd, int fd_type);
 void	create_pipe(t_child_params *params);
-void exec_child(t_command *cmd, t_data *data, char **envp);
+void exec_child(t_command *cmd, t_data *data, char **envp, int *fd);
 void start_child(t_command *cmd, t_data *data, char **envp, t_child_params	*params);
 void	parent_pid(t_command *cmd, t_child_params	*params);
 void exec_cmd(t_command *cmd, t_data *data, char **envp);

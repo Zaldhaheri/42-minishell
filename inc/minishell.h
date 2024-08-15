@@ -10,6 +10,10 @@
 #include <sys/wait.h>
 # include <fcntl.h> 
 # include <limits.h>
+#include <signal.h>
+//temp
+#include <string.h>
+#include <termios.h>
 
 #define WORD 0
 #define COMMAND 11 //execve
@@ -107,7 +111,7 @@ int parse_out(t_data *data);
 int parse_space(t_data *data);
 int parse_pipe(t_data *data);
 int parse_dollar(t_data *data);
-
+int is_valid_key(char *str);
 void	set_type(t_data *data);
 
 //utils

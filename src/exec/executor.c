@@ -6,7 +6,7 @@
 /*   By: nalkhate <nalkhate@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/11 16:25:03 by nalkhate          #+#    #+#             */
-/*   Updated: 2024/08/13 21:04:08 by nalkhate         ###   ########.fr       */
+/*   Updated: 2024/08/14 17:37:15 by nalkhate         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -141,6 +141,7 @@ void exec_line(t_data *data, char **envp)
 	t_command *head;
 	t_token *temp;
 	char **cmd;
+
 	temp = data->tokens;
 	head = NULL;
 	while(temp)
