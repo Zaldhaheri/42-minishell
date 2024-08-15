@@ -37,3 +37,197 @@ minishell(56111,0x10f90adc0) malloc: Incorrect checksum for freed object 0x7fed6
 Corrupt value: 0x0
 minishell(56111,0x10f90adc0) malloc: *** set a breakpoint in malloc_error_break to debug
 zsh: abort      ./minishell
+
+-------------------------------------------------------------------------------------------------------
+djsd " d sad d sa da"  dj skaj d" dsa "
+==6228== Invalid write of size 8
+==6228==    at 0x10D058: set_command (in /workspaces/42-minishell/minishell)
+==6228==    by 0x10D38B: exec_line (in /workspaces/42-minishell/minishell)
+==6228==    by 0x10960D: main (in /workspaces/42-minishell/minishell)
+==6228==  Address 0x4b1b2e0 is 0 bytes after a block of size 32 alloc'd
+==6228==    at 0x483B7F3: malloc (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
+==6228==    by 0x10D304: cmd_size_init (in /workspaces/42-minishell/minishell)
+==6228==    by 0x10D370: exec_line (in /workspaces/42-minishell/minishell)
+==6228==    by 0x10960D: main (in /workspaces/42-minishell/minishell)
+==6228== 
+==6228== Invalid write of size 8
+==6228==    at 0x10D25D: set_command (in /workspaces/42-minishell/minishell)
+==6228==    by 0x10D38B: exec_line (in /workspaces/42-minishell/minishell)
+==6228==    by 0x10960D: main (in /workspaces/42-minishell/minishell)
+==6228==  Address 0x4b1b2e8 is 8 bytes after a block of size 32 alloc'd
+==6228==    at 0x483B7F3: malloc (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
+==6228==    by 0x10D304: cmd_size_init (in /workspaces/42-minishell/minishell)
+==6228==    by 0x10D370: exec_line (in /workspaces/42-minishell/minishell)
+==6228==    by 0x10960D: main (in /workspaces/42-minishell/minishell)
+==6228== 
+cmd: djsd
+==6283== Syscall param execve(argv) points to unaddressable byte(s)
+==6283==    at 0x498717B: execve (syscall-template.S:78)
+==6283==    by 0x10C795: exec_child (in /workspaces/42-minishell/minishell)
+==6283==    by 0x10C8DB: start_child (in /workspaces/42-minishell/minishell)
+==6283==    by 0x10CAD8: exec_cmd (in /workspaces/42-minishell/minishell)
+==6283==    by 0x10D408: exec_line (in /workspaces/42-minishell/minishell)
+==6283==    by 0x10960D: main (in /workspaces/42-minishell/minishell)
+==6283==  Address 0x4b1b2e0 is 0 bytes after a block of size 32 alloc'd
+==6283==    at 0x483B7F3: malloc (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
+==6283==    by 0x10D304: cmd_size_init (in /workspaces/42-minishell/minishell)
+==6283==    by 0x10D370: exec_line (in /workspaces/42-minishell/minishell)
+==6283==    by 0x10960D: main (in /workspaces/42-minishell/minishell)
+==6283== 
+djsd: command not found
+==6283== Invalid read of size 8
+==6283==    at 0x10BB89: free_args (in /workspaces/42-minishell/minishell)
+==6283==    by 0x10CCE7: free_commands (in /workspaces/42-minishell/minishell)
+==6283==    by 0x10C7E9: exec_child (in /workspaces/42-minishell/minishell)
+==6283==    by 0x10C8DB: start_child (in /workspaces/42-minishell/minishell)
+==6283==    by 0x10CAD8: exec_cmd (in /workspaces/42-minishell/minishell)
+==6283==    by 0x10D408: exec_line (in /workspaces/42-minishell/minishell)
+==6283==    by 0x10960D: main (in /workspaces/42-minishell/minishell)
+==6283==  Address 0x4b1b2e0 is 0 bytes after a block of size 32 alloc'd
+==6283==    at 0x483B7F3: malloc (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
+==6283==    by 0x10D304: cmd_size_init (in /workspaces/42-minishell/minishell)
+==6283==    by 0x10D370: exec_line (in /workspaces/42-minishell/minishell)
+==6283==    by 0x10960D: main (in /workspaces/42-minishell/minishell)
+==6283== 
+==6283== Invalid read of size 8
+==6283==    at 0x10BB66: free_args (in /workspaces/42-minishell/minishell)
+==6283==    by 0x10CCE7: free_commands (in /workspaces/42-minishell/minishell)
+==6283==    by 0x10C7E9: exec_child (in /workspaces/42-minishell/minishell)
+==6283==    by 0x10C8DB: start_child (in /workspaces/42-minishell/minishell)
+==6283==    by 0x10CAD8: exec_cmd (in /workspaces/42-minishell/minishell)
+==6283==    by 0x10D408: exec_line (in /workspaces/42-minishell/minishell)
+==6283==    by 0x10960D: main (in /workspaces/42-minishell/minishell)
+==6283==  Address 0x4b1b2e0 is 0 bytes after a block of size 32 alloc'd
+==6283==    at 0x483B7F3: malloc (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
+==6283==    by 0x10D304: cmd_size_init (in /workspaces/42-minishell/minishell)
+==6283==    by 0x10D370: exec_line (in /workspaces/42-minishell/minishell)
+==6283==    by 0x10960D: main (in /workspaces/42-minishell/minishell)
+==6283== 
+==6283== 
+==6283== FILE DESCRIPTORS: 8 open at exit.
+==6283== Open file descriptor 23: /dev/pts/ptmx
+==6283==    <inherited from parent>
+==6283== 
+==6283== Open file descriptor 21: /home/codespace/.vscode-remote/data/logs/20240815T130844/network.log
+==6283==    <inherited from parent>
+==6283== 
+==6283== Open file descriptor 20: /home/codespace/.vscode-remote/data/logs/20240815T130844/remoteagent.log
+==6283==    <inherited from parent>
+==6283== 
+==6283== Open file descriptor 19: /home/codespace/.vscode-remote/data/logs/20240815T130844/ptyhost.log
+==6283==    <inherited from parent>
+==6283== 
+==6283== Open file descriptor 6: /dev/null
+==6283==    <inherited from parent>
+==6283== 
+==6283== Open file descriptor 2: /dev/pts/2
+==6283==    <inherited from parent>
+==6283== 
+==6283== Open file descriptor 1: /dev/pts/2
+==6283==    <inherited from parent>
+==6283== 
+==6283== Open file descriptor 0: /dev/pts/2
+==6283==    <inherited from parent>
+==6283== 
+==6283== 
+==6283== HEAP SUMMARY:
+==6283==     in use at exit: 204,714 bytes in 219 blocks
+==6283==   total heap usage: 1,406 allocs, 1,187 frees, 256,432 bytes allocated
+==6283== 
+==6283== LEAK SUMMARY:
+==6283==    definitely lost: 0 bytes in 0 blocks
+==6283==    indirectly lost: 0 bytes in 0 blocks
+==6283==      possibly lost: 0 bytes in 0 blocks
+==6283==    still reachable: 0 bytes in 0 blocks
+==6283==         suppressed: 204,714 bytes in 219 blocks
+==6283== 
+==6283== For lists of detected and suppressed errors, rerun with: -s
+==6283== ERROR SUMMARY: 7 errors from 5 contexts (suppressed: 0 from 0)
+status 256
+exit status: 1
+==6228== Invalid read of size 8
+==6228==    at 0x10BB89: free_args (in /workspaces/42-minishell/minishell)
+==6228==    by 0x10CCE7: free_commands (in /workspaces/42-minishell/minishell)
+==6228==    by 0x10D414: exec_line (in /workspaces/42-minishell/minishell)
+==6228==    by 0x10960D: main (in /workspaces/42-minishell/minishell)
+==6228==  Address 0x4b1b2e0 is 0 bytes after a block of size 32 alloc'd
+==6228==    at 0x483B7F3: malloc (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
+==6228==    by 0x10D304: cmd_size_init (in /workspaces/42-minishell/minishell)
+==6228==    by 0x10D370: exec_line (in /workspaces/42-minishell/minishell)
+==6228==    by 0x10960D: main (in /workspaces/42-minishell/minishell)
+==6228== 
+==6228== Invalid read of size 8
+==6228==    at 0x10BB66: free_args (in /workspaces/42-minishell/minishell)
+==6228==    by 0x10CCE7: free_commands (in /workspaces/42-minishell/minishell)
+==6228==    by 0x10D414: exec_line (in /workspaces/42-minishell/minishell)
+==6228==    by 0x10960D: main (in /workspaces/42-minishell/minishell)
+==6228==  Address 0x4b1b2e0 is 0 bytes after a block of size 32 alloc'd
+==6228==    at 0x483B7F3: malloc (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
+==6228==    by 0x10D304: cmd_size_init (in /workspaces/42-minishell/minishell)
+==6228==    by 0x10D370: exec_line (in /workspaces/42-minishell/minishell)
+==6228==    by 0x10960D: main (in /workspaces/42-minishell/minishell)
+==6228== 
+minishell# exit
+==6228== 
+==6228== FILE DESCRIPTORS: 8 open at exit.
+==6228== Open file descriptor 23: /dev/pts/ptmx
+==6228==    <inherited from parent>
+==6228== 
+==6228== Open file descriptor 21: /home/codespace/.vscode-remote/data/logs/20240815T130844/network.log
+==6228==    <inherited from parent>
+==6228== 
+==6228== Open file descriptor 20: /home/codespace/.vscode-remote/data/logs/20240815T130844/remoteagent.log
+==6228==    <inherited from parent>
+==6228== 
+==6228== Open file descriptor 19: /home/codespace/.vscode-remote/data/logs/20240815T130844/ptyhost.log
+==6228==    <inherited from parent>
+==6228== 
+==6228== Open file descriptor 6: /dev/null
+==6228==    <inherited from parent>
+==6228== 
+==6228== Open file descriptor 2: /dev/pts/2
+==6228==    <inherited from parent>
+==6228== 
+==6228== Open file descriptor 1: /dev/pts/2
+==6228==    <inherited from parent>
+==6228== 
+==6228== Open file descriptor 0: /dev/pts/2
+==6228==    <inherited from parent>
+==6228== 
+==6228== 
+==6228== HEAP SUMMARY:
+==6228==     in use at exit: 204,714 bytes in 219 blocks
+==6228==   total heap usage: 1,409 allocs, 1,190 frees, 256,464 bytes allocated
+==6228== 
+==6228== LEAK SUMMARY:
+==6228==    definitely lost: 0 bytes in 0 blocks
+==6228==    indirectly lost: 0 bytes in 0 blocks
+==6228==      possibly lost: 0 bytes in 0 blocks
+==6228==    still reachable: 0 bytes in 0 blocks
+==6228==         suppressed: 204,714 bytes in 219 blocks
+==6228== 
+==6228== For lists of detected and suppressed errors, rerun with: -s
+==6228== ERROR SUMMARY: 5 errors from 4 contexts (suppressed: 1 from 1)
+-------------------------------------------------------------------------------------------------
+
+minishell# djsd " d sad d sa da"  dj skaj d" dsa "hdjsd fknd gjfk
+input: djsd " d sad d sa da"  dj skaj d" dsa "hdjsd fknd gjfk
+djsd-- d sad d sa da--dj--skaj--d dsa hdjsd--fknd--gjfk
+NODE: djsd Type: 0 NODE:  d sad d sa da Type: 19 NODE: dj Type: 0 NODE: skaj Type: 0 NODE: d dsa hdjsd Type: 19 NODE: fknd Type: 0 NODE: gjfk Type: 0 
+Leaving parser
+NODE: djsd Type: 11 NODE:  d sad d sa da Type: 19 NODE: dj Type: 24 NODE: skaj Type: 24 NODE: d dsa hdjsd Type: 19 NODE: fknd Type: 24 NODE: gjfk Type: 24 
+first cmd: djsd
+flag :  d sad d sa da
+flag : dj
+flag : skaj
+flag : d dsa hdjsd
+flag : fknd
+flag : gjfk
+cmd: djsd
+djsd: command not found
+free(): invalid next size (fast)
+status 134
+exit status: 0
+free(): invalid next size (fast)
+Aborted (core dumped)
+-----------------------------------------------------------------------------------------------------
