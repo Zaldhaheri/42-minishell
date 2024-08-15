@@ -7,7 +7,7 @@ void print_env(t_env *env)
     temp = env;
     while(temp)
     {
-        if (temp->key && temp->value)
+        if (temp->key && temp->value && !temp->hide)
         {
             printf(GREEN "%s" RESET, temp->key);
             printf("=");
@@ -61,13 +61,14 @@ void ft_envclear(t_env **lst)
     *lst = NULL; 
 }
 
-t_env	*ft_envnew(char *word)
+t_env	*ft_envnew(char *word, int hide)
 {
 	t_env *node;
     char **split;
 	node = (t_env *)malloc(sizeof(t_env));
     node->key = NULL;
     node->value = NULL;
+    node->hide = hide;
 	if (!node)
 		return (NULL);
 	split = ft_split(word, '=');
@@ -82,16 +83,16 @@ t_env	*ft_envnew(char *word)
 }
 
 // //place string like A=1 to add to env list
-void    ft_envadd_back(t_env **lst, char *s)
+void    ft_envadd_back(t_env **lst, char *s, int hide)
 {
     t_env *temp;
 
     if (*lst == NULL)
-        *lst = ft_envnew(s);
+        *lst = ft_envnew(s, hide);
     else
     {
         temp = ft_envlast(*lst);
-        temp->next = ft_envnew(s);
+        temp->next = ft_envnew(s, hide);
     }
 }
 
@@ -102,17 +103,17 @@ void	env_init(t_data *data)
     data->myenv = NULL;
     while(data->envp[data->i])
     {
-        ft_envadd_back(&data->myenv, data->envp[data->i]);
+        ft_envadd_back(&data->myenv, data->envp[data->i], 0);
         data->i++;
     }
     data->i = 0;
 }
 
 //ex: str: ?=1
-void    add_to_myenv(t_data *data, char *str)
+void    add_to_myenv(t_data *data, char *str, int hide)
 {
     if (check_env_dupes(data, str))
-        ft_envadd_back(&data->myenv, str);
+        ft_envadd_back(&data->myenv, str, hide);
     if (str)
         free(str);
 }
@@ -132,7 +133,7 @@ void    pre_init(t_data *data, char **envp)
     data->tokens = NULL;
     data->i = 0;
     env_init(data);
-    add_to_myenv(data, ft_strdup("?=0"));
+    add_to_myenv(data, ft_strdup("?=20"), 1);
     print_env(data->myenv);
 }
 

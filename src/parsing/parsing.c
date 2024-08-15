@@ -82,7 +82,7 @@ void add_token_to_env(t_data *data)
 {
     printf(RED "is env\n" RESET);
     if (check_env_dupes(data, data->checker))
-        ft_envadd_back(&data->myenv, data->checker);
+        ft_envadd_back(&data->myenv, data->checker, 1);
     if (data->checker)
         free(data->checker);
     data->checker = ft_strdup("");

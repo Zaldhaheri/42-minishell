@@ -50,6 +50,7 @@ struct s_env
 	char *content; //A=1
 	char *key; //A
 	char *value; //1
+	int hide;
 	struct s_env *next;
 };
 
@@ -92,8 +93,8 @@ void    data_init(t_data *data);
 void    pre_init(t_data *data, char **envp);
 void	env_init(t_data *data);
 t_env	*ft_envlast(t_env *lst);
-t_env	*ft_envnew(char *word);
-void    ft_envadd_back(t_env **lst, char *s);
+t_env	*ft_envnew(char *word, int hide);
+void    ft_envadd_back(t_env **lst, char *s, int hide);
 void    ft_envclear(t_env **lst);
 void free_split_from(char **split, int from);
 
