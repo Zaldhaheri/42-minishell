@@ -70,6 +70,7 @@ t_command *new_command(char **cmd, int fd, int fd_type)
 	new->fd_type = fd_type;
 	return(new);
 }
+
 void	create_pipe(t_child_params *params)
 {
 	if (pipe(params->fd) == -1)
