@@ -3,7 +3,7 @@ NAME = minishell
 SRC = src/minishell.c src/initializing/init.c src/parsing/parsing.c src/parsing/parsingchar.c utils/utils1.c utils/lst_utils.c utils/ft_strtrim.c src/type.c\
 		utils/cmd_utils.c utils/ft_split.c get_next_line/get_next_line.c \
 		get_next_line/get_next_line_utils.c src/exec/exec_utils.c src/exec/cmd_arg_utils.c \
-		src/exec/executor.c
+		src/exec/executor.c src/bcomm/bcomm.c
 
 OBJ = $(SRC:.c=.o)
 
@@ -17,8 +17,8 @@ COMPILE = $(CC) $(CFLAGS) $(RLFLAG)
 all : $(NAME)
 
 leak: $(NAME)
-	valgrind --leak-check=full --show-leak-kinds=all --trace-children=yes --track-fds=yes --suppressions=leaks.supp ./minishell
-
+	valgrind --leak-check=full --suppressions=leaks.supp ./minishell
+# --show-leak-kinds=all --trace-children=yes --track-fds=yes 
 $(NAME) : $(OBJ)
 	$(COMPILE) $(OBJ) -I/opt/vagrant/embedded/include -L/opt/vagrant/embedded/lib -lreadline -lhistory -o $(NAME)
 

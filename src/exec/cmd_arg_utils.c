@@ -54,6 +54,33 @@ void	cmd_add_back(t_command **lst, t_command *new)
 	}
 }
 
+int check_bcommand(char *comm)
+{
+	int c_len;
+
+	if (!comm)
+		return (0);
+	c_len = ft_strlen(comm);
+	if (!ft_strncmp(comm, "echo", c_len))
+		return (1);
+	else if (!ft_strncmp(comm, "cd", c_len))
+		return (1);
+	else if (!ft_strncmp(comm, "cd", c_len))
+		return (1);
+	else if (!ft_strncmp(comm, "pwd", c_len))
+		return (1);
+	else if (!ft_strncmp(comm, "export", c_len))
+		return (1);
+	else if (!ft_strncmp(comm, "unset", c_len))
+		return (1);
+	else if (!ft_strncmp(comm, "env", c_len))
+		return (1);
+	else if (!ft_strncmp(comm, "exit", c_len))
+		return (1);
+	else
+		return (0);
+}
+
 t_command *new_command(char **cmd, int fd, int fd_type)
 {
 	t_command *new;
@@ -68,6 +95,8 @@ t_command *new_command(char **cmd, int fd, int fd_type)
 	new->next = NULL;
 	new->cmd_fd = fd;
 	new->fd_type = fd_type;
+	printf("cmd[0] =  %s\n", cmd[0]);
+	new->is_bcommand = check_bcommand(cmd[0]);
 	return(new);
 }
 

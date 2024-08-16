@@ -17,7 +17,10 @@
 
 void exec_child(t_command *cmd, t_data *data, char **envp, int *fd)
 {
-	if (cmd && cmd->command[0])
+	int exit_status;
+
+	exit_status = 1;
+	if (cmd && cmd->command[0] && !cmd->is_bcommand)
 		execve(cmd->command[0], cmd->command, envp);
 
 	if (errno == ENOENT)
@@ -27,6 +30,12 @@ void exec_child(t_command *cmd, t_data *data, char **envp, int *fd)
 	}
 	else 
         perror(cmd->command[0]);
+	if (cmd->is_bcommand)
+	{
+		ft_putstr_fd("-----BCOMM-----\n",2);
+		bcomm_exec(cmd);
+		exit_status = 0;
+	}
 	free_commands(&cmd);
 	ft_envclear(&data->myenv);
 	ft_lstclear(data);
@@ -34,10 +43,8 @@ void exec_child(t_command *cmd, t_data *data, char **envp, int *fd)
 		close(fd[0]);
 	if (fd[1] > -1)
 		close(fd[1]);
+    exit(exit_status);
 	
-    exit(EXIT_FAILURE);
-	
-
 }
 
 void start_child(t_command *cmd, t_data *data, char **envp, t_child_params	*params)
@@ -80,6 +87,13 @@ void	parent_pid(t_command *cmd, t_child_params	*params)
     params->is_first = 0;
 }
 
+void bcomm_exec(t_command *cmd)
+{
+
+	if (!ft_strncmp("echo", cmd->command[0], 4))
+		b_echo(cmd->command);
+}
+
 void exec_cmd(t_command *cmd, t_data *data, char **envp)
 {
     pid_t			pid;
@@ -95,6 +109,7 @@ void exec_cmd(t_command *cmd, t_data *data, char **envp)
         if (cmd->next)
             create_pipe(&params);
         printf("cmd: %s\n", cmd->command[0]);
+	
         pid = fork();
         if (pid == -1)
 			return ((perror("fork"), exit(EXIT_FAILURE)));
@@ -103,6 +118,7 @@ void exec_cmd(t_command *cmd, t_data *data, char **envp)
 			start_child(cmd, data, envp, &params);
 		else
 			parent_pid(cmd, &params);
+		
 		cmd = cmd->next;
     }
     if (params.fd_in != STDIN_FILENO)

@@ -34,5 +34,6 @@ void	parent_pid(t_command *cmd, t_child_params	*params);
 void exec_cmd(t_command *cmd, t_data *data, char **envp);
 int open_file(char *filename, int open_type);
 int heredoc(char *limiter);
-
+void b_echo(char **com);
+void bcomm_exec(t_command *cmd);
 #endif
