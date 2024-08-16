@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_utils.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nalkhate <nalkhate@student.42.fr>          +#+  +:+       +#+        */
+/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/11 16:24:22 by nalkhate          #+#    #+#             */
-/*   Updated: 2024/08/14 17:53:20 by nalkhate         ###   ########.fr       */
+/*   Updated: 2024/08/16 20:04:12 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,9 +87,9 @@ void	parent_pid(t_command *cmd, t_child_params	*params)
     params->is_first = 0;
 }
 
+//bcommands execute here
 void bcomm_exec(t_command *cmd)
 {
-
 	if (!ft_strncmp("echo", cmd->command[0], 4))
 		b_echo(cmd->command);
 }

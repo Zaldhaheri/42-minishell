@@ -106,6 +106,7 @@ int check_string(t_data *data);
 void add_token_from_checker(t_data *data, int type, char **str);
 void add_token_to_env(t_data *data);
 int check_env_dupes(t_data *data, char *str);
+char *get_env_value(t_data *data, char *key);
 int parse_double_quotes(t_data *data);
 int parse_single_quotes(t_data *data);
 int parse_in(t_data *data);
