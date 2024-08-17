@@ -29,12 +29,12 @@ int check_env_dupes(t_data *data, char *str)
     flag = 1;
     split = ft_split(str, '=');
     data->temp = split[0];
-    printf("temp: .%s.\n", data->temp);
+    //printf("temp: .%s.\n", data->temp);
     while(curr)
     {
         if (curr->key && !ft_strcmp(data->temp, curr->key))
         {
-            printf("key found\n");
+            //printf("key found\n");
             free(curr->value);
             curr->value = ft_strdup(split[1]);
             flag = 0;

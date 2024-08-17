@@ -97,6 +97,9 @@ t_env	*ft_envlast(t_env *lst);
 t_env	*ft_envnew(char *word, int hide);
 void    ft_envadd_back(t_env **lst, char *s, int hide);
 void    ft_envclear(t_env **lst);
+void    set_exitstatus(t_data *data);
+void    add_to_myenv(t_data *data, char *str, int hide);
+void incr_shlvl(t_data *data);
 void free_split_from(char **split, int from);
 
 //parsing
@@ -131,6 +134,7 @@ char	*ft_strjoin(char const *s1, char const *s2);
 char	**ft_split(char const *s, char c);
 void	ft_putstr_fd(char *s, int fd);
 char	*ft_itoa(int n);
+int	ft_atoi(const char *str);
 
 //lst utils
 t_token	*ft_lstnew(char *word);

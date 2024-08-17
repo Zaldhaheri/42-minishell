@@ -38,7 +38,8 @@ void    pre_init(t_data *data, char **envp)
     data->tokens = NULL;
     data->i = 0;
     env_init(data);
-    add_to_myenv(data, ft_strdup("?=20"), 1);
+    add_to_myenv(data, ft_strdup("?=0"), 1);
+    incr_shlvl(data);
     print_env(data->myenv);
 }
 
