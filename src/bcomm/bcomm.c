@@ -44,3 +44,17 @@ void b_echo(char **com)
     if (!flag)
         printf("\n");
 }
+
+void b_env(t_data *data)
+{
+    t_env *curr;
+
+    curr = data->myenv;
+    printf("My env bcomm\n");
+    while (curr)
+    {
+        if (curr->key && curr->value && !curr->hide)
+            printf("%s=%s\n", curr->key, curr->value);
+        curr = curr->next;
+    }
+}

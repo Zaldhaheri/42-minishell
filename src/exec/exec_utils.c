@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_utils.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
+/*   By: zaldhahe <zaldhahe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/11 16:24:22 by nalkhate          #+#    #+#             */
-/*   Updated: 2024/08/16 20:04:12 by marvin           ###   ########.fr       */
+/*   Updated: 2024/08/17 18:42:02 by zaldhahe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ void exec_child(t_command *cmd, t_data *data, char **envp, int *fd)
 	if (cmd->is_bcommand)
 	{
 		ft_putstr_fd("-----BCOMM-----\n",2);
-		bcomm_exec(cmd);
+		bcomm_exec(cmd, data);
 		exit_status = 0;
 	}
 	free_commands(&cmd);
@@ -88,10 +88,12 @@ void	parent_pid(t_command *cmd, t_child_params	*params)
 }
 
 //bcommands execute here
-void bcomm_exec(t_command *cmd)
+void bcomm_exec(t_command *cmd, t_data *data)
 {
 	if (!ft_strncmp("echo", cmd->command[0], 4))
 		b_echo(cmd->command);
+	else if (!ft_strncmp("env", cmd->command[0], 3))
+		b_env(data);
 }
 
 void exec_cmd(t_command *cmd, t_data *data, char **envp)

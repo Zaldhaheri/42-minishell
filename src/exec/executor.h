@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   executor.h                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nalkhate <nalkhate@student.42.fr>          +#+  +:+       +#+        */
+/*   By: zaldhahe <zaldhahe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/11 16:24:18 by nalkhate          #+#    #+#             */
-/*   Updated: 2024/08/14 17:53:43 by nalkhate         ###   ########.fr       */
+/*   Updated: 2024/08/17 18:40:33 by zaldhahe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,9 @@ void	parent_pid(t_command *cmd, t_child_params	*params);
 void exec_cmd(t_command *cmd, t_data *data, char **envp);
 int open_file(char *filename, int open_type);
 int heredoc(char *limiter);
+void bcomm_exec(t_command *cmd, t_data *data);
+
+//builtins
 void b_echo(char **com);
-void bcomm_exec(t_command *cmd);
+void b_env(t_data *data);
 #endif
