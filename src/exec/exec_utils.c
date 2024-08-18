@@ -6,7 +6,7 @@
 /*   By: nalkhate <nalkhate@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/11 16:24:22 by nalkhate          #+#    #+#             */
-/*   Updated: 2024/08/18 14:29:34 by nalkhate         ###   ########.fr       */
+/*   Updated: 2024/08/18 14:36:45 by nalkhate         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -144,9 +144,11 @@ void exec_cmd(t_command *cmd, t_data *data, char **envp)
 	{
 		close(params.fd_in);
 	}
-	waitpid(pid, &(data->status), 0);
+    if (!params.is_first)
+	    waitpid(pid, &(data->status), 0);
 	printf("status %d\n", data->status);
 	printf("exit status: %d\n", WEXITSTATUS(data->status));
+    set_exitstatus(data);
 	if (data->status== 11)
 		printf("Seg fault\n");
 }
