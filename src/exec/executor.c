@@ -6,7 +6,7 @@
 /*   By: nalkhate <nalkhate@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/11 16:25:03 by nalkhate          #+#    #+#             */
-/*   Updated: 2024/08/14 17:37:15 by nalkhate         ###   ########.fr       */
+/*   Updated: 2024/08/18 19:01:16 by nalkhate         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,6 +61,8 @@ t_command *set_command(char **command,  t_token *temp, char **envp, t_token **he
 			{
 				printf("first cmd: %s\n", temp->content);
 				command[i] = ft_get_cmd_path(temp->content, envp);
+				if (temp->content && !command[i])
+					command[i] = ft_strdup(temp->content);
 			}else if (i == 0 && temp->type == BCOMMAND)
 			{
 				command[i] = ft_strdup(temp->content);

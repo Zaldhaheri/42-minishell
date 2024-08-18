@@ -72,8 +72,10 @@ void b_cd(t_data *data, char **cmd)
         else
             chdir(home);
     }
-    else if (chdir(cmd[1]) == -1)
+    else if (chdir(cmd[1]) == -1){
         perror("cd");
+        data->status = 1;
+    }
 }
 
 void b_pwd()
