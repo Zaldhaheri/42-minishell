@@ -6,7 +6,7 @@
 /*   By: nalkhate <nalkhate@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/11 16:24:22 by nalkhate          #+#    #+#             */
-/*   Updated: 2024/08/18 14:36:45 by nalkhate         ###   ########.fr       */
+/*   Updated: 2024/08/18 15:32:12 by nalkhate         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,14 +101,7 @@ void	parent_pid(t_command *cmd, t_child_params	*params, t_data *data)
     params->is_first = 0;
 }
 
-//bcommands execute here
-void bcomm_exec(t_command *cmd, t_data *data)
-{
-	if (!ft_strncmp("echo", cmd->command[0], 4))
-		b_echo(cmd->command);
-	else if (!ft_strncmp("env", cmd->command[0], 3))
-		b_env(data);
-}
+
 
 void exec_cmd(t_command *cmd, t_data *data, char **envp)
 {

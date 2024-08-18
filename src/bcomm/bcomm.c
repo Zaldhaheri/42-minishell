@@ -58,3 +58,34 @@ void b_env(t_data *data)
         curr = curr->next;
     }
 }
+
+void b_cd(t_data *data, char **cmd)
+{
+    char *home;
+
+    home = get_env_value(data, "HOME");
+    if (!cmd[1] || !ft_strncmp(cmd[1], "~", 1)){
+        if (!home)
+        {
+            ft_putstr_fd("home directory is not set.\n", 2);
+        }
+        else
+            chdir(home);
+    }
+    else if (chdir(cmd[1]) == -1)
+        perror("cd");
+}
+
+void b_pwd()
+{
+    char *path;
+
+    path = getcwd(NULL, PATH_MAX);
+    if (!path)
+        perror("pwd");
+    else{
+        printf("%s\n", path);
+        free(path);
+    }
+
+}
