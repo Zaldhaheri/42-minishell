@@ -35,6 +35,7 @@ void    pre_init(t_data *data, char **envp)
 {
     data->envp = envp;
     data->myenv = NULL;
+    data->myenv = NULL;
     data->tokens = NULL;
     data->i = 0;
     env_init(data);

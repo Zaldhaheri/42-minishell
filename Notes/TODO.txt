@@ -31,3 +31,18 @@ need to make unset and export function
 unset will loop through the myenv and delone the node with the given key, make the prev point to next
 export without argument will sort the env when printing only, and print nothing when with arguments but add to myenv with hide=0
 make a function to make our linked list env to a char** datatype
+
+some errors on valgrind:
+
+minishell# pwd
+==10775== LEAK SUMMARY:
+==10775==    definitely lost: 0 bytes in 0 blocks
+==10775==    indirectly lost: 0 bytes in 0 blocks
+==10775==      possibly lost: 0 bytes in 0 blocks
+==10775==    still reachable: 0 bytes in 0 blocks
+==10775==         suppressed: 204,642 bytes in 219 blocks
+==10775== 
+==10775== Use --track-origins=yes to see where uninitialised values come from
+==10775== For lists of detected and suppressed errors, rerun with: -s
+==10775== ERROR SUMMARY: 15 errors from 15 contexts (suppressed: 1 from 1)
+

@@ -56,12 +56,12 @@ int main(int argc, char **argv, char **envp)
         	data_init(&data);
 			parser(&data);
 			set_type(&data);
-			exec_line(&data, envp);
+			exec_line(&data, data.myenvstr);
+			free_split_from(data.myenvstr, 0);
 			ft_lstclear(&data);
 		}
 	}
 	ft_envclear(&data.myenv);
-	free_args(data.myenvstr);
 	ft_lstclear(&data);
 	printf("exit\n");
 }

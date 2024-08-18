@@ -138,6 +138,7 @@ char	**ft_split(char const *s, char c);
 void	ft_putstr_fd(char *s, int fd);
 char	*ft_itoa(int n);
 int	ft_atoi(const char *str);
+void	*ft_memset(void *str, int x, size_t n);
 
 //lst utils
 t_token	*ft_lstnew(char *word);

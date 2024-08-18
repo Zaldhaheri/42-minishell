@@ -96,7 +96,7 @@ int parse_dollar(t_data *data)
 
     j = 0;
     key = malloc(256); //large value
-    memset(key, 0, 256);
+    ft_memset(key, 0, 256);
     data->i++;
     data->checker[ft_strlen(data->checker) - 1] = '\0';
     printf(YELLOW "CHECKER: %s\n" RESET, data->checker);
