@@ -68,6 +68,7 @@ typedef struct s_data
 	char *temp; //temp string
 	int typeflag;
 	char **envp; //original envp
+	char **myenvstr;
 	t_env	*myenv; //our env
 	t_token *tokens;
 	t_token *currtoken;
@@ -101,6 +102,8 @@ void    set_exitstatus(t_data *data);
 void    add_to_myenv(t_data *data, char *str, int hide);
 void incr_shlvl(t_data *data);
 void free_split_from(char **split, int from);
+void set_pwd(t_data *data);
+char **env_to_array(t_env *myenv);
 
 //parsing
 void parser(t_data *data);

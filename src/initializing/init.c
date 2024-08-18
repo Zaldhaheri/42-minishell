@@ -40,6 +40,7 @@ void    pre_init(t_data *data, char **envp)
     env_init(data);
     add_to_myenv(data, ft_strdup("?=0"), 1);
     incr_shlvl(data);
+    set_pwd(data);
     print_env(data->myenv);
 }
 
@@ -49,4 +50,52 @@ void    data_init(t_data *data)
 	data->checker = ft_strdup("");
 	data->tokens = NULL;
 	data->typeflag = WORD;
+    data->myenvstr = env_to_array(data->myenv);
+}
+
+int ft_envsize(t_env *myenv)
+{
+    t_env *curr;
+    int i;
+
+    i = 0;
+    curr = myenv;
+    while(curr)
+    {
+        if (curr->key && curr->value && !curr->hide)
+            i++;
+        curr = curr->next;
+    }
+    return (i);
+}
+
+char **env_to_array(t_env *myenv)
+{
+    printf("envtoarray\n");
+    int size;
+    char *temp;
+    char **array;
+    t_env *curr;
+    int i;
+
+    i = 0;
+    size = ft_envsize(myenv);
+    printf("size: %d\n", size);
+    if (size == 0)
+        return NULL;
+    array = malloc((size + 1) * sizeof(char *));
+    curr = myenv;
+    while(i < size)
+    {
+        if (curr->key && curr->value && !curr->hide)
+        {
+            temp = ft_strjoin(curr->key, "=");
+            array[i] = ft_strjoin(temp, curr->value);
+            printf("arr:%s\n", array[i]);
+            i++;
+        }
+        curr = curr->next;
+    }
+    array[size] = NULL;
+    return array;
 }

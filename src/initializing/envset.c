@@ -14,6 +14,20 @@ void    set_exitstatus(t_data *data)
     add_to_myenv(data, exit_status, 1);
 }
 
+void set_pwd(t_data *data)
+{
+    char *str;
+    char *finalstr;
+    char *temp;
+
+    str = getcwd(NULL, PATH_MAX);
+    temp = ft_strjoin("PWD", "=");
+    finalstr = ft_strjoin(temp, str);
+    free(str);
+    free(temp);
+    add_to_myenv(data, finalstr, 0);
+}
+
 void incr_shlvl(t_data *data)
 {
     char *shlvl_str;
