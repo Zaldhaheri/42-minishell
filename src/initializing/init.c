@@ -80,7 +80,6 @@ char **env_to_array(t_env *myenv)
 
     i = 0;
     size = ft_envsize(myenv);
-    printf("size: %d\n", size);
     if (size == 0)
         return NULL;
     array = malloc((size + 1) * sizeof(char *));
@@ -91,7 +90,7 @@ char **env_to_array(t_env *myenv)
         {
             temp = ft_strjoin(curr->key, "=");
             array[i] = ft_strjoin(temp, curr->value);
-            printf("arr:%s\n", array[i]);
+            //printf("arr:%s\n", array[i]);
             i++;
         }
         curr = curr->next;
