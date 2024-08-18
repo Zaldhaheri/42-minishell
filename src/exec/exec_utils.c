@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_utils.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: zaldhahe <zaldhahe@student.42.fr>          +#+  +:+       +#+        */
+/*   By: nalkhate <nalkhate@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/11 16:24:22 by nalkhate          #+#    #+#             */
-/*   Updated: 2024/08/17 18:42:02 by zaldhahe         ###   ########.fr       */
+/*   Updated: 2024/08/18 14:29:34 by nalkhate         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 #include <errno.h>
 
 
-void exec_child(t_command *cmd, t_data *data, char **envp, int *fd)
+void exec_child(t_command *cmd, t_data *data, char **envp, t_child_params	*params)
 {
 	int exit_status;
 
@@ -36,13 +36,15 @@ void exec_child(t_command *cmd, t_data *data, char **envp, int *fd)
 		bcomm_exec(cmd, data);
 		exit_status = 0;
 	}
+    if(cmd->cmd_fd > 0)
+        close(cmd->cmd_fd);
 	free_commands(&cmd);
 	ft_envclear(&data->myenv);
 	ft_lstclear(data);
-	if (fd[0] > -1)
-		close(fd[0]);
-	if (fd[1] > -1)
-		close(fd[1]);
+	if (params->fd[0] > -1)
+		close(params->fd[0]);
+	if (params->fd[1] > -1)
+		close(params->fd[1]);
     exit(exit_status);
 	
 }
@@ -55,7 +57,7 @@ void start_child(t_command *cmd, t_data *data, char **envp, t_child_params	*para
          	dup2(cmd->cmd_fd,  STDOUT_FILENO);
 		if (cmd->fd_type == FD_IN)
 			dup2(cmd->cmd_fd, STDIN_FILENO);
-		exec_child(cmd, data, envp, params->fd);
+		exec_child(cmd, data, envp, params);
 	}
     if (cmd->fd_type == FD_OUT || cmd->fd_type == APPEND)
         dup2(cmd->cmd_fd,  STDOUT_FILENO);
@@ -71,11 +73,21 @@ void start_child(t_command *cmd, t_data *data, char **envp, t_child_params	*para
     if (cmd->next)
         close(params->fd[0]);
     close(params->fd[1]);
-	exec_child(cmd, data, envp, params->fd);
+	exec_child(cmd, data, envp, params);
 }
 
-void	parent_pid(t_command *cmd, t_child_params	*params)
-{
+void	parent_pid(t_command *cmd, t_child_params	*params, t_data *data)
+{   int saved_stdout;
+    if (cmd->is_bcommand && !cmd->next)
+    {
+        saved_stdout = dup(STDOUT_FILENO);
+        if (cmd->fd_type == FD_OUT || cmd->fd_type == APPEND)
+         	dup2(cmd->cmd_fd,  STDOUT_FILENO);
+        bcomm_exec(cmd, data);
+        dup2(saved_stdout, STDOUT_FILENO);
+        close(saved_stdout);
+        return ;
+    }
 	if (cmd->next)
 	{
         close(params->fd[1]);
@@ -84,6 +96,8 @@ void	parent_pid(t_command *cmd, t_child_params	*params)
 		else
            	params->fd_in = params->fd[0];
     }
+    if(cmd->cmd_fd > 0)
+        close(cmd->cmd_fd);
     params->is_first = 0;
 }
 
@@ -110,6 +124,9 @@ void exec_cmd(t_command *cmd, t_data *data, char **envp)
 	{
         if (cmd->next)
             create_pipe(&params);
+        if(!cmd->next && params.is_first && cmd->is_bcommand)
+            parent_pid(cmd, &params, data);
+        else{
         printf("cmd: %s\n", cmd->command[0]);
 	
         pid = fork();
@@ -119,8 +136,8 @@ void exec_cmd(t_command *cmd, t_data *data, char **envp)
         if (pid == 0)
 			start_child(cmd, data, envp, &params);
 		else
-			parent_pid(cmd, &params);
-		
+			parent_pid(cmd, &params, data);
+        }
 		cmd = cmd->next;
     }
     if (params.fd_in != STDIN_FILENO)

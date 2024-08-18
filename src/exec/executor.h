@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   executor.h                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: zaldhahe <zaldhahe@student.42.fr>          +#+  +:+       +#+        */
+/*   By: nalkhate <nalkhate@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/11 16:24:18 by nalkhate          #+#    #+#             */
-/*   Updated: 2024/08/17 18:40:33 by zaldhahe         ###   ########.fr       */
+/*   Updated: 2024/08/18 14:20:37 by nalkhate         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,9 +28,9 @@ void	free_commands(t_command **lst);
 void	cmd_add_back(t_command **lst, t_command *new);
 t_command *new_command(char **cmd, int fd, int fd_type);
 void	create_pipe(t_child_params *params);
-void exec_child(t_command *cmd, t_data *data, char **envp, int *fd);
+void exec_child(t_command *cmd, t_data *data, char **envp, t_child_params	*params);
 void start_child(t_command *cmd, t_data *data, char **envp, t_child_params	*params);
-void	parent_pid(t_command *cmd, t_child_params	*params);
+void	parent_pid(t_command *cmd, t_child_params	*params, t_data *data);
 void exec_cmd(t_command *cmd, t_data *data, char **envp);
 int open_file(char *filename, int open_type);
 int heredoc(char *limiter);
