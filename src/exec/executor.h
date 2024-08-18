@@ -6,7 +6,7 @@
 /*   By: nalkhate <nalkhate@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/11 16:24:18 by nalkhate          #+#    #+#             */
-/*   Updated: 2024/08/18 15:27:01 by nalkhate         ###   ########.fr       */
+/*   Updated: 2024/08/18 16:46:44 by nalkhate         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,4 +41,5 @@ void b_echo(char **com);
 void b_env(t_data *data);
 void b_cd(t_data *data, char **cmd);
 void b_pwd();
+void b_exit(t_data *data, t_command *cmd);
 #endif

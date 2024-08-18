@@ -89,3 +89,78 @@ void b_pwd()
     }
 
 }
+
+static void	exit_overflow(char *temp)
+{
+	ft_putstr_fd("minishell: exit: ", 2);
+    ft_putstr_fd(temp, 2);
+    ft_putstr_fd(": numeric argument required\n", 2);
+}
+
+long	ft_atol(const char *str, char *temp)
+{
+	int						sign;
+	unsigned long long		result;
+	int						digits;
+
+	sign = 1;
+	result = 0;
+	digits = 1;
+	while (*str && (*str == 32 || (*str >= 9 && *str <= 13)))
+		str++;
+	if (*str == '-' || *str == '+')
+	{
+		if (*str == '-')
+			sign *= -1;
+		str++;
+	}
+	while (*str && *str >= '0' && *str <= '9')
+	{
+		result = (result * 10) + *str - 48;
+		if (result > 9223372036854775808ULL || digits > 19)
+			return (exit_overflow(temp), 255);
+		str++;
+		if (result > 0)
+			digits++;
+	}
+	return (result * sign);
+}
+int is_numeric(char *str)
+{
+    if (*str == '+' || *str == '-')
+        str++;
+    while(*str)
+    {
+        if (*str < 48 || *str > 57)
+            return 0;
+        str++;
+    }
+    return 1;
+}
+
+void    b_exit(t_data *data, t_command *cmd)
+{
+    int arg;
+
+    arg = 0;
+    if (cmd->command[1] && is_numeric(cmd->command[1]) &&cmd->command[2])
+    {
+        printf("exit\n");
+        ft_putstr_fd("minishell: exit: too many arguments\n", 2);
+        data->status = 1;
+        set_exitstatus(data);
+        return ;
+    }
+    if (cmd->command[1] && is_numeric(cmd->command[1]))
+        arg = ft_atol(cmd->command[1], cmd->command[1]);
+    else if (cmd->command[1] && !is_numeric(cmd->command[1]))
+    {
+        exit_overflow(cmd->command[1]);
+        arg = 255;
+    }
+    free_commands(&cmd);
+    ft_envclear(&data->myenv);
+	ft_lstclear(data);
+    printf("exit\n");
+    exit(arg);
+}

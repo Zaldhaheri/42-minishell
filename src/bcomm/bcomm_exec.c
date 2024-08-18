@@ -11,5 +11,6 @@ void bcomm_exec(t_command *cmd, t_data *data)
 		b_cd(data, cmd->command);
     else if (!ft_strncmp("pwd", cmd->command[0], 3))
 		b_pwd();
-    
+    else if (!ft_strncmp("exit", cmd->command[0], 4))
+		b_exit(data, cmd);
 }
