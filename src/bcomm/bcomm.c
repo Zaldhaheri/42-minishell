@@ -90,14 +90,15 @@ void b_pwd()
 
 }
 
-static void	exit_overflow(char *temp)
+static void	exit_overflow(char *temp, int *flag)
 {
-	ft_putstr_fd("minishell: exit: ", 2);
+	ft_putstr_fd("exit\nminishell: exit: ", 2);
     ft_putstr_fd(temp, 2);
     ft_putstr_fd(": numeric argument required\n", 2);
+    *flag = 0;
 }
 
-long	ft_atol(const char *str, char *temp)
+long	ft_atol(const char *str, char *temp, int *flag)
 {
 	int						sign;
 	unsigned long long		result;
@@ -118,7 +119,7 @@ long	ft_atol(const char *str, char *temp)
 	{
 		result = (result * 10) + *str - 48;
 		if (result > 9223372036854775808ULL || digits > 19)
-			return (exit_overflow(temp), 255);
+			return (exit_overflow(temp, flag), 255);
 		str++;
 		if (result > 0)
 			digits++;
@@ -141,7 +142,9 @@ int is_numeric(char *str)
 void    b_exit(t_data *data, t_command *cmd)
 {
     int arg;
+    int flag;
 
+    flag = 1;
     arg = 0;
     if (cmd->command[1] && is_numeric(cmd->command[1]) &&cmd->command[2])
     {
@@ -152,15 +155,16 @@ void    b_exit(t_data *data, t_command *cmd)
         return ;
     }
     if (cmd->command[1] && is_numeric(cmd->command[1]))
-        arg = ft_atol(cmd->command[1], cmd->command[1]);
+        arg = ft_atol(cmd->command[1], cmd->command[1], &flag);
     else if (cmd->command[1] && !is_numeric(cmd->command[1]))
     {
-        exit_overflow(cmd->command[1]);
+        exit_overflow(cmd->command[1], &flag);
         arg = 255;
     }
     free_commands(&cmd);
     ft_envclear(&data->myenv);
 	ft_lstclear(data);
-    printf("exit\n");
+    if (flag)
+        printf("exit\n");
     exit(arg);
 }

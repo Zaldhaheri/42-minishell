@@ -6,7 +6,7 @@
 /*   By: nalkhate <nalkhate@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/11 16:24:22 by nalkhate          #+#    #+#             */
-/*   Updated: 2024/08/18 15:32:12 by nalkhate         ###   ########.fr       */
+/*   Updated: 2024/08/18 18:26:17 by nalkhate         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,8 +36,9 @@ void exec_child(t_command *cmd, t_data *data, char **envp, t_child_params	*param
 		bcomm_exec(cmd, data);
 		exit_status = 0;
 	}
-    if(cmd->cmd_fd > 0)
+    if(cmd->cmd_fd > 0){
         close(cmd->cmd_fd);
+	}
 	free_commands(&cmd);
 	ft_envclear(&data->myenv);
 	ft_lstclear(data);
