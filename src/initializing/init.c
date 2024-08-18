@@ -90,7 +90,7 @@ char **env_to_array(t_env *myenv)
         {
             temp = ft_strjoin(curr->key, "=");
             array[i] = ft_strjoin(temp, curr->value);
-            //printf("arr:%s\n", array[i]);
+            free(temp);
             i++;
         }
         curr = curr->next;

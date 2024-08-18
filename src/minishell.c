@@ -61,6 +61,7 @@ int main(int argc, char **argv, char **envp)
 		}
 	}
 	ft_envclear(&data.myenv);
+	free_args(data.myenvstr);
 	ft_lstclear(&data);
 	printf("exit\n");
 }

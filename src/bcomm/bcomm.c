@@ -165,6 +165,7 @@ void    b_exit(t_data *data, t_command *cmd)
     }
     free_commands(&cmd);
     ft_envclear(&data->myenv);
+    free_split_from(data->myenvstr, 0);
 	ft_lstclear(data);
     if (flag)
         printf("exit\n");
