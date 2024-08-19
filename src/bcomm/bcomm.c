@@ -174,9 +174,11 @@ void b_pwd()
 {
     char *path;
 
+    path = NULL;
     path = getcwd(NULL, PATH_MAX);
-    if (!path)
+    if (!path){
         perror("pwd");
+    }
     else{
         printf("%s\n", path);
         free(path);

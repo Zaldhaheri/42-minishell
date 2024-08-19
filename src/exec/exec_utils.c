@@ -6,7 +6,7 @@
 /*   By: nalkhate <nalkhate@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/11 16:24:22 by nalkhate          #+#    #+#             */
-/*   Updated: 2024/08/19 20:59:02 by nalkhate         ###   ########.fr       */
+/*   Updated: 2024/08/19 21:58:42 by nalkhate         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,8 +32,10 @@ void exec_child(t_command *cmd, t_data *data, char **envp, t_child_params	*param
 		ft_putstr_fd(cmd->command[0], STDERR_FILENO);
 		ft_putstr_fd(": command not found\n", STDERR_FILENO);
 	}
-	else 
-        perror(cmd->command[0]);
+	// else {
+	// 	if (!cmd->is_bcommand)
+    //     	perror(cmd->command[0]);
+	// }
 	if (cmd->is_bcommand)
 	{
 		ft_putstr_fd("-----BCOMM-----\n",2);
@@ -80,7 +82,7 @@ void start_child(t_command *cmd, t_data *data, char **envp, t_child_params	*para
 
 void	parent_pid(t_command *cmd, t_child_params	*params, t_data *data)
 {   int saved_stdout;
-    if (cmd->is_bcommand && !cmd->next)
+    if (cmd->is_bcommand && !cmd->next && params->is_first)
     {
         saved_stdout = dup(STDOUT_FILENO);
         if (cmd->fd_type == FD_OUT || cmd->fd_type == APPEND)
