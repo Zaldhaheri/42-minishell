@@ -59,6 +59,39 @@ void b_env(t_data *data)
     }
 }
 
+void b_unset(t_data *data, char **cmd)
+{
+    t_env *curr;
+    t_env *prev;
+    t_env *temp;
+    int i;
+
+    i = 1;
+    while(cmd[i])
+    {
+        curr = data->myenv;
+        prev = NULL;
+        while(curr)
+        {
+            //printf("curr key: %s\n", curr->key);
+            if (curr->key && !ft_strcmp(curr->key, cmd[i]) && curr->key[0] != '?')
+            {
+                printf("key %s found\n", curr->key);
+                prev->next = curr->next;
+                temp = curr;
+                curr = curr->next;
+                free(temp->key);
+                free(temp->value);
+                free(temp);
+                break ;
+            }
+            prev = curr;
+            curr = curr->next;
+        }
+        i++;
+    }
+}
+
 void b_cd(t_data *data, char **cmd)
 {
     char *home;
@@ -128,6 +161,7 @@ long	ft_atol(const char *str, char *temp, int *flag)
 	}
 	return (result * sign);
 }
+
 int is_numeric(char *str)
 {
     if (*str == '+' || *str == '-')
@@ -171,3 +205,5 @@ void    b_exit(t_data *data, t_command *cmd)
         printf("exit\n");
     exit(arg);
 }
+
+

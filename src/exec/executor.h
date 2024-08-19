@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   executor.h                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nalkhate <nalkhate@student.42.fr>          +#+  +:+       +#+        */
+/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/11 16:24:18 by nalkhate          #+#    #+#             */
-/*   Updated: 2024/08/18 16:46:44 by nalkhate         ###   ########.fr       */
+/*   Updated: 2024/08/19 05:00:32 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,7 @@ void bcomm_exec(t_command *cmd, t_data *data);
 //builtins
 void b_echo(char **com);
 void b_env(t_data *data);
+void b_unset(t_data *data, char **cmd);
 void b_cd(t_data *data, char **cmd);
 void b_pwd();
 void b_exit(t_data *data, t_command *cmd);
