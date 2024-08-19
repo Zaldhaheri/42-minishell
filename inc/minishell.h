@@ -96,6 +96,7 @@ void    pre_init(t_data *data, char **envp);
 void	env_init(t_data *data);
 t_env	*ft_envlast(t_env *lst);
 t_env	*ft_envnew(char *word, int hide);
+int ft_envsize(t_env *myenv);
 void    ft_envadd_back(t_env **lst, char *s, int hide);
 void    ft_envclear(t_env **lst);
 void    set_exitstatus(t_data *data);

@@ -27,11 +27,6 @@ basically where ever we have perror
 
 make function to set exit status, return myenvp as char**.
 
-need to make unset and export function
-unset will loop through the myenv and delone the node with the given key, make the prev point to next
-export without argument will sort the env when printing only, and print nothing when with arguments but add to myenv with hide=0
-make a function to make our linked list env to a char** datatype
-
 some errors on valgrind:
 
 minishell# pwd
@@ -46,3 +41,5 @@ minishell# pwd
 ==10775== For lists of detected and suppressed errors, rerun with: -s
 ==10775== ERROR SUMMARY: 15 errors from 15 contexts (suppressed: 1 from 1)
 
+unset export works, but for export to work properly, where we declare env keys needs to be changed and added to exec instead of parsing
+to not declare before exporting basically.

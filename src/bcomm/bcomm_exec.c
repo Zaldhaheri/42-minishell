@@ -8,6 +8,8 @@ void bcomm_exec(t_command *cmd, t_data *data)
 		b_echo(cmd->command);
 	else if (!ft_strncmp("env", cmd->command[0], 3))
 		b_env(data);
+	else if (!ft_strncmp("export", cmd->command[0], 6))
+		b_export(data, cmd->command);
 	else if (!ft_strncmp("unset", cmd->command[0], 5))
 		b_unset(data, cmd->command);
     else if (!ft_strncmp("cd", cmd->command[0], 2))
