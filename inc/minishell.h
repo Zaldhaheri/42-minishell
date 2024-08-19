@@ -147,7 +147,7 @@ void	ft_lstadd_back(t_token **lst, t_token *new);
 void	ft_lstclear(t_data *lst);
 
 //exec
-void exec_line(t_data *data, char **envp);
+void exec_line(t_data *data);
 void	free_args(char **args);
 char	*ft_get_cmd_path(char *cmd, char **envp);
 

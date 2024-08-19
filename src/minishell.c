@@ -56,7 +56,7 @@ int main(int argc, char **argv, char **envp)
         	data_init(&data);
 			parser(&data);
 			set_type(&data);
-			exec_line(&data, data.myenvstr);
+			exec_line(&data);
 			free_split_from(data.myenvstr, 0);
 			ft_lstclear(&data);
 		}

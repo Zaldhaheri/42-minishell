@@ -6,7 +6,7 @@
 /*   By: nalkhate <nalkhate@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/11 16:24:22 by nalkhate          #+#    #+#             */
-/*   Updated: 2024/08/18 21:23:26 by nalkhate         ###   ########.fr       */
+/*   Updated: 2024/08/19 17:26:37 by nalkhate         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,10 @@ void exec_child(t_command *cmd, t_data *data, char **envp, t_child_params	*param
 	int exit_status;
 
 	exit_status = 1;
+	if (params->fd[0] > -1)
+		close(params->fd[0]);
+	if (params->fd[1] > -1)
+		close(params->fd[1]);
 	if (cmd && cmd->command[0] && !cmd->is_bcommand)
 		execve(cmd->command[0], cmd->command, envp);
 
@@ -43,10 +47,10 @@ void exec_child(t_command *cmd, t_data *data, char **envp, t_child_params	*param
 	free_args(envp);
 	ft_envclear(&data->myenv);
 	ft_lstclear(data);
-	if (params->fd[0] > -1)
-		close(params->fd[0]);
-	if (params->fd[1] > -1)
-		close(params->fd[1]);
+	// if (params->fd[0] > -1)
+	// 	close(params->fd[0]);
+	// if (params->fd[1] > -1)
+	// 	close(params->fd[1]);
     exit(exit_status);
 	
 }
@@ -115,6 +119,7 @@ void exec_cmd(t_command *cmd, t_data *data, char **envp)
     params.is_first = 1;
 	params.fd[0] = -10;
 	params.fd[1] = -10;
+	pid = -1;
     while (cmd)
 	{
         if (cmd->next)

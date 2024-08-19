@@ -6,7 +6,7 @@
 /*   By: nalkhate <nalkhate@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/11 16:25:03 by nalkhate          #+#    #+#             */
-/*   Updated: 2024/08/18 19:01:16 by nalkhate         ###   ########.fr       */
+/*   Updated: 2024/08/19 17:29:05 by nalkhate         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -145,7 +145,7 @@ char	**cmd_size_init(t_token *temp)
 	return(command);
 }
 
-void exec_line(t_data *data, char **envp)
+void exec_line(t_data *data)
 {
 	t_command *command;
 	t_command *head;
@@ -154,10 +154,12 @@ void exec_line(t_data *data, char **envp)
 
 	temp = data->tokens;
 	head = NULL;
+	cmd = NULL;
+	command = NULL;
 	while(temp)
 	{
 		cmd = cmd_size_init(temp);
-		command = set_command(cmd, temp, envp, &temp);
+		command = set_command(cmd, temp, data->myenvstr, &temp);
 		if (command)
 			cmd_add_back(&head, command);
 		else
@@ -165,7 +167,7 @@ void exec_line(t_data *data, char **envp)
 				temp = temp->next;
 	}
 	if (head && *cmd != NULL && command)
-		exec_cmd(head, data, envp);
+		exec_cmd(head, data, data->myenvstr);
 	free_commands(&head);
 }
 
