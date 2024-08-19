@@ -47,7 +47,6 @@ void append_checker(t_data *data)
     if (data->checker)
         free(data->checker);
     data->checker = data->temp;
-    printf(WHITE "a%d: %s.\n" RESET, data->i, data->checker);
 }
 
 void add_token_from_checker(t_data *data, int type, char **str)

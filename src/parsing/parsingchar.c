@@ -96,10 +96,7 @@ int parse_space(t_data *data)
     }
     if (ft_strlen(data->input) - 1 > data->i || data->input[data->i] == ' ' ||
         data->input[data->i] == '\t')
-    {
-        printf("balls\n");
         data->checker[ft_strlen(data->checker) - 1] = '\0';
-    }
     printf(GREEN "WORD: %s.\n" RESET, data->checker);
     return (1);
 }
