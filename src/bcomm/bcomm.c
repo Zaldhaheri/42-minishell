@@ -184,6 +184,17 @@ void b_pwd()
 
 }
 
+void b_declare(t_data *data, char **cmd)
+{
+    int i;
+
+    i = 0;
+    while(cmd[i])
+    {
+        i++;
+    }
+}
+
 static void	exit_overflow(char *temp, int *flag)
 {
 	ft_putstr_fd("exit\nminishell: exit: ", 2);

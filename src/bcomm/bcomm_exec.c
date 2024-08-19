@@ -18,4 +18,7 @@ void bcomm_exec(t_command *cmd, t_data *data)
 		b_pwd();
     else if (!ft_strncmp("exit", cmd->command[0], 4))
 		b_exit(data, cmd);
+	else if (ft_strrchr(cmd->command[0], '=') && ft_strlen(cmd->command[0]) > 1
+                    && cmd->command[0][0] != '=' && is_valid_key(cmd->command[0]))
+			b_declare(data, cmd->command);
 }

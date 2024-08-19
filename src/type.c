@@ -75,6 +75,9 @@ void	check_if_bcommand(t_token *temp)
 		temp->type = BCOMMAND;
 	else if (!ft_strncmp(temp->content, "exit", c_len))
 		temp->type = BCOMMAND;
+	else if (ft_strrchr(temp->content, '=') && ft_strlen(temp->content) > 1
+                    && temp->content[0] != '=' && is_valid_key(temp->content))
+                    temp->type = BCOMMAND;
 }
 
 void	set_type(t_data *data)

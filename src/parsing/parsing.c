@@ -13,11 +13,11 @@ void parser(t_data *data)
             append_checker(data);
             if (check_string(data))
             {
-                if (ft_strrchr(data->checker, '=') && ft_strlen(data->checker) > 1
-                    && data->checker[0] != '=' && data->typeflag != DOLLAR && is_valid_key(data->checker))
-                    add_token_to_env(data);
-                else
-                    add_token_from_checker(data, data->typeflag, &data->checker);
+                // if (ft_strrchr(data->checker, '=') && ft_strlen(data->checker) > 1
+                //     && data->checker[0] != '=' && data->typeflag != DOLLAR && is_valid_key(data->checker))
+                //     add_token_to_env(data);
+                // else
+                add_token_from_checker(data, data->typeflag, &data->checker);
             }
         }
         data->i++;

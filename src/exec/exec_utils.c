@@ -6,7 +6,7 @@
 /*   By: nalkhate <nalkhate@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/11 16:24:22 by nalkhate          #+#    #+#             */
-/*   Updated: 2024/08/19 18:25:05 by nalkhate         ###   ########.fr       */
+/*   Updated: 2024/08/19 20:59:02 by nalkhate         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,6 +88,10 @@ void	parent_pid(t_command *cmd, t_child_params	*params, t_data *data)
         bcomm_exec(cmd, data);
         dup2(saved_stdout, STDOUT_FILENO);
         close(saved_stdout);
+		if (cmd->cmd_fd == -1)
+			data->status = 1;
+		else
+			data->status = 0;
         return ;
     }
 	if (cmd->next)
@@ -142,11 +146,19 @@ void exec_cmd(t_command *cmd, t_data *data, char **envp)
 	}
     if (!params.is_first)
 	    waitpid(pid, &(data->status), 0);
-	printf("status %d\n", data->status);
-	printf("exit status: %d\n", WEXITSTATUS(data->status));
-    set_exitstatus(data);
-	if (data->status== 11)
-		printf("Seg fault\n");
+	if (WIFEXITED(data->status)) {
+    // The process exited normally, print the exit status
+    printf("1status: %d\n", data->status);
+    printf("exit status: %d\n", WEXITSTATUS(data->status));
+} else if (WIFSIGNALED(data->status)) {
+    // The process was terminated by a signal, print the signal number
+    printf("2status: %d\n", data->status);
+    printf("terminated by signal: %d\n", WTERMSIG(data->status));
+} else {
+    // Handle other cases if necessary
+    printf("3status: %d\n", data->status);
+    printf("Unknown exit condition\n");
+}
 }
 
 int open_file(char *filename, int open_type)

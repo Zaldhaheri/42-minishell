@@ -6,7 +6,7 @@
 /*   By: nalkhate <nalkhate@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/11 16:25:03 by nalkhate          #+#    #+#             */
-/*   Updated: 2024/08/19 18:49:29 by nalkhate         ###   ########.fr       */
+/*   Updated: 2024/08/19 19:12:06 by nalkhate         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ int heredoc(char *limiter)
     return (fd[0]);
 }
 
-t_command *set_command(char **command,  t_token *temp, char **envp, t_token **head)
+t_command *set_command(char **command,  t_token *temp, t_data *data, t_token **head)
 {
 	int			i;
 	int			cmd_fd;
@@ -60,7 +60,7 @@ t_command *set_command(char **command,  t_token *temp, char **envp, t_token **he
 			if (i == 0 && temp->type != BCOMMAND )
 			{
 				printf("first cmd: %s\n", temp->content);
-				command[i] = ft_get_cmd_path(temp->content, envp);
+				command[i] = ft_get_cmd_path(temp->content, data->myenvstr);
 				if (temp->content && !command[i])
 					command[i] = ft_strdup(temp->content);
 			}else if (i == 0 && temp->type == BCOMMAND)
@@ -77,12 +77,12 @@ t_command *set_command(char **command,  t_token *temp, char **envp, t_token **he
 		else if (temp->type == FD_IN || temp->type == FD_OUT 
 		|| temp->type == APPEND || temp->type == HEREDOC)
 		{
-			if (temp->next && temp->type != HEREDOC){
-				if (cmd_fd > -1){
-					ft_putstr_fd("closed fd\n", 2);
+			if (temp->next && temp->type != HEREDOC)
+			{
+				if (cmd_fd > -1)
+				{
 					close(cmd_fd);
 				}
-					
 				cmd_fd = open_file(temp->next->content, temp->type);
 				*head = temp;
 				if  (cmd_fd == -1 && i > 0)
@@ -103,6 +103,7 @@ t_command *set_command(char **command,  t_token *temp, char **envp, t_token **he
 			else if(!temp->next)
 			{
 				ft_putstr_fd("minishell: syntax error near unexpected token `newline'\n", 2);
+				data->status = 258;
 				if  (i > 0)
 				{
 					command[i] = NULL;
@@ -164,7 +165,7 @@ void exec_line(t_data *data)
 	while(temp)
 	{
 		cmd = cmd_size_init(temp);
-		command = set_command(cmd, temp, data->myenvstr, &temp);
+		command = set_command(cmd, temp, data, &temp);
 		if (command)
 			cmd_add_back(&head, command);
 		else
@@ -173,6 +174,12 @@ void exec_line(t_data *data)
 	}
 	if (head && *cmd != NULL && command)
 		exec_cmd(head, data, data->myenvstr);
+	if (data->status == 11)
+	{
+		ft_putstr_fd("Segmentation fault: 11\n", 2);
+		data->status = 139;
+	}
+	set_exitstatus(data);
 	free_commands(&head);
 }
 
