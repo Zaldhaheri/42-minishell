@@ -6,7 +6,7 @@
 /*   By: nalkhate <nalkhate@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/11 16:24:22 by nalkhate          #+#    #+#             */
-/*   Updated: 2024/08/19 17:26:37 by nalkhate         ###   ########.fr       */
+/*   Updated: 2024/08/19 18:25:05 by nalkhate         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,10 +47,6 @@ void exec_child(t_command *cmd, t_data *data, char **envp, t_child_params	*param
 	free_args(envp);
 	ft_envclear(&data->myenv);
 	ft_lstclear(data);
-	// if (params->fd[0] > -1)
-	// 	close(params->fd[0]);
-	// if (params->fd[1] > -1)
-	// 	close(params->fd[1]);
     exit(exit_status);
 	
 }

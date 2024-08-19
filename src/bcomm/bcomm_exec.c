@@ -3,7 +3,7 @@
 //bcommands execute here
 void bcomm_exec(t_command *cmd, t_data *data)
 {
-	printf("bcomm_exec\n");
+	ft_putstr_fd("bcomm_exec\n", 2);
 	if (!ft_strncmp("echo", cmd->command[0], 4))
 		b_echo(cmd->command);
 	else if (!ft_strncmp("env", cmd->command[0], 3))

@@ -6,7 +6,7 @@
 /*   By: nalkhate <nalkhate@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/11 16:25:03 by nalkhate          #+#    #+#             */
-/*   Updated: 2024/08/19 17:29:05 by nalkhate         ###   ########.fr       */
+/*   Updated: 2024/08/19 18:49:29 by nalkhate         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,6 +78,11 @@ t_command *set_command(char **command,  t_token *temp, char **envp, t_token **he
 		|| temp->type == APPEND || temp->type == HEREDOC)
 		{
 			if (temp->next && temp->type != HEREDOC){
+				if (cmd_fd > -1){
+					ft_putstr_fd("closed fd\n", 2);
+					close(cmd_fd);
+				}
+					
 				cmd_fd = open_file(temp->next->content, temp->type);
 				*head = temp;
 				if  (cmd_fd == -1 && i > 0)

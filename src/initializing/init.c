@@ -37,6 +37,7 @@ void    pre_init(t_data *data, char **envp)
     data->myenv = NULL;
     data->myenv = NULL;
     data->tokens = NULL;
+    data->status = 0;
     data->i = 0;
     env_init(data);
     add_to_myenv(data, ft_strdup("?=0"), 1);

@@ -17,7 +17,6 @@ all : $(NAME)
 
 leak: $(NAME)
 	valgrind --leak-check=full --track-origins=yes --show-leak-kinds=all --trace-children=yes --track-fds=yes  --suppressions=leaks.supp ./minishell
-#  --track-fds=yes 
 
 $(NAME) : $(OBJ)
 	$(CC) $(CFLAGS) $(OBJ) -L/opt/vagrant/embedded/lib -lreadline -lncurses -lhistory -o $(NAME)
