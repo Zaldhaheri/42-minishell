@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cmd_arg_utils.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nalkhate <nalkhate@student.42.fr>          +#+  +:+       +#+        */
+/*   By: zaldhahe <zaldhahe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/11 16:27:49 by nalkhate          #+#    #+#             */
-/*   Updated: 2024/08/11 20:08:32 by nalkhate         ###   ########.fr       */
+/*   Updated: 2024/08/19 21:37:30 by zaldhahe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,6 +76,9 @@ int check_bcommand(char *comm)
 	else if (!ft_strncmp(comm, "env", c_len))
 		return (1);
 	else if (!ft_strncmp(comm, "exit", c_len))
+		return (1);
+	else if (ft_strrchr(comm, '=') && ft_strlen(comm) > 1
+                    && comm[0] != '=' && is_valid_key(comm))
 		return (1);
 	else
 		return (0);

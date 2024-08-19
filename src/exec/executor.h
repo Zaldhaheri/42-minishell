@@ -6,7 +6,7 @@
 /*   By: zaldhahe <zaldhahe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/11 16:24:18 by nalkhate          #+#    #+#             */
-/*   Updated: 2024/08/19 19:51:23 by zaldhahe         ###   ########.fr       */
+/*   Updated: 2024/08/19 21:33:39 by zaldhahe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,4 +44,5 @@ void b_unset(t_data *data, char **cmd);
 void b_cd(t_data *data, char **cmd);
 void b_pwd();
 void b_exit(t_data *data, t_command *cmd);
+void b_declare(t_data *data, char **cmd);
 #endif

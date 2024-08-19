@@ -186,12 +186,23 @@ void b_pwd()
 
 void b_declare(t_data *data, char **cmd)
 {
+    printf("in b_declare\n");
     int i;
+    int valid;
 
+    valid = 1;
     i = 0;
-    while(cmd[i])
+    while(cmd[i] && valid)
     {
+        if (!((ft_strrchr(cmd[i], '=') && ft_strlen(cmd[i]) > 1
+                    && cmd[i][0] != '=' && is_valid_key(cmd[i]))))
+                    valid = 0;
         i++;
+    }
+    if (valid)
+    {
+        i--;
+        add_to_myenv(data, ft_strdup(cmd[i]), 1, 0);
     }
 }
 
