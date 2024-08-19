@@ -113,7 +113,7 @@ void b_export(t_data *data, char **cmd)
         {
             if (ft_strrchr(cmd[i], '=') && ft_strlen(cmd[i]) > 1
                     && cmd[i][0] != '=' && is_valid_key(cmd[i]))
-                add_to_myenv(data, ft_strdup(cmd[i]), 0);
+                add_to_myenv(data, ft_strdup(cmd[i]), 0, 1);
             i++;
         }
     }

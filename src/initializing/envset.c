@@ -11,7 +11,7 @@ void    set_exitstatus(t_data *data)
     exit_status = ft_strjoin(temp, status_str);
     free(status_str);
     free(temp);
-    add_to_myenv(data, exit_status, 1);
+    add_to_myenv(data, exit_status, 1, 0);
 }
 
 void set_pwd(t_data *data)
@@ -25,7 +25,7 @@ void set_pwd(t_data *data)
     finalstr = ft_strjoin(temp, str);
     free(str);
     free(temp);
-    add_to_myenv(data, finalstr, 0);
+    add_to_myenv(data, finalstr, 0, 0);
 }
 
 void incr_shlvl(t_data *data)
@@ -42,7 +42,7 @@ void incr_shlvl(t_data *data)
         shlvl = ft_atoi(value) + 1;
     shlvl_str = ft_itoa(shlvl);
     new_shlvl_str = ft_strjoin("SHLVL=", shlvl_str);
-    add_to_myenv(data, new_shlvl_str, 0);
+    add_to_myenv(data, new_shlvl_str, 0, 0);
     if (shlvl_str)
         free(shlvl_str);
 }

@@ -23,9 +23,9 @@ void	env_init(t_data *data)
     data->i = 0;
 }
 
-void    add_to_myenv(t_data *data, char *str, int hide)
+void    add_to_myenv(t_data *data, char *str, int hide, int sethide)
 {
-    if (check_env_dupes(data, str))
+    if (check_env_dupes(data, str, sethide))
         ft_envadd_back(&data->myenv, str, hide);
     if (str)
         free(str);
@@ -40,7 +40,7 @@ void    pre_init(t_data *data, char **envp)
     data->status = 0;
     data->i = 0;
     env_init(data);
-    add_to_myenv(data, ft_strdup("?=0"), 1);
+    add_to_myenv(data, ft_strdup("?=0"), 1, 0);
     incr_shlvl(data);
     set_pwd(data);
     print_env(data->myenv);

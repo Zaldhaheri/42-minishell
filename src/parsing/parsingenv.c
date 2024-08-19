@@ -19,7 +19,7 @@ int is_valid_key(char *str)
     return (1);
 }
 
-int check_env_dupes(t_data *data, char *str)
+int check_env_dupes(t_data *data, char *str, int sethide)
 {
     int flag;
     char **split;
@@ -37,6 +37,8 @@ int check_env_dupes(t_data *data, char *str)
             //printf("key found\n");
             free(curr->value);
             curr->value = ft_strdup(split[1]);
+            if (sethide)
+                curr->hide = 0;
             flag = 0;
             break ;
         }
@@ -50,7 +52,7 @@ int check_env_dupes(t_data *data, char *str)
 void add_token_to_env(t_data *data)
 {
     printf(RED "is env\n" RESET);
-    if (check_env_dupes(data, data->checker))
+    if (check_env_dupes(data, data->checker, 0))
         ft_envadd_back(&data->myenv, data->checker, 1);
     if (data->checker)
         free(data->checker);
