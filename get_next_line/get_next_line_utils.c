@@ -6,7 +6,7 @@
 /*   By: nalkhate <nalkhate@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/01 19:42:49 by nalkhate          #+#    #+#             */
-/*   Updated: 2024/08/10 14:04:30 by nalkhate         ###   ########.fr       */
+/*   Updated: 2024/08/20 21:37:26 by nalkhate         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,4 +55,3 @@ char	*concatenate_list(t_list **lst)
 	ft_gnlclear(lst);
 	return (result);
 }
-
