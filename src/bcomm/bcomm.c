@@ -164,7 +164,7 @@ static void	exit_overflow(char *temp, int *flag)
     *flag = 0;
 }
 
-long	ft_atol(const char *str, char *temp, int *flag)
+long    ft_atol(const char *str, char *temp, int *flag)
 {
 	int						sign;
 	unsigned long long		result;
