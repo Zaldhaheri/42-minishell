@@ -79,6 +79,7 @@ void b_export(t_data *data, char **cmd)
 
 void b_unset(t_data *data, char **cmd)
 {
+    printf("unset\n");
     t_env *curr;
     t_env *prev;
     t_env *temp;
@@ -94,12 +95,17 @@ void b_unset(t_data *data, char **cmd)
             if (curr->key && !ft_strcmp(curr->key, cmd[i]) && curr->key[0] != '?')
             {
                 printf("key %s found\n", curr->key);
-                prev->next = curr->next;
+                if (prev)
+                    prev->next = curr->next;
+                printf("prevnext\n");
                 temp = curr;
                 curr = curr->next;
                 free(temp->key);
+                printf("free key\n");
                 free(temp->value);
+                printf("free value\n");
                 free(temp);
+                printf("free temp\n");
                 break ;
             }
             prev = curr;

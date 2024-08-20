@@ -1,9 +1,22 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   lst_utils.c                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: zaldhahe <zaldhahe@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/08/20 20:28:03 by zaldhahe          #+#    #+#             */
+/*   Updated: 2024/08/20 20:28:15 by zaldhahe         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../inc/minishell.h"
 
 t_token	*ft_lstnew(char *word)
 {
-	t_token *node;
-	node = (t_token *)malloc(sizeof(t_token));
+	t_token	*node;
+
+	node = (t_token *) malloc(sizeof(t_token));
 	if (!node)
 		return (NULL);
 	node->content = ft_strdup(word);
@@ -38,7 +51,7 @@ void	ft_lstclear(t_data *lst)
 {
 	t_token	*temp;
 
-	while(lst->tokens)
+	while (lst->tokens)
 	{
 		temp = lst->tokens;
 		lst->tokens = lst->tokens->next;
