@@ -6,13 +6,21 @@
 /*   By: nalkhate <nalkhate@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/11 16:25:03 by nalkhate          #+#    #+#             */
-/*   Updated: 2024/08/20 16:33:23 by nalkhate         ###   ########.fr       */
+/*   Updated: 2024/08/20 17:42:58 by nalkhate         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 
 #include "executor.h"
 
+void	create_pipe(t_child_params *params)
+{
+	if (pipe(params->fd) == -1)
+	{
+		perror("pipe");
+		exit(EXIT_FAILURE);
+	}
+}
 
 int heredoc(char *limiter)
 {
@@ -74,7 +82,7 @@ void exec_line(t_data *data)
 		temp = next_cmd(command, &head, temp);
 	}
 	if (head && *cmd != NULL && command)
-		exec_cmd(head, data, data->myenvstr);
+		exec_cmd(head, data);
 	if (data->status == 11)
 	{
 		ft_putstr_fd("Segmentation fault: 11\n", 2);

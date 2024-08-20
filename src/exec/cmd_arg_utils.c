@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cmd_arg_utils.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: zaldhahe <zaldhahe@student.42.fr>          +#+  +:+       +#+        */
+/*   By: nalkhate <nalkhate@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/11 16:27:49 by nalkhate          #+#    #+#             */
-/*   Updated: 2024/08/19 21:37:30 by zaldhahe         ###   ########.fr       */
+/*   Updated: 2024/08/20 17:30:31 by nalkhate         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,8 +80,7 @@ int check_bcommand(char *comm)
 	else if (ft_strrchr(comm, '=') && ft_strlen(comm) > 1
                     && comm[0] != '=' && is_valid_key(comm))
 		return (1);
-	else
-		return (0);
+	return (0);
 }
 
 t_command *new_command(char **cmd, int fd, int fd_type)
@@ -98,16 +97,6 @@ t_command *new_command(char **cmd, int fd, int fd_type)
 	new->next = NULL;
 	new->cmd_fd = fd;
 	new->fd_type = fd_type;
-	printf("cmd[0] =  %s\n", cmd[0]);
 	new->is_bcommand = check_bcommand(cmd[0]);
 	return(new);
-}
-
-void	create_pipe(t_child_params *params)
-{
-	if (pipe(params->fd) == -1)
-	{
-		perror("pipe");
-		exit(EXIT_FAILURE);
-	}
 }

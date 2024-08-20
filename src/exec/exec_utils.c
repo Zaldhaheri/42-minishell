@@ -6,7 +6,7 @@
 /*   By: nalkhate <nalkhate@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/11 16:24:22 by nalkhate          #+#    #+#             */
-/*   Updated: 2024/08/19 23:14:38 by nalkhate         ###   ########.fr       */
+/*   Updated: 2024/08/20 17:50:57 by nalkhate         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,16 @@
 #include "executor.h"
 #include <errno.h>
 
+void	exit_free(t_command *cmd, t_data *data, int exit_status)
+{
+	free_commands(&cmd);
+	free_args(data->myenvstr);
+	ft_envclear(&data->myenv);
+	ft_lstclear(data);
+    exit(exit_status);
+}
 
-void exec_child(t_command *cmd, t_data *data, char **envp, t_child_params	*params)
+void exec_child(t_command *cmd, t_data *data, t_child_params *params)
 {
 	int exit_status;
 
@@ -25,7 +33,7 @@ void exec_child(t_command *cmd, t_data *data, char **envp, t_child_params	*param
 	if (params->fd[1] > -1)
 		close(params->fd[1]);
 	if (cmd && cmd->command[0] && !cmd->is_bcommand)
-		execve(cmd->command[0], cmd->command, envp);
+		execve(cmd->command[0], cmd->command, data->myenvstr);
 
 	if (errno == ENOENT)
 	{
@@ -34,22 +42,15 @@ void exec_child(t_command *cmd, t_data *data, char **envp, t_child_params	*param
 	}
 	if (cmd->is_bcommand)
 	{
-		ft_putstr_fd("-----BCOMM-----\n",2);
 		bcomm_exec(cmd, data);
 		exit_status = 0;
 	}
-    if(cmd->cmd_fd > 0){
+    if(cmd->cmd_fd > 0)
         close(cmd->cmd_fd);
-	}
-	free_commands(&cmd);
-	free_args(envp);
-	ft_envclear(&data->myenv);
-	ft_lstclear(data);
-    exit(exit_status);
-	
+	exit_free(cmd, data, exit_status);
 }
 
-void start_child(t_command *cmd, t_data *data, char **envp, t_child_params	*params)
+void start_child(t_command *cmd, t_data *data, t_child_params *params)
 {
 	if (!cmd->next && params->is_first)
 	{
@@ -57,7 +58,7 @@ void start_child(t_command *cmd, t_data *data, char **envp, t_child_params	*para
          	dup2(cmd->cmd_fd,  STDOUT_FILENO);
 		if (cmd->fd_type == FD_IN)
 			dup2(cmd->cmd_fd, STDIN_FILENO);
-		exec_child(cmd, data, envp, params);
+		exec_child(cmd, data, params);
 	}
     if (cmd->fd_type == FD_OUT || cmd->fd_type == APPEND)
         dup2(cmd->cmd_fd,  STDOUT_FILENO);
@@ -73,11 +74,13 @@ void start_child(t_command *cmd, t_data *data, char **envp, t_child_params	*para
     if (cmd->next)
         close(params->fd[0]);
     close(params->fd[1]);
-	exec_child(cmd, data, envp, params);
+	exec_child(cmd, data, params);
 }
 
 void	parent_pid(t_command *cmd, t_child_params	*params, t_data *data)
-{   int saved_stdout;
+{
+	int saved_stdout;
+
     if (cmd->is_bcommand && !cmd->next && params->is_first)
     {
         saved_stdout = dup(STDOUT_FILENO);
@@ -100,6 +103,8 @@ void	parent_pid(t_command *cmd, t_child_params	*params, t_data *data)
 		else
            	params->fd_in = params->fd[0];
     }
+	if (cmd->cmd_fd == -1)
+		data->status = 1;
     if(cmd->cmd_fd > 0)
         close(cmd->cmd_fd);
     params->is_first = 0;
@@ -107,7 +112,7 @@ void	parent_pid(t_command *cmd, t_child_params	*params, t_data *data)
 
 
 
-void exec_cmd(t_command *cmd, t_data *data, char **envp)
+void exec_cmd(t_command *cmd, t_data *data)
 {
     pid_t			pid;
     t_child_params	params;
@@ -132,7 +137,7 @@ void exec_cmd(t_command *cmd, t_data *data, char **envp)
 			return ((perror("fork"), exit(EXIT_FAILURE)));
 
         if (pid == 0)
-			start_child(cmd, data, envp, &params);
+			start_child(cmd, data, &params);
 		else
 			parent_pid(cmd, &params, data);
         }
@@ -143,17 +148,18 @@ void exec_cmd(t_command *cmd, t_data *data, char **envp)
 		close(params.fd_in);
 	}
     if (!params.is_first)
-	    waitpid(pid, &(data->status), 0);
+		while(wait(&data->status) > 0);
+	//waitpid(pid, &(data->status), 0);
 	if (WIFEXITED(data->status)) {
     // The process exited normally, print the exit status
     printf("1status: %d\n", data->status);
 	data->status = WEXITSTATUS(data->status);
     printf("exit status: %d\nWIFSIGNALED(data->status) %d\n", WEXITSTATUS(data->status), WEXITSTATUS(data->status));
-} else if (WIFSIGNALED(data->status)) {
+	} else if (WIFSIGNALED(data->status)) {
     // The process was terminated by a signal, print the signal number
     printf("2status: %d\n", data->status);
     printf("terminated by signal: %d\n", WTERMSIG(data->status));
-} else {
+	} else {
     // Handle other cases if necessary
     printf("3status: %d\n", data->status);
     printf("Unknown exit condition\n");
