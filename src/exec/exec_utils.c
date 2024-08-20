@@ -6,7 +6,7 @@
 /*   By: nalkhate <nalkhate@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/11 16:24:22 by nalkhate          #+#    #+#             */
-/*   Updated: 2024/08/20 21:24:43 by nalkhate         ###   ########.fr       */
+/*   Updated: 2024/08/20 22:24:09 by nalkhate         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,16 +79,16 @@ void	start_child(t_command *cmd, t_data *data, t_child_params *params)
 
 void	parent_pid(t_command *cmd, t_child_params	*params, t_data *data)
 {
-	int	saved_stdout;
+	// int	saved_stdout;
 
 	if (cmd->is_bcommand && !cmd->next && params->is_first)
 	{
-		saved_stdout = dup(STDOUT_FILENO);
+		//saved_stdout = dup(STDOUT_FILENO);
 		if (cmd->fd_type == FD_OUT || cmd->fd_type == APPEND)
 			dup2(cmd->cmd_fd, STDOUT_FILENO);
 		bcomm_exec(cmd, data);
-		dup2(saved_stdout, STDOUT_FILENO);
-		close(saved_stdout);
+		//dup2(saved_stdout, STDOUT_FILENO);
+		// close(saved_stdout);
 		if (cmd->cmd_fd == -1)
 			data->status = 1;
 		else
@@ -142,30 +142,4 @@ void	exec_cmd(t_command *cmd, t_data *data)
 		close(params.fd_in);
 	if (!params.is_first)
 		waitpid(pid, &(data->status), 0);
-}
-
-int	open_file(char *filename, int open_type)
-{
-	int	ret_fd;
-
-	ret_fd = 0;
-	if (open_type == FD_IN)
-	{
-		ret_fd = open(filename, O_RDONLY);
-		if (ret_fd == -1)
-			perror(filename);
-	}
-	else if (open_type == FD_OUT)
-	{
-		ret_fd = open(filename, O_WRONLY | O_CREAT | O_TRUNC, 0644);
-		if (ret_fd == -1)
-			perror(filename);
-	}
-	else if (open_type == APPEND)
-	{
-		ret_fd = open(filename, O_WRONLY | O_CREAT | O_APPEND, 0644);
-		if (ret_fd == -1)
-			perror(filename);
-	}
-	return (ret_fd);
 }
