@@ -6,7 +6,7 @@
 /*   By: nalkhate <nalkhate@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/11 16:24:22 by nalkhate          #+#    #+#             */
-/*   Updated: 2024/08/19 21:58:42 by nalkhate         ###   ########.fr       */
+/*   Updated: 2024/08/19 23:14:38 by nalkhate         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,10 +32,6 @@ void exec_child(t_command *cmd, t_data *data, char **envp, t_child_params	*param
 		ft_putstr_fd(cmd->command[0], STDERR_FILENO);
 		ft_putstr_fd(": command not found\n", STDERR_FILENO);
 	}
-	// else {
-	// 	if (!cmd->is_bcommand)
-    //     	perror(cmd->command[0]);
-	// }
 	if (cmd->is_bcommand)
 	{
 		ft_putstr_fd("-----BCOMM-----\n",2);
@@ -151,7 +147,8 @@ void exec_cmd(t_command *cmd, t_data *data, char **envp)
 	if (WIFEXITED(data->status)) {
     // The process exited normally, print the exit status
     printf("1status: %d\n", data->status);
-    printf("exit status: %d\n", WEXITSTATUS(data->status));
+	data->status = WEXITSTATUS(data->status);
+    printf("exit status: %d\nWIFSIGNALED(data->status) %d\n", WEXITSTATUS(data->status), WEXITSTATUS(data->status));
 } else if (WIFSIGNALED(data->status)) {
     // The process was terminated by a signal, print the signal number
     printf("2status: %d\n", data->status);
