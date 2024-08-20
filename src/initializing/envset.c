@@ -46,3 +46,24 @@ void incr_shlvl(t_data *data)
     if (shlvl_str)
         free(shlvl_str);
 }
+
+void	env_init(t_data *data)
+{
+	if (data->myenv)
+		return ;
+	data->myenv = NULL;
+	while(data->envp[data->i])
+	{
+		ft_envadd_back(&data->myenv, data->envp[data->i], 0);
+		data->i++;
+	}
+	data->i = 0;
+}
+
+void    add_to_myenv(t_data *data, char *str, int hide, int sethide)
+{
+	if (check_env_dupes(data, str, sethide))
+		ft_envadd_back(&data->myenv, str, hide);
+	if (str)
+		free(str);
+}

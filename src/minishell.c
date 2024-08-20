@@ -11,15 +11,15 @@ void print_list(t_token *lst)
 	{
 		if (temp->content)
 			printf(RED "%s" RESET, temp->content);
-        if (temp->next)
-            printf(RED "--" RESET);
+		if (temp->next)
+			printf(RED "--" RESET);
 		temp = temp->next;;
 	}
 	printf("\n");
 }
 void signal_handler(int signo) 
 {
-    	if (signo == SIGINT)
+	if (signo == SIGINT)
 	{
 		// rl_on_new_line();
 		// rl_redisplay();
@@ -51,9 +51,8 @@ int main(int argc, char **argv, char **envp)
 			break;
 		if (data.input[0] != 0)
 		{
-			printf("input: %s\n", data.input);
 			add_history(data.input);
-        	data_init(&data);
+			data_init(&data);
 			parser(&data);
 			set_type(&data);
 			exec_line(&data);
