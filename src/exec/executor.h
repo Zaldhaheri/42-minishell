@@ -6,7 +6,7 @@
 /*   By: nalkhate <nalkhate@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/11 16:24:18 by nalkhate          #+#    #+#             */
-/*   Updated: 2024/08/20 21:40:11 by nalkhate         ###   ########.fr       */
+/*   Updated: 2024/08/20 21:47:38 by nalkhate         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ t_command	*set_command(char **command, t_token *temp,
 int			is_valid_type(int type);
 void		create_pipe(t_child_params *params);
 //builtins
-void		b_echo(char **com);
+void		b_echo(t_data *data, char **com);
 void		b_env(t_data *data);
 void		b_export(t_data *data, char **cmd);
 void		b_unset(t_data *data, char **cmd);
