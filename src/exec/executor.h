@@ -6,7 +6,7 @@
 /*   By: nalkhate <nalkhate@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/11 16:24:18 by nalkhate          #+#    #+#             */
-/*   Updated: 2024/08/20 17:42:23 by nalkhate         ###   ########.fr       */
+/*   Updated: 2024/08/20 21:08:45 by nalkhate         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,7 @@ void	handle_command(t_token *temp, char **command, t_data *data, t_cmd_data *cmd
 int		handle_token_type(t_token *temp, char **command, t_data_bundle *bundle);
 t_token	*handle_pipe(t_token *temp);
 void	init_cmd_data(t_cmd_data *cmd_data);
-void	handle_syntax_error(int i, char **command, t_data *data, t_token **head, t_token *temp);
+void	handle_syntax_error(t_data_bundle *bundle, char **command, t_token *temp);
 int		validate_fd(int cmd_fd, int i, char **command);
 
 #endif

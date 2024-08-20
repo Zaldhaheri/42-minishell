@@ -6,7 +6,7 @@
 /*   By: nalkhate <nalkhate@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/11 16:27:49 by nalkhate          #+#    #+#             */
-/*   Updated: 2024/08/20 17:30:31 by nalkhate         ###   ########.fr       */
+/*   Updated: 2024/08/20 20:51:01 by nalkhate         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,16 +23,15 @@ t_command	*cmd_lstlast(t_command *lst)
 
 void	free_commands(t_command **lst)
 {
-	t_command *temp;
+	t_command	*temp;
 
-	while(*lst)
+	while (*lst)
 	{
 		temp = *lst;
 		*lst = (*lst)->next;
 		if (temp->cmd_fd > -1)
 		{
 			close(temp->cmd_fd);
-			
 		}
 		free_args(temp->command);
 		free(temp);
@@ -54,9 +53,9 @@ void	cmd_add_back(t_command **lst, t_command *new)
 	}
 }
 
-int check_bcommand(char *comm)
+int	check_bcommand(char *comm)
 {
-	int c_len;
+	int	c_len;
 
 	if (!comm)
 		return (0);
@@ -78,14 +77,14 @@ int check_bcommand(char *comm)
 	else if (!ft_strncmp(comm, "exit", c_len))
 		return (1);
 	else if (ft_strrchr(comm, '=') && ft_strlen(comm) > 1
-                    && comm[0] != '=' && is_valid_key(comm))
+		&& comm[0] != '=' && is_valid_key(comm))
 		return (1);
 	return (0);
 }
 
-t_command *new_command(char **cmd, int fd, int fd_type)
+t_command	*new_command(char **cmd, int fd, int fd_type)
 {
-	t_command *new;
+	t_command	*new;
 
 	new = (t_command *)malloc(sizeof(t_command));
 	if (!new)
@@ -98,5 +97,5 @@ t_command *new_command(char **cmd, int fd, int fd_type)
 	new->cmd_fd = fd;
 	new->fd_type = fd_type;
 	new->is_bcommand = check_bcommand(cmd[0]);
-	return(new);
+	return (new);
 }
