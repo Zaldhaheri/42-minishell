@@ -3,28 +3,28 @@
 /*                                                        :::      ::::::::   */
 /*   b_echo.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nalkhate <nalkhate@student.42.fr>          +#+  +:+       +#+        */
+/*   By: zaldhahe <zaldhahe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/20 18:05:00 by nalkhate          #+#    #+#             */
-/*   Updated: 2024/08/20 18:06:03 by nalkhate         ###   ########.fr       */
+/*   Updated: 2024/08/20 21:37:01 by zaldhahe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../exec/executor.h"
 
-void b_pwd()
+void	b_pwd(void)
 {
-    char *path;
+	char	*path;
 
-    path = NULL;
-    path = getcwd(NULL, PATH_MAX);
-    if (!path){
-        perror("pwd");
-    }
-    else{
-        printf("%s\n", path);
-        free(path);
-    }
+	path = NULL;
+	path = getcwd(NULL, PATH_MAX);
+	if (!path)
+		perror("pwd");
+	else
+	{
+		printf("%s\n", path);
+		free(path);
+	}
 }
 
 void	process_echo_arg(char **com, int *i, int *flag, int *not_words)

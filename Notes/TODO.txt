@@ -43,3 +43,5 @@ minishell# pwd
 
 unset export works, but for export to work properly, where we declare env keys needs to be changed and added to exec instead of parsing
 to not declare before exporting basically.
+
+basically done, whats left is to change pwd and oldpwd when we do cd. and norminette whats left.
