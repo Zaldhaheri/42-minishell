@@ -29,10 +29,9 @@ void signal_handler(int signo)
 	}
 }
 
-
 int main(int argc, char **argv, char **envp)
 {
-	t_data data;
+	t_data	data;
 
 	(void)argc;
 	(void)argv;
@@ -44,7 +43,7 @@ int main(int argc, char **argv, char **envp)
 	{
 		data.input = readline(MAGENTA "minishell# " RESET);
 		if (!data.input)
-			break;
+			break ;
 		if (data.input[0] != 0)
 		{
 			add_history(data.input);
@@ -64,4 +63,3 @@ int main(int argc, char **argv, char **envp)
 	ft_lstclear(&data);
 	printf("exit\n");
 }
-

@@ -6,7 +6,7 @@
 /*   By: nalkhate <nalkhate@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/20 20:29:53 by nalkhate          #+#    #+#             */
-/*   Updated: 2024/08/20 21:00:31 by nalkhate         ###   ########.fr       */
+/*   Updated: 2024/08/20 23:10:06 by nalkhate         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,26 +56,21 @@ static int	check_if_command(t_data *data, t_token *curr)
 
 void	check_if_bcommand(t_token *temp)
 {
-	int	c_len;
-
 	if (temp->type)
 		return ;
-	c_len = ft_strlen(temp->content);
-	if (!ft_strncmp(temp->content, "echo", c_len))
+	if (!ft_strncmp(temp->content, "echo", 4))
 		temp->type = BCOMMAND;
-	else if (!ft_strncmp(temp->content, "cd", c_len))
+	else if (!ft_strncmp(temp->content, "cd", 2))
 		temp->type = BCOMMAND;
-	else if (!ft_strncmp(temp->content, "cd", c_len))
+	else if (!ft_strncmp(temp->content, "pwd", 3))
 		temp->type = BCOMMAND;
-	else if (!ft_strncmp(temp->content, "pwd", c_len))
+	else if (!ft_strncmp(temp->content, "export", 6))
 		temp->type = BCOMMAND;
-	else if (!ft_strncmp(temp->content, "export", c_len))
+	else if (!ft_strncmp(temp->content, "unset", 5))
 		temp->type = BCOMMAND;
-	else if (!ft_strncmp(temp->content, "unset", c_len))
+	else if (!ft_strncmp(temp->content, "env", 3))
 		temp->type = BCOMMAND;
-	else if (!ft_strncmp(temp->content, "env", c_len))
-		temp->type = BCOMMAND;
-	else if (!ft_strncmp(temp->content, "exit", c_len))
+	else if (!ft_strncmp(temp->content, "exit", 4))
 		temp->type = BCOMMAND;
 	else if (ft_strrchr(temp->content, '=') && ft_strlen(temp->content) > 1
 		&& temp->content[0] != '=' && is_valid_key(temp->content))
@@ -116,15 +111,3 @@ void	set_type(t_data *data)
 		temp = temp->next;
 	}
 }
-// void print_type(t_data *data)
-// {
-// 	t_token	*temp;
-
-// 	temp = data->tokens;
-// 	while(temp)
-// 	{
-// 		printf(MAGENTA"NODE: %s Type: %d " RESET, temp->content, temp->type);
-// 		temp = temp->next;
-// 	}
-// 	printf("\n");
-// }

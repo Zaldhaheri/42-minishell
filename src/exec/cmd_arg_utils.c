@@ -6,7 +6,7 @@
 /*   By: nalkhate <nalkhate@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/11 16:27:49 by nalkhate          #+#    #+#             */
-/*   Updated: 2024/08/20 20:51:01 by nalkhate         ###   ########.fr       */
+/*   Updated: 2024/08/20 23:24:09 by nalkhate         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,31 +55,27 @@ void	cmd_add_back(t_command **lst, t_command *new)
 
 int	check_bcommand(char *comm)
 {
-	int	c_len;
-
 	if (!comm)
 		return (0);
-	c_len = ft_strlen(comm);
-	if (!ft_strncmp(comm, "echo", c_len))
+	if (!ft_strncmp(comm, "echo", 4))
 		return (1);
-	else if (!ft_strncmp(comm, "cd", c_len))
+	else if (!ft_strncmp(comm, "cd", 2))
 		return (1);
-	else if (!ft_strncmp(comm, "cd", c_len))
+	else if (!ft_strncmp(comm, "pwd", 3))
 		return (1);
-	else if (!ft_strncmp(comm, "pwd", c_len))
+	else if (!ft_strncmp(comm, "export", 6))
 		return (1);
-	else if (!ft_strncmp(comm, "export", c_len))
+	else if (!ft_strncmp(comm, "unset", 5))
 		return (1);
-	else if (!ft_strncmp(comm, "unset", c_len))
+	else if (!ft_strncmp(comm, "env", 3))
 		return (1);
-	else if (!ft_strncmp(comm, "env", c_len))
-		return (1);
-	else if (!ft_strncmp(comm, "exit", c_len))
+	else if (!ft_strncmp(comm, "exit", 4))
 		return (1);
 	else if (ft_strrchr(comm, '=') && ft_strlen(comm) > 1
 		&& comm[0] != '=' && is_valid_key(comm))
 		return (1);
-	return (0);
+	else
+		return (0);
 }
 
 t_command	*new_command(char **cmd, int fd, int fd_type)
