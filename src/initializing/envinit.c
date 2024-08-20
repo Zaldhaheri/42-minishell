@@ -1,11 +1,23 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   envinit.c                                          :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: zaldhahe <zaldhahe@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/08/20 19:51:40 by zaldhahe          #+#    #+#             */
+/*   Updated: 2024/08/20 19:51:40 by zaldhahe         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../../inc/minishell.h"
 
-void print_env(t_env *env)
+void	print_env(t_env *env)
 {
-	t_env *temp;
+	t_env	*temp;
 
 	temp = env;
-	while(temp)
+	while (temp)
 	{
 		if (temp->key && temp->value && !temp->hide)
 		{
@@ -27,10 +39,10 @@ t_env	*ft_envlast(t_env *lst)
 	return (lst);
 }
 
-void ft_envclear(t_env **lst)
+void	ft_envclear(t_env **lst)
 {
-	t_env *curr;
-	t_env *temp;
+	t_env	*curr;
+	t_env	*temp;
 
 	curr = *lst;
 	while (curr)
@@ -43,18 +55,17 @@ void ft_envclear(t_env **lst)
 		}
 		curr = curr->next;
 		if (temp)
-		{
-			free(temp); 
-		}
+			free(temp);
 	}
-	*lst = NULL; 
+	*lst = NULL;
 }
 
 t_env	*ft_envnew(char *word, int hide)
 {
-	t_env *node;
-	char **split;
-	node = (t_env *)malloc(sizeof(t_env));
+	t_env	*node;
+	char	**split;
+
+	node = (t_env *) malloc(sizeof(t_env));
 	node->key = NULL;
 	node->value = NULL;
 	node->hide = hide;
@@ -71,9 +82,9 @@ t_env	*ft_envnew(char *word, int hide)
 	return (node);
 }
 
-void    ft_envadd_back(t_env **lst, char *s, int hide)
+void	ft_envadd_back(t_env **lst, char *s, int hide)
 {
-	t_env *temp;
+	t_env	*temp;
 
 	if (*lst == NULL)
 		*lst = ft_envnew(s, hide);

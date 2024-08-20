@@ -64,12 +64,16 @@ struct s_token
 typedef struct s_data
 {
 	char *input;
-	char *checker; //the appender
-	char *temp; //temp string
+	char *checker;
+	char *temp;
+	char *tempkey;
+	char *tempvalue;
+	char *temp2;
+	int j;
 	int typeflag;
-	char **envp; //original envp
+	char **envp;
 	char **myenvstr;
-	t_env	*myenv; //our env
+	t_env	*myenv;
 	t_token *tokens;
 	t_token *currtoken;
 	unsigned int i;
@@ -109,6 +113,7 @@ char **env_to_array(t_env *myenv);
 //parsing
 void parser(t_data *data);
 void append_checker(t_data *data);
+void append_checker_char(t_data *data, int c);
 int check_string(t_data *data);
 void add_token_from_checker(t_data *data, int type, char **str);
 void add_token_to_env(t_data *data);

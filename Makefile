@@ -1,7 +1,7 @@
 NAME = minishell
 
 SRC = src/minishell.c src/initializing/init.c src/initializing/envinit.c src/initializing/envset.c src/parsing/parsingenv.c src/parsing/parsing.c src/parsing/parsingchar.c \
-		utils/utils1.c utils/lst_utils.c utils/ft_strtrim.c src/type.c utils/cmd_utils.c utils/ft_split.c \
+		src/parsing/parsingchar2.c utils/utils1.c utils/lst_utils.c utils/ft_strtrim.c src/type.c utils/cmd_utils.c utils/ft_split.c \
 		get_next_line/get_next_line.c get_next_line/get_next_line_utils.c src/exec/exec_utils.c src/exec/cmd_arg_utils.c src/exec/cmd_utils.c\
 		src/exec/handle_cmd.c src/exec/executor.c src/bcomm/bcomm.c src/bcomm/bcomm_exec.c src/bcomm/b_echo.c
 
