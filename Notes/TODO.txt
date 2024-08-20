@@ -45,3 +45,20 @@ unset export works, but for export to work properly, where we declare env keys n
 to not declare before exporting basically.
 
 basically done, whats left is to change pwd and oldpwd when we do cd. and norminette whats left.
+
+zaldhahe@lab1r3s2 42-minishell % ./minishell
+minishell# unset
+unset
+minishell# unset bababbaba
+unset
+minishell# unset USER
+unset
+key USER found
+prevnext
+free key
+free value
+free temp
+minishell# hello
+hello: command not found
+minishell(91470,0x10ef8ddc0) malloc: *** error for object 0x7fb9be400005: pointer being freed was not allocated
+minishell(91470,0x10ef8ddc0) malloc: *** set a breakpoint in malloc_error_break to debug
