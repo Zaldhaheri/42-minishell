@@ -22,6 +22,13 @@ static void	params_init(t_child_params	*params)
 	params->saved_stdout = dup(STDIN_FILENO);
 }
 
+static void	child_proc(t_data *data)
+{
+	while (wait(&(data->status)) > 0)
+	{
+	}
+}
+
 void	exec_cmd(t_command *cmd, t_data *data)
 {
 	t_child_params	params;
@@ -48,5 +55,5 @@ void	exec_cmd(t_command *cmd, t_data *data)
 	}
 	if (params.fd_in != STDIN_FILENO)
 		close(params.fd_in);
-	waitpid(params.pid, &(data->status), 0);
+	child_proc(data);
 }
