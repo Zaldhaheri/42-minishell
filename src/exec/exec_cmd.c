@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_cmd.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nalkhate <nalkhate@student.42.fr>          +#+  +:+       +#+        */
+/*   By: zaldhahe <zaldhahe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/21 09:43:08 by nalkhate          #+#    #+#             */
-/*   Updated: 2024/08/21 09:50:04 by nalkhate         ###   ########.fr       */
+/*   Updated: 2024/08/21 17:48:35 by zaldhahe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,10 +23,10 @@ static void	params_init(t_child_params	*params)
 
 void	exec_cmd(t_command *cmd, t_data *data)
 {
-	pid_t			pid;
 	t_child_params	params;
 
 	params_init(&params);
+	params.pid = 0;
 	while (cmd)
 	{
 		if (cmd->next)
@@ -35,10 +35,10 @@ void	exec_cmd(t_command *cmd, t_data *data)
 			parent_pid(cmd, &params, data);
 		else
 		{
-			pid = fork();
-			if (pid == -1)
+			params.pid = fork();
+			if (params.pid == -1)
 				return ((perror("fork"), exit(EXIT_FAILURE)));
-			if (pid == 0)
+			if (params.pid == 0)
 				start_child(cmd, data, &params);
 			else
 				parent_pid(cmd, &params, data);
@@ -47,5 +47,5 @@ void	exec_cmd(t_command *cmd, t_data *data)
 	}
 	if (params.fd_in != STDIN_FILENO)
 		close(params.fd_in);
-	waitpid(pid, &(data->status), 0);
+	waitpid(params.pid, &(data->status), 0);
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   executor.h                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nalkhate <nalkhate@student.42.fr>          +#+  +:+       +#+        */
+/*   By: zaldhahe <zaldhahe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/11 16:24:18 by nalkhate          #+#    #+#             */
-/*   Updated: 2024/08/21 13:38:48 by nalkhate         ###   ########.fr       */
+/*   Updated: 2024/08/21 17:57:12 by zaldhahe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,10 +17,11 @@
 
 typedef struct s_child_params
 {
-	int	fd[2];
-	int	fd_in;
-	int	fd_out;
-	int	is_first;
+	int		fd[2];
+	int		fd_in;
+	int		fd_out;
+	int		is_first;
+	pid_t	pid;
 }	t_child_params;
 
 t_command	*cmd_lstlast(t_command *lst);

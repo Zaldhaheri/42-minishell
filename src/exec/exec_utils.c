@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_utils.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nalkhate <nalkhate@student.42.fr>          +#+  +:+       +#+        */
+/*   By: zaldhahe <zaldhahe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/11 16:24:22 by nalkhate          #+#    #+#             */
-/*   Updated: 2024/08/21 09:44:01 by nalkhate         ###   ########.fr       */
+/*   Updated: 2024/08/21 17:54:50 by zaldhahe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,7 +90,7 @@ static void	bcomm_parent(t_command *cmd, t_data *data)
 	}
 	if (cmd->cmd_fd == -1)
 		data->status = 1;
-	else
+	else if (!data->sflag)
 		data->status = 0;
 }
 

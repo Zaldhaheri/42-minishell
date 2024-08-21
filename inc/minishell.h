@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nalkhate <nalkhate@student.42.fr>          +#+  +:+       +#+        */
+/*   By: zaldhahe <zaldhahe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/20 21:09:43 by zaldhahe          #+#    #+#             */
-/*   Updated: 2024/08/20 21:36:54 by nalkhate         ###   ########.fr       */
+/*   Updated: 2024/08/21 18:03:36 by zaldhahe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,11 +53,12 @@ typedef struct s_data
 	char			*input;
 	char			*checker;
 	char			*temp;
+	char			*temp2;
 	char			*tempkey;
 	char			*tempvalue;
-	char			*temp2;
 	int				j;
 	int				typeflag;
+	int				sflag;
 	char			**envp;
 	char			**myenvstr;
 	t_env			*myenv;
@@ -76,10 +77,6 @@ typedef struct s_command
 	struct s_command	*next;
 	struct s_command	*prev;
 }	t_command;
-
-void	print_list(t_token *lst);
-void	print_type(t_data *data);
-void	print_env(t_env *env);
 
 //initializing
 void	data_init(t_data *data);

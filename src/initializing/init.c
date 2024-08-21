@@ -28,7 +28,7 @@ void	pre_init(t_data *data, char **envp)
 	data->myenv = NULL;
 	data->myenv = NULL;
 	data->tokens = NULL;
-	data->status = 0;
+	data->sflag = 0;
 	data->i = 0;
 	env_init(data);
 	add_to_myenv(data, ft_strdup("?=0"), 1, 0);
@@ -42,6 +42,7 @@ void	data_init(t_data *data)
 	data->checker = ft_strdup("");
 	data->tokens = NULL;
 	data->typeflag = WORD;
+	data->status = 0;
 	data->myenvstr = env_to_array(data->myenv);
 }
 

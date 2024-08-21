@@ -1,23 +1,20 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   minishell.c                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: zaldhahe <zaldhahe@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/08/21 17:57:48 by zaldhahe          #+#    #+#             */
+/*   Updated: 2024/08/21 17:57:48 by zaldhahe         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../inc/minishell.h"
 
 int	g_exit_code;
 
-void print_list(t_token *lst)
-{
-	t_token *temp;
-
-	temp = lst;
-	while (temp != NULL)
-	{
-		if (temp->content)
-			printf(RED "%s" RESET, temp->content);
-		if (temp->next)
-			printf(RED "--" RESET);
-		temp = temp->next;
-	}
-	printf("\n");
-}
-void signal_handler(int signo) 
+void	signal_handler(int signo)
 {
 	if (signo == SIGINT)
 	{
@@ -25,11 +22,21 @@ void signal_handler(int signo)
 		rl_replace_line("", 0);
 		rl_on_new_line();
 		rl_redisplay();
-		//g_exit_code = 1;
 	}
 }
 
-int main(int argc, char **argv, char **envp)
+void	minishell(t_data *data)
+{
+	add_history(data->input);
+	data_init(data);
+	parser(data);
+	set_type(data);
+	exec_line(data);
+	free_split_from(data->myenvstr, 0);
+	ft_lstclear(data);
+}
+
+int	main(int argc, char **argv, char **envp)
 {
 	t_data	data;
 
@@ -45,15 +52,7 @@ int main(int argc, char **argv, char **envp)
 		if (!data.input)
 			break ;
 		if (data.input[0] != 0)
-		{
-			add_history(data.input);
-			data_init(&data);
-			parser(&data);
-			set_type(&data);
-			exec_line(&data);
-			free_split_from(data.myenvstr, 0);
-			ft_lstclear(&data);
-		}
+			minishell(&data);
 		else
 		{
 			data.status = g_exit_code;

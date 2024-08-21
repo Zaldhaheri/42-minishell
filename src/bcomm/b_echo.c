@@ -3,23 +3,23 @@
 /*                                                        :::      ::::::::   */
 /*   b_echo.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nalkhate <nalkhate@student.42.fr>          +#+  +:+       +#+        */
+/*   By: zaldhahe <zaldhahe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/20 18:05:00 by nalkhate          #+#    #+#             */
-/*   Updated: 2024/08/21 12:43:14 by nalkhate         ###   ########.fr       */
+/*   Updated: 2024/08/21 18:25:05 by zaldhahe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../exec/executor.h"
 
-char *get_pwd()
+char	*get_pwd(void)
 {
 	char	*path;
 
 	path = NULL;
 	path = getcwd(NULL, PATH_MAX);
 	if (!path)
-		return("");
+		return ("");
 	else
 		return (path);
 }

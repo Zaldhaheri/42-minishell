@@ -1,250 +1,107 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   bcomm.c                                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: zaldhahe <zaldhahe@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/08/21 17:23:47 by zaldhahe          #+#    #+#             */
+/*   Updated: 2024/08/21 18:22:46 by zaldhahe         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
 #include "../exec/executor.h"
 
-
-
-void b_env(t_data *data)
+void	b_unset_del(t_env *prev, t_env *curr)
 {
-    t_env *curr;
-
-    curr = data->myenv;
-    printf("My env bcomm\n");
-    while (curr)
-    {
-        if (curr->key && curr->value && !curr->hide)
-            printf("%s=%s\n", curr->key, curr->value);
-        curr = curr->next;
-    }
+	if (prev)
+		prev->next = curr->next;
+	free(curr->key);
+	free(curr->value);
+	free(curr);
 }
 
-void b_sort(char **arr, int size)
+void	b_unset(t_data *data, char **cmd)
 {
-    int swap;
-    char *temp;
-    int i;
+	t_env	*curr;
+	t_env	*prev;
+	t_env	*temp;
+	int		i;
 
-    swap = 1;
-    while(swap)
-    {
-        i = 0;
-        swap = 0;
-        while(i < size - 1)
-        {
-            if (ft_strcmp(arr[i], arr[i + 1]) > 0)
-            {
-                temp = arr[i];
-                arr[i] = arr[i + 1];
-                arr[i + 1] = temp;
-                swap = 1;
-            }
-            i++;
-        }
-    }
-}
-
-void print_export(t_data *data)
-{
-    char **tempenv;
-    int i;
-
-    i = 0;
-    tempenv = env_to_array(data->myenv);
-    b_sort(tempenv, ft_envsize(data->myenv));
-    while(tempenv[i])
-    {
-        printf("%s\n", tempenv[i++]);
-    }
-    free_split_from(tempenv, 0);
-}
-
-void b_export(t_data *data, char **cmd)
-{
-    int i;
-
-    i = 0;
-    printf("export\n");
-    if (!cmd[1])
-        print_export(data);
-    else
-    {
-        while(cmd[i])
-        {
-            if (ft_strrchr(cmd[i], '=') && ft_strlen(cmd[i]) > 1
-                    && cmd[i][0] != '=' && is_valid_key(cmd[i]))
-                add_to_myenv(data, ft_strdup(cmd[i]), 0, 1);
-            i++;
-        }
-    }
-}
-
-void b_unset(t_data *data, char **cmd)
-{
-    printf("unset\n");
-    t_env *curr;
-    t_env *prev;
-    t_env *temp;
-    int i;
-
-    i = 1;
-    while(cmd[i])
-    {
-        curr = data->myenv;
-        prev = NULL;
-        while(curr)
-        {
-            if (curr->key && !ft_strcmp(curr->key, cmd[i]) && curr->key[0] != '?')
-            {
-                printf("key %s found\n", curr->key);
-                if (prev)
-                    prev->next = curr->next;
-                printf("prevnext\n");
-                temp = curr;
-                curr = curr->next;
-                free(temp->key);
-                printf("free key\n");
-                free(temp->value);
-                printf("free value\n");
-                free(temp);
-                printf("free temp\n");
-                break ;
-            }
-            printf("after break\n");
-            prev = curr;
-            curr = curr->next;
-        }
-        i++;
-    }
-}
-
-void b_cd(t_data *data, char **cmd)
-{
-    char    *home;
-    char    *curr_pwd;
-    char    *temp;
-
-    temp = get_pwd();
-    curr_pwd = ft_strjoin("OLDPWD=", temp);
-    add_to_myenv(data, ft_strdup(curr_pwd), 0, 1);
-    free(temp);
-    free(curr_pwd);
-    home = get_env_value(data, "HOME");
-    if (!cmd[1] || !ft_strncmp(cmd[1], "~", 1)){
-        if (!home)
-            ft_putstr_fd("minishell: cd: HOME not set\n", 2);
-        else
-            chdir(home);
-    }
-    else if (chdir(cmd[1]) == -1){
-        perror("cd");
-        data->status = 1;
-    }
-    temp = get_pwd();
-    curr_pwd = ft_strjoin("PWD=", temp);
-    add_to_myenv(data, ft_strdup(curr_pwd), 0, 1);
-    free(curr_pwd);
-}
-
-void b_declare(t_data *data, char **cmd)
-{
-    printf("in b_declare\n");
-    int i;
-    int valid;
-
-    valid = 1;
-    i = 0;
-    while(cmd[i] && valid)
-    {
-        if (!((ft_strrchr(cmd[i], '=') && ft_strlen(cmd[i]) > 1
-                    && cmd[i][0] != '=' && is_valid_key(cmd[i]))))
-                    valid = 0;
-        i++;
-    }
-    if (valid)
-    {
-        i--;
-        add_to_myenv(data, ft_strdup(cmd[i]), 1, 0);
-    }
-}
-
-static void	exit_overflow(char *temp, int *flag)
-{
-	ft_putstr_fd("exit\nminishell: exit: ", 2);
-    ft_putstr_fd(temp, 2);
-    ft_putstr_fd(": numeric argument required\n", 2);
-    *flag = 0;
-}
-
-long    ft_atol(const char *str, char *temp, int *flag)
-{
-	int						sign;
-	unsigned long long		result;
-	int						digits;
-
-	sign = 1;
-	result = 0;
-	digits = 1;
-	while (*str && (*str == 32 || (*str >= 9 && *str <= 13)))
-		str++;
-	if (*str == '-' || *str == '+')
+	i = 1;
+	while (cmd[i])
 	{
-		if (*str == '-')
-			sign *= -1;
-		str++;
+		curr = data->myenv;
+		prev = NULL;
+		while (curr)
+		{
+			if (curr->key && !ft_strcmp(curr->key, cmd[i])
+				&& curr->key[0] != '?')
+			{
+				temp = curr;
+				curr = curr->next;
+				b_unset_del(prev, temp);
+				break ;
+			}
+			prev = curr;
+			curr = curr->next;
+		}
+		i++;
 	}
-	while (*str && *str >= '0' && *str <= '9')
+}
+
+void	b_cd_oldpwd(t_data *data, char **temp, char **curr_pwd)
+{
+	*temp = get_pwd();
+	*curr_pwd = ft_strjoin("OLDPWD=", *temp);
+	add_to_myenv(data, ft_strdup(*curr_pwd), 0, 1);
+	free(*temp);
+	free(*curr_pwd);
+}
+
+void	b_cd(t_data *data, char **cmd)
+{
+	char	*home;
+	char	*curr_pwd;
+	char	*temp;
+
+	b_cd_oldpwd(data, &temp, &curr_pwd);
+	home = get_env_value(data, "HOME");
+	if (!cmd[1] || !ft_strncmp(cmd[1], "~", 1))
 	{
-		result = (result * 10) + *str - 48;
-		if (result > 9223372036854775808ULL || digits > 19)
-			return (exit_overflow(temp, flag), 255);
-		str++;
-		if (result > 0)
-			digits++;
+		if (!home)
+			ft_putstr_fd("minishell: cd: HOME not set\n", 2);
+		else
+			chdir(home);
 	}
-	return (result * sign);
+	else if (chdir(cmd[1]) == -1)
+	{
+		perror("cd");
+		data->status = 1;
+	}
+	temp = get_pwd();
+	curr_pwd = ft_strjoin("PWD=", temp);
+	add_to_myenv(data, ft_strdup(curr_pwd), 0, 1);
+	free(curr_pwd);
 }
 
-int is_numeric(char *str)
+void	b_declare(t_data *data, char **cmd)
 {
-    if (*str == '+' || *str == '-')
-        str++;
-    while(*str)
-    {
-        if (*str < 48 || *str > 57)
-            return 0;
-        str++;
-    }
-    return 1;
+	int	i;
+	int	valid;
+
+	valid = 1;
+	i = 0;
+	while (cmd[i] && valid)
+	{
+		if (!((ft_strrchr(cmd[i], '=') && ft_strlen(cmd[i]) > 1
+					&& cmd[i][0] != '=' && is_valid_key(cmd[i]))))
+			valid = 0;
+		i++;
+	}
+	if (valid)
+	{
+		i--;
+		add_to_myenv(data, ft_strdup(cmd[i]), 1, 0);
+	}
 }
-
-void    b_exit(t_data *data, t_command *cmd)
-{
-    int arg;
-    int flag;
-
-    flag = 1;
-    arg = 0;
-    if (cmd->command[1] && is_numeric(cmd->command[1]) &&cmd->command[2])
-    {
-        printf("exit\n");
-        ft_putstr_fd("minishell: exit: too many arguments\n", 2);
-        data->status = 1;
-        set_exitstatus(data);
-        return ;
-    }
-    if (cmd->command[1] && is_numeric(cmd->command[1]))
-        arg = ft_atol(cmd->command[1], cmd->command[1], &flag);
-    else if (cmd->command[1] && !is_numeric(cmd->command[1]))
-    {
-        exit_overflow(cmd->command[1], &flag);
-        arg = 255;
-    }
-    free_commands(&cmd);
-    ft_envclear(&data->myenv);
-    free_split_from(data->myenvstr, 0);
-	ft_lstclear(data);
-    if (flag)
-        printf("exit\n");
-    exit(arg);
-}
-
-

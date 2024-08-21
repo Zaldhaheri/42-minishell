@@ -12,24 +12,6 @@
 
 #include "../../inc/minishell.h"
 
-void	print_env(t_env *env)
-{
-	t_env	*temp;
-
-	temp = env;
-	while (temp)
-	{
-		if (temp->key && temp->value && !temp->hide)
-		{
-			printf(GREEN "%s" RESET, temp->key);
-			printf("=");
-			printf(BLUE "%s\n" RESET, temp->value);
-		}
-		temp = temp->next;
-	}
-	printf("\n");
-}
-
 t_env	*ft_envlast(t_env *lst)
 {
 	if (!lst)
