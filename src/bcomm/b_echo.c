@@ -6,11 +6,23 @@
 /*   By: nalkhate <nalkhate@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/20 18:05:00 by nalkhate          #+#    #+#             */
-/*   Updated: 2024/08/20 21:47:01 by nalkhate         ###   ########.fr       */
+/*   Updated: 2024/08/21 12:43:14 by nalkhate         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../exec/executor.h"
+
+char *get_pwd()
+{
+	char	*path;
+
+	path = NULL;
+	path = getcwd(NULL, PATH_MAX);
+	if (!path)
+		return("");
+	else
+		return (path);
+}
 
 void	b_pwd(void)
 {

@@ -108,6 +108,7 @@ void b_unset(t_data *data, char **cmd)
                 printf("free temp\n");
                 break ;
             }
+            printf("after break\n");
             prev = curr;
             curr = curr->next;
         }
@@ -117,14 +118,19 @@ void b_unset(t_data *data, char **cmd)
 
 void b_cd(t_data *data, char **cmd)
 {
-    char *home;
+    char    *home;
+    char    *curr_pwd;
+    char    *temp;
 
+    temp = get_pwd();
+    curr_pwd = ft_strjoin("OLDPWD=", temp);
+    add_to_myenv(data, ft_strdup(curr_pwd), 0, 1);
+    free(temp);
+    free(curr_pwd);
     home = get_env_value(data, "HOME");
     if (!cmd[1] || !ft_strncmp(cmd[1], "~", 1)){
         if (!home)
-        {
-            ft_putstr_fd("home directory is not set.\n", 2);
-        }
+            ft_putstr_fd("minishell: cd: HOME not set\n", 2);
         else
             chdir(home);
     }
@@ -132,6 +138,10 @@ void b_cd(t_data *data, char **cmd)
         perror("cd");
         data->status = 1;
     }
+    temp = get_pwd();
+    curr_pwd = ft_strjoin("PWD=", temp);
+    add_to_myenv(data, ft_strdup(curr_pwd), 0, 1);
+    free(curr_pwd);
 }
 
 void b_declare(t_data *data, char **cmd)
