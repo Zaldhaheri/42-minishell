@@ -19,6 +19,7 @@ static void	params_init(t_child_params	*params)
 	params->is_first = 1;
 	params->fd[0] = -10;
 	params->fd[1] = -10;
+	params->saved_stdout = dup(STDIN_FILENO);
 }
 
 void	exec_cmd(t_command *cmd, t_data *data)

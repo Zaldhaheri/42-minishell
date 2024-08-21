@@ -22,6 +22,7 @@ typedef struct s_child_params
 	int		fd_out;
 	int		is_first;
 	pid_t	pid;
+	int		saved_stdout;
 }	t_child_params;
 
 t_command	*cmd_lstlast(t_command *lst);
