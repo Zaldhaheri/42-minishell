@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   bcomm.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: zaldhahe <zaldhahe@student.42.fr>          +#+  +:+       +#+        */
+/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/21 17:23:47 by zaldhahe          #+#    #+#             */
-/*   Updated: 2024/08/21 18:22:46 by zaldhahe         ###   ########.fr       */
+/*   Updated: 2024/08/21 23:17:30 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,6 +83,7 @@ void	b_cd(t_data *data, char **cmd)
 	curr_pwd = ft_strjoin("PWD=", temp);
 	add_to_myenv(data, ft_strdup(curr_pwd), 0, 1);
 	free(curr_pwd);
+	free(temp);
 }
 
 void	b_declare(t_data *data, char **cmd)
