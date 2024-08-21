@@ -6,7 +6,7 @@
 /*   By: nalkhate <nalkhate@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/11 16:24:18 by nalkhate          #+#    #+#             */
-/*   Updated: 2024/08/20 21:47:38 by nalkhate         ###   ########.fr       */
+/*   Updated: 2024/08/21 13:38:48 by nalkhate         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ void		b_cd(t_data *data, char **cmd);
 void		b_pwd(void);
 void		b_exit(t_data *data, t_command *cmd);
 void		b_declare(t_data *data, char **cmd);
-
+char		*get_pwd(void);
 //norme stuff
 typedef struct s_cmd_data
 {
