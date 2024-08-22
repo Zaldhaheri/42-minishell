@@ -3,17 +3,19 @@
 /*                                                        :::      ::::::::   */
 /*   bcomm.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nalkhate <nalkhate@student.42.fr>          +#+  +:+       +#+        */
+/*   By: zaldhahe <zaldhahe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/21 17:23:47 by zaldhahe          #+#    #+#             */
-/*   Updated: 2024/08/22 16:39:52 by nalkhate         ###   ########.fr       */
+/*   Updated: 2024/08/22 19:47:38 by zaldhahe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../exec/executor.h"
 
-void	b_unset_del(t_env *prev, t_env *curr)
+void	b_unset_del(t_data *data, t_env *prev, t_env *curr)
 {
+	if (!ft_strcmp(data->myenv->key, curr->key))
+		data->myenv = data->myenv->next;
 	if (prev)
 		prev->next = curr->next;
 	free(curr->key);
@@ -40,7 +42,7 @@ void	b_unset(t_data *data, char **cmd)
 			{
 				temp = curr;
 				curr = curr->next;
-				b_unset_del(prev, temp);
+				b_unset_del(data, prev, temp);
 				break ;
 			}
 			prev = curr;
