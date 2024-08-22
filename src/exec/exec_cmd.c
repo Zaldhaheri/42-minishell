@@ -6,7 +6,7 @@
 /*   By: nalkhate <nalkhate@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/21 09:43:08 by nalkhate          #+#    #+#             */
-/*   Updated: 2024/08/22 20:09:35 by nalkhate         ###   ########.fr       */
+/*   Updated: 2024/08/22 21:31:58 by nalkhate         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,13 @@ static void	params_init(t_child_params	*params)
 static void	child_proc(t_data *data, t_child_params	*params)
 {
 	waitpid(params->pid, &data->status, 0);
-	data->status = WEXITSTATUS(data->status);
+	if (data->status == 11)
+	{
+		ft_putstr_fd("Segmentation fault: 11\n", 2);
+		data->status = 139;
+	}
+	else
+		data->status = WEXITSTATUS(data->status);
 	close(params->saved_stdout);
 }
 

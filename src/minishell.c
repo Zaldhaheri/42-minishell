@@ -12,7 +12,7 @@
 
 #include "../inc/minishell.h"
 
-int	g_exit_code;
+int	g_exit_code = 0;
 
 void	signal_handler(int signo)
 {
@@ -22,6 +22,7 @@ void	signal_handler(int signo)
 		rl_replace_line("", 0);
 		rl_on_new_line();
 		rl_redisplay();
+		g_exit_code = 1;
 	}
 }
 
@@ -49,13 +50,12 @@ int	main(int argc, char **argv, char **envp)
 
 	(void)argc;
 	(void)argv;
-	g_exit_code = 0;
 	pre_init(&data, envp);
 	signal(SIGQUIT, SIG_IGN);
 	signal(SIGINT, signal_handler);
 	while (1)
 	{
-		data.input = readline(MAGENTA "minishell# " RESET);
+		data.input = readline(BLUE "brokeshell# " RESET);
 		if (!data.input)
 			break ;
 		if (data.input[0] != 0)
@@ -63,6 +63,7 @@ int	main(int argc, char **argv, char **envp)
 		else
 		{
 			data.status = g_exit_code;
+			set_exitstatus(&data);
 		}
 	}
 	ft_envclear(&data.myenv);

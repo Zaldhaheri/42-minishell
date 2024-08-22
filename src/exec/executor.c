@@ -6,11 +6,13 @@
 /*   By: nalkhate <nalkhate@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/11 16:25:03 by nalkhate          #+#    #+#             */
-/*   Updated: 2024/08/20 23:26:46 by nalkhate         ###   ########.fr       */
+/*   Updated: 2024/08/22 21:29:42 by nalkhate         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "executor.h"
+
+extern int	g_exit_code;
 
 void	create_pipe(t_child_params *params)
 {
@@ -81,11 +83,7 @@ void	exec_line(t_data *data)
 	}
 	if (head && *cmd != NULL && command)
 		exec_cmd(head, data);
-	if (data->status == 11)
-	{
-		ft_putstr_fd("Segmentation fault: 11\n", 2);
-		data->status = 139;
-	}
+	g_exit_code = 0;
 	set_exitstatus(data);
 	free_commands(&head);
 }
