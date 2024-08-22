@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   b_echo.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: zaldhahe <zaldhahe@student.42.fr>          +#+  +:+       +#+        */
+/*   By: nalkhate <nalkhate@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/20 18:05:00 by nalkhate          #+#    #+#             */
-/*   Updated: 2024/08/21 18:25:05 by zaldhahe         ###   ########.fr       */
+/*   Updated: 2024/08/22 16:38:52 by nalkhate         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,4 +83,24 @@ void	b_echo(t_data *data, char **com)
 	}
 	if (!flag)
 		printf("\n");
+}
+
+void	cd_home_path(char *home, char *cmd, t_data *data)
+{
+	char	*joined;
+
+	joined = NULL;
+	if (home)
+	{
+		joined = ft_strjoin(home, cmd + 1);
+	}
+	if (joined)
+	{
+		if (chdir(joined) == -1)
+		{
+			perror("cd");
+			data->status = 1;
+		}
+		free(joined);
+	}
 }

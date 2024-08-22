@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   executor.h                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: zaldhahe <zaldhahe@student.42.fr>          +#+  +:+       +#+        */
+/*   By: nalkhate <nalkhate@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/11 16:24:18 by nalkhate          #+#    #+#             */
-/*   Updated: 2024/08/21 17:57:12 by zaldhahe         ###   ########.fr       */
+/*   Updated: 2024/08/22 16:34:17 by nalkhate         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,6 +52,7 @@ void		b_pwd(void);
 void		b_exit(t_data *data, t_command *cmd);
 void		b_declare(t_data *data, char **cmd);
 char		*get_pwd(void);
+void		cd_home_path(char *home, char *cmd, t_data *data);
 //norme stuff
 typedef struct s_cmd_data
 {

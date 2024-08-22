@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   bcomm.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
+/*   By: nalkhate <nalkhate@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/21 17:23:47 by zaldhahe          #+#    #+#             */
-/*   Updated: 2024/08/21 23:17:30 by marvin           ###   ########.fr       */
+/*   Updated: 2024/08/22 16:39:52 by nalkhate         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,13 +67,15 @@ void	b_cd(t_data *data, char **cmd)
 
 	b_cd_oldpwd(data, &temp, &curr_pwd);
 	home = get_env_value(data, "HOME");
-	if (!cmd[1] || !ft_strncmp(cmd[1], "~", 1))
+	if (!cmd[1] || !ft_strncmp(cmd[1], "~", 2))
 	{
 		if (!home)
 			ft_putstr_fd("minishell: cd: HOME not set\n", 2);
 		else
 			chdir(home);
 	}
+	else if (!ft_strncmp(cmd[1], "~", 1))
+		cd_home_path(home, cmd[1], data);
 	else if (chdir(cmd[1]) == -1)
 	{
 		perror("cd");

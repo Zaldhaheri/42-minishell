@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_utils.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: zaldhahe <zaldhahe@student.42.fr>          +#+  +:+       +#+        */
+/*   By: nalkhate <nalkhate@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/11 16:24:22 by nalkhate          #+#    #+#             */
-/*   Updated: 2024/08/21 17:54:50 by zaldhahe         ###   ########.fr       */
+/*   Updated: 2024/08/22 15:59:28 by nalkhate         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,10 +47,9 @@ void	exec_child(t_command *cmd, t_data *data, t_child_params *params)
 		bcomm_exec(cmd, data);
 		exit_status = 0;
 	}
-	if (params->saved_stdout > -1)
-		close(params->saved_stdout);
 	if (cmd->cmd_fd > 0)
 		close(cmd->cmd_fd);
+	close(params->saved_stdout);
 	exit_free(cmd, data, exit_status);
 }
 

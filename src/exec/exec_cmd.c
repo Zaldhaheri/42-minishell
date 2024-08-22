@@ -6,7 +6,7 @@
 /*   By: nalkhate <nalkhate@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/21 09:43:08 by nalkhate          #+#    #+#             */
-/*   Updated: 2024/08/22 15:48:30 by nalkhate         ###   ########.fr       */
+/*   Updated: 2024/08/22 15:56:32 by nalkhate         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,12 +22,13 @@ static void	params_init(t_child_params	*params)
 	params->saved_stdout = dup(STDIN_FILENO);
 }
 
-static void	child_proc(t_data *data)
+static void	child_proc(t_data *data, t_child_params	*params)
 {
 	while (wait(&(data->status)) > 0)
 	{
 	}
 	data->status = WEXITSTATUS(data->status);
+	close(params->saved_stdout);
 }
 
 void	exec_cmd(t_command *cmd, t_data *data)
@@ -56,5 +57,5 @@ void	exec_cmd(t_command *cmd, t_data *data)
 	}
 	if (params.fd_in != STDIN_FILENO)
 		close(params.fd_in);
-	child_proc(data);
+	child_proc(data, &params);
 }
