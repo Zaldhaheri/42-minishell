@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_cmd.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: zaldhahe <zaldhahe@student.42.fr>          +#+  +:+       +#+        */
+/*   By: nalkhate <nalkhate@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/21 09:43:08 by nalkhate          #+#    #+#             */
-/*   Updated: 2024/08/21 17:48:35 by zaldhahe         ###   ########.fr       */
+/*   Updated: 2024/08/22 15:48:30 by nalkhate         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,7 @@ static void	child_proc(t_data *data)
 	while (wait(&(data->status)) > 0)
 	{
 	}
+	data->status = WEXITSTATUS(data->status);
 }
 
 void	exec_cmd(t_command *cmd, t_data *data)
