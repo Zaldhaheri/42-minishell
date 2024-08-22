@@ -6,7 +6,7 @@
 /*   By: nalkhate <nalkhate@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/11 16:24:22 by nalkhate          #+#    #+#             */
-/*   Updated: 2024/08/22 17:44:03 by nalkhate         ###   ########.fr       */
+/*   Updated: 2024/08/22 20:05:32 by nalkhate         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,7 @@ void	exit_free(t_command *cmd, t_data *data, int exit_status)
 		ft_envclear(&data->myenv);
 	}
 	ft_lstclear(data);
+	close_std();
 	exit(exit_status);
 }
 
@@ -37,10 +38,13 @@ void	exec_child(t_command *cmd, t_data *data, t_child_params *params)
 		execve(cmd->command[0], cmd->command, data->myenvstr);
 		if (errno == ENOENT)
 		{
-			ft_putstr_fd(cmd->command[0], STDERR_FILENO);
-			ft_putstr_fd(": command not found\n", STDERR_FILENO);
+			exit_status = exec_printerr(cmd->command[0]);
 		}
-		exit_status = 127;
+		else
+		{
+			perror(cmd->command[0]);
+			exit_status = 126;
+		}
 	}
 	else if (cmd->is_bcommand)
 	{

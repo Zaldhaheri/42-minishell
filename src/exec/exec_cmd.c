@@ -6,7 +6,7 @@
 /*   By: nalkhate <nalkhate@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/21 09:43:08 by nalkhate          #+#    #+#             */
-/*   Updated: 2024/08/22 18:09:20 by nalkhate         ###   ########.fr       */
+/*   Updated: 2024/08/22 20:04:50 by nalkhate         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,9 +24,7 @@ static void	params_init(t_child_params	*params)
 
 static void	child_proc(t_data *data, t_child_params	*params)
 {
-	while (wait(&(data->status)) > 0)
-	{
-	}
+	waitpid(params->pid, &data->status, 0);
 	data->status = WEXITSTATUS(data->status);
 	close(params->saved_stdout);
 }
@@ -58,4 +56,11 @@ void	exec_cmd(t_command *cmd, t_data *data)
 	if (params.fd_in != STDIN_FILENO)
 		close(params.fd_in);
 	child_proc(data, &params);
+}
+
+int	exec_printerr(char *cmd)
+{
+	ft_putstr_fd(cmd, STDERR_FILENO);
+	ft_putstr_fd(": command not found\n", STDERR_FILENO);
+	return (127);	
 }

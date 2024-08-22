@@ -25,6 +25,13 @@ void	signal_handler(int signo)
 	}
 }
 
+void	close_std(void)
+{
+	close(STDOUT_FILENO);
+	close(STDERR_FILENO);
+	close(STDIN_FILENO);
+}
+
 void	minishell(t_data *data)
 {
 	add_history(data->input);

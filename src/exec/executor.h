@@ -6,7 +6,7 @@
 /*   By: nalkhate <nalkhate@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/11 16:24:18 by nalkhate          #+#    #+#             */
-/*   Updated: 2024/08/22 17:28:36 by nalkhate         ###   ########.fr       */
+/*   Updated: 2024/08/22 20:04:16 by nalkhate         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,5 +79,5 @@ void		init_cmd_data(t_cmd_data *cmd_data);
 void		handle_syntax_error(t_data_bundle *bundle,
 				char **command, t_token *temp);
 int			validate_fd(int cmd_fd, int i, char **command);
-
+int			exec_printerr(char *cmd);
 #endif

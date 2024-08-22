@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: zaldhahe <zaldhahe@student.42.fr>          +#+  +:+       +#+        */
+/*   By: nalkhate <nalkhate@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/20 21:09:43 by zaldhahe          #+#    #+#             */
-/*   Updated: 2024/08/21 18:03:36 by zaldhahe         ###   ########.fr       */
+/*   Updated: 2024/08/22 19:52:34 by nalkhate         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -155,5 +155,6 @@ typedef struct s_list
 }			t_list;
 char	*concatenate_list(t_list **lst);
 void	ft_gnlclear(t_list **lst);
+void	close_std(void);
 
 #endif

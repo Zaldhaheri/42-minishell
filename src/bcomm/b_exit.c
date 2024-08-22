@@ -6,7 +6,7 @@
 /*   By: nalkhate <nalkhate@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/21 18:22:34 by zaldhahe          #+#    #+#             */
-/*   Updated: 2024/08/22 17:24:45 by nalkhate         ###   ########.fr       */
+/*   Updated: 2024/08/22 19:57:36 by nalkhate         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,5 +96,5 @@ void	b_exit(t_data *data, t_command *cmd, t_child_params	*params)
 	if (flag)
 		printf("exit\n");
 	close(params->saved_stdout);
-	exit(arg);
+	return ((close_std(), exit(arg)));
 }
