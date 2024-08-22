@@ -6,7 +6,7 @@
 /*   By: nalkhate <nalkhate@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/11 16:24:18 by nalkhate          #+#    #+#             */
-/*   Updated: 2024/08/22 16:34:17 by nalkhate         ###   ########.fr       */
+/*   Updated: 2024/08/22 17:28:36 by nalkhate         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ void		parent_pid(t_command *cmd, t_child_params	*params, t_data *data);
 void		exec_cmd(t_command *cmd, t_data *data);
 int			open_file(char *filename, int open_type);
 int			heredoc(char *limiter);
-void		bcomm_exec(t_command *cmd, t_data *data);
+void		bcomm_exec(t_command *cmd, t_data *data, t_child_params	*params);
 char		**cmd_size_init(t_token *temp);
 t_command	*set_command(char **command, t_token *temp,
 				t_data *data, t_token **head);
@@ -49,7 +49,7 @@ void		b_export(t_data *data, char **cmd);
 void		b_unset(t_data *data, char **cmd);
 void		b_cd(t_data *data, char **cmd);
 void		b_pwd(void);
-void		b_exit(t_data *data, t_command *cmd);
+void		b_exit(t_data *data, t_command *cmd, t_child_params	*params);
 void		b_declare(t_data *data, char **cmd);
 char		*get_pwd(void);
 void		cd_home_path(char *home, char *cmd, t_data *data);

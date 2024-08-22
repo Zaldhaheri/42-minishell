@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   b_exit.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: zaldhahe <zaldhahe@student.42.fr>          +#+  +:+       +#+        */
+/*   By: nalkhate <nalkhate@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/21 18:22:34 by zaldhahe          #+#    #+#             */
-/*   Updated: 2024/08/21 18:22:58 by zaldhahe         ###   ########.fr       */
+/*   Updated: 2024/08/22 17:24:45 by nalkhate         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,7 @@ void	b_exit_frees(t_data *data, t_command *cmd)
 	ft_lstclear(data);
 }
 
-void	b_exit(t_data *data, t_command *cmd)
+void	b_exit(t_data *data, t_command *cmd, t_child_params	*params)
 {
 	int	arg;
 	int	flag;
@@ -95,5 +95,6 @@ void	b_exit(t_data *data, t_command *cmd)
 	b_exit_frees(data, cmd);
 	if (flag)
 		printf("exit\n");
+	close(params->saved_stdout);
 	exit(arg);
 }

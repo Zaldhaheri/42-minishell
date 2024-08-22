@@ -6,13 +6,13 @@
 /*   By: nalkhate <nalkhate@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/20 21:49:17 by nalkhate          #+#    #+#             */
-/*   Updated: 2024/08/22 15:46:17 by nalkhate         ###   ########.fr       */
+/*   Updated: 2024/08/22 17:24:04 by nalkhate         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../exec/executor.h"
 
-void	bcomm_exec(t_command *cmd, t_data *data)
+void	bcomm_exec(t_command *cmd, t_data *data, t_child_params	*params)
 {
 	if (!ft_strncmp("echo", cmd->command[0], 5))
 		b_echo(data, cmd->command);
@@ -27,7 +27,7 @@ void	bcomm_exec(t_command *cmd, t_data *data)
 	else if (!ft_strncmp("pwd", cmd->command[0], 4))
 		b_pwd();
 	else if (!ft_strncmp("exit", cmd->command[0], 5))
-		b_exit(data, cmd);
+		b_exit(data, cmd, params);
 	else if (ft_strrchr(cmd->command[0], '=') && ft_strlen(cmd->command[0]) > 1
 		&& cmd->command[0][0] != '=' && is_valid_key(cmd->command[0]))
 		b_declare(data, cmd->command);
