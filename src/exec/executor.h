@@ -28,7 +28,7 @@ typedef struct s_child_params
 t_command	*cmd_lstlast(t_command *lst);
 void		free_commands(t_command **lst);
 void		cmd_add_back(t_command **lst, t_command *new);
-t_command	*new_command(char **cmd, int fd, int fd_type);
+t_command	*new_command(char **cmd, int fd_in, int fd_out, int fd_type);
 void		create_pipe(t_child_params *params);
 void		exec_child(t_command *cmd, t_data *data, t_child_params *params);
 void		start_child(t_command *cmd, t_data *data, t_child_params *params);
@@ -56,7 +56,8 @@ void		cd_home_path(char *home, char *cmd, t_data *data);
 //norme stuff
 typedef struct s_cmd_data
 {
-	int	cmd_fd;
+	int	fd_out;
+	int fd_in;
 	int	fd_type;
 	int	i;
 }	t_cmd_data;

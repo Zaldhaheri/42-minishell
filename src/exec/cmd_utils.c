@@ -46,7 +46,7 @@ t_command	*set_command(char **command, t_token *temp,
 	}
 	*head = handle_pipe(temp);
 	command[cmd_data.i] = NULL;
-	return (new_command(command, cmd_data.cmd_fd, cmd_data.fd_type));
+	return (new_command(command, cmd_data.fd_in, cmd_data.fd_out, cmd_data.fd_type));
 }
 
 int	handle_token_type(t_token *temp, char **command, t_data_bundle *bundle)
@@ -63,7 +63,8 @@ int	handle_token_type(t_token *temp, char **command, t_data_bundle *bundle)
 
 void	init_cmd_data(t_cmd_data *cmd_data)
 {
-	cmd_data->cmd_fd = NO_FD;
+	cmd_data->fd_in = NO_FD;
+	cmd_data->fd_out = NO_FD;
 	cmd_data->fd_type = NO_FD;
 	cmd_data->i = 0;
 }
@@ -81,16 +82,16 @@ char	**cmd_size_init(t_token *temp)
 	command = NULL;
 	while (count && count->type != PIPE)
 	{
-		if (temp->type == COMMAND || temp->type == FLAG
-			|| temp->type == BCOMMAND || temp->type == DQUOTES
-			|| temp->type == SQUOTES)
+		if (count->type == COMMAND || count->type == FLAG
+			|| count->type == BCOMMAND || count->type == DQUOTES
+			|| count->type == SQUOTES)
 		{
 			c_len++;
 		}
 		count = count->next;
 	}
 	command = (char **)malloc((c_len + 1) * sizeof(char *));
-	while (i <= c_len)
+	while (i < c_len + 2)
 	{
 		command[i++] = NULL;
 	}

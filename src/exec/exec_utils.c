@@ -51,31 +51,36 @@ void	exec_child(t_command *cmd, t_data *data, t_child_params *params)
 		bcomm_exec(cmd, data, params);
 		exit_status = 0;
 	}
-	if (cmd->cmd_fd > 0)
-		close(cmd->cmd_fd);
+	if (cmd->fd_out > -1)
+		close(cmd->fd_out);
+	if (cmd->fd_in > -1)
+		close(cmd->fd_in);
 	close(params->saved_stdout);
 	exit_free(cmd, data, exit_status);
 }
 
 void	start_child(t_command *cmd, t_data *data, t_child_params *params)
 {
-	if (params->is_first && cmd->fd_type == FD_IN)
+	if (params->is_first && cmd->fd_in > -1)
 	{
-		dup2(cmd->cmd_fd, STDIN_FILENO);
-		close(cmd->cmd_fd);
-		cmd->cmd_fd = -1;
+		dup2(cmd->fd_in, STDIN_FILENO);
+		close(cmd->fd_in);
+		cmd->fd_in = NO_FD;
 	}
 	else if (!params->is_first)
 	{
-		dup2(params->fd_in, STDIN_FILENO);
+		if (cmd->fd_in > -1)
+			dup2(cmd->fd_in, STDIN_FILENO);
+		else
+			dup2(params->fd_in, STDIN_FILENO);
 	}
-	if (cmd->next)
+	if (cmd->next && cmd->fd_out < 0)
 		dup2(params->fd[1], STDOUT_FILENO);
-	else if (cmd->fd_type == FD_OUT || cmd->fd_type == APPEND)
+	else if (cmd->fd_out > -1)
 	{
-		dup2(cmd->cmd_fd, STDOUT_FILENO);
-		close(cmd->cmd_fd);
-		cmd->cmd_fd = -1;
+		dup2(cmd->fd_out, STDOUT_FILENO);
+		close(cmd->fd_out);
+		cmd->fd_out = NO_FD;
 	}
 	if (params->fd[0] > -1)
 		close(params->fd[0]);
@@ -88,17 +93,17 @@ static void	bcomm_parent(t_command *cmd, t_data *data, t_child_params	*params)
 {
 	int	saved_stdout;
 
-	if (cmd->fd_type == FD_OUT || cmd->fd_type == APPEND)
+	if (cmd->fd_out > -1)
 		saved_stdout = dup(STDOUT_FILENO);
-	if (cmd->fd_type == FD_OUT || cmd->fd_type == APPEND)
-		dup2(cmd->cmd_fd, STDOUT_FILENO);
+	if (cmd->fd_out > -1)
+		dup2(cmd->fd_out, STDOUT_FILENO);
 	bcomm_exec(cmd, data, params);
-	if (cmd->fd_type == FD_OUT || cmd->fd_type == APPEND)
+	if (cmd->fd_out > -1)
 	{
 		dup2(saved_stdout, STDOUT_FILENO);
 		close(saved_stdout);
 	}
-	if (cmd->cmd_fd == -1)
+	if (cmd->fd_out == -1)
 		data->status = 1;
 	else if (!data->sflag)
 		data->status = 0;
@@ -122,7 +127,9 @@ void	parent_pid(t_command *cmd, t_child_params *params, t_data *data)
 		dup2(params->saved_stdout, STDIN_FILENO);
 		close(params->saved_stdout);
 	}
-	if (cmd->cmd_fd > 0)
-		close(cmd->cmd_fd);
+	if (cmd->fd_out > -1)
+		close(cmd->fd_out);
+	if (cmd->fd_in > -1)
+		close(cmd->fd_in);
 	params->is_first = 0;
 }

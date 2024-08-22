@@ -29,10 +29,10 @@ void	free_commands(t_command **lst)
 	{
 		temp = *lst;
 		*lst = (*lst)->next;
-		if (temp->cmd_fd > -1)
-		{
-			close(temp->cmd_fd);
-		}
+		if (temp->fd_in > -1)
+			close(temp->fd_in);
+		if (temp->fd_out > -1)
+			close(temp->fd_out);
 		free_args(temp->command);
 		free(temp);
 	}
@@ -49,7 +49,6 @@ void	cmd_add_back(t_command **lst, t_command *new)
 	{
 		temp = cmd_lstlast(*lst);
 		temp->next = new;
-		new->prev = temp;
 	}
 }
 
@@ -78,7 +77,7 @@ int	check_bcommand(char *comm)
 		return (0);
 }
 
-t_command	*new_command(char **cmd, int fd, int fd_type)
+t_command	*new_command(char **cmd, int fd_in, int fd_out, int fd_type)
 {
 	t_command	*new;
 
@@ -90,7 +89,8 @@ t_command	*new_command(char **cmd, int fd, int fd_type)
 	}
 	new->command = cmd;
 	new->next = NULL;
-	new->cmd_fd = fd;
+	new->fd_in = fd_in;
+	new->fd_out = fd_out;
 	new->fd_type = fd_type;
 	new->is_bcommand = check_bcommand(cmd[0]);
 	return (new);

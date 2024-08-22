@@ -16,32 +16,48 @@ void	handle_command(t_token *temp, char **command,
 	t_data *data, t_cmd_data *cmd_data)
 {
 	if (cmd_data->i == 0 && temp->type != BCOMMAND)
-	{
 		command[cmd_data->i] = ft_get_cmd_path(temp->content, data->myenvstr);
-	}
 	else if (cmd_data->i == 0 && (!command[cmd_data->i]
 			|| temp->type == BCOMMAND))
 		command[cmd_data->i] = ft_strdup(temp->content);
 	else
 		command[cmd_data->i] = ft_strdup(temp->content);
 	cmd_data->i++;
+
 }
 
+void read_in_out(t_token *temp,  t_data_bundle *bundle)
+{
+	if (temp->type == FD_OUT)
+	{
+		if (bundle->cmd_data->fd_out > -1)
+			close(bundle->cmd_data->fd_out);
+		bundle->cmd_data->fd_out = open_file(temp->next->content, temp->type);
+		*(bundle->head) = temp;
+	}
+	else if (temp->type == FD_IN)
+	{
+		if (bundle->cmd_data->fd_in > -1)
+			close(bundle->cmd_data->fd_in);
+		bundle->cmd_data->fd_in = open_file(temp->next->content, temp->type);
+		*(bundle->head) = temp;
+	}
+}
 int	handle_redirection(t_token *temp, char **command, t_data_bundle *bundle)
 {
 	if (temp->next && temp->type != HEREDOC)
 	{
-		if (bundle->cmd_data->cmd_fd > -1)
-			close(bundle->cmd_data->cmd_fd);
-		bundle->cmd_data->cmd_fd = open_file(temp->next->content, temp->type);
-		*(bundle->head) = temp;
-		if (!validate_fd(bundle->cmd_data->cmd_fd,
+		read_in_out(temp, bundle);
+		if(temp->type == FD_IN && !validate_fd(bundle->cmd_data->fd_in,
+				bundle->cmd_data->i, command))
+			return (0);
+		else if(temp->type == FD_OUT && !validate_fd(bundle->cmd_data->fd_out,
 				bundle->cmd_data->i, command))
 			return (0);
 	}
 	else if (temp->next && temp->type == HEREDOC)
 	{
-		bundle->cmd_data->cmd_fd = heredoc(temp->next->content);
+		bundle->cmd_data->fd_in = heredoc(temp->next->content);
 		temp->type = FD_IN;
 	}
 	else if (!temp->next)
@@ -49,7 +65,10 @@ int	handle_redirection(t_token *temp, char **command, t_data_bundle *bundle)
 		handle_syntax_error(bundle, command, temp);
 		return (0);
 	}
-	bundle->cmd_data->fd_type = temp->type;
+	if (bundle->cmd_data->fd_in > -1 && bundle->cmd_data->fd_out > -1)
+		bundle->cmd_data->fd_type = BOTH_FD;
+	else
+		bundle->cmd_data->fd_type = temp->type;
 	return (1);
 }
 

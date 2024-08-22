@@ -15,6 +15,7 @@
 
 # define WORD 0
 # define COMMAND 11 //execve
+# define BOTH_FD 9
 # define FD_IN 12
 # define FD_OUT 13
 # define APPEND 14
