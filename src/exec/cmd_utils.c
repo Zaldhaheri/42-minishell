@@ -6,7 +6,7 @@
 /*   By: nalkhate <nalkhate@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/20 16:32:06 by nalkhate          #+#    #+#             */
-/*   Updated: 2024/08/20 20:59:34 by nalkhate         ###   ########.fr       */
+/*   Updated: 2024/08/23 14:46:30 by nalkhate         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,7 +91,7 @@ char	**cmd_size_init(t_token *temp)
 		count = count->next;
 	}
 	command = (char **)malloc((c_len + 1) * sizeof(char *));
-	while (i < c_len + 2)
+	while (i <= c_len)
 	{
 		command[i++] = NULL;
 	}
