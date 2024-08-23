@@ -6,7 +6,7 @@
 /*   By: nalkhate <nalkhate@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/20 20:29:53 by nalkhate          #+#    #+#             */
-/*   Updated: 2024/08/20 23:10:06 by nalkhate         ###   ########.fr       */
+/*   Updated: 2024/08/23 15:46:34 by nalkhate         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,7 +102,8 @@ void	set_type(t_data *data)
 	{
 		if (temp->type == DOLLAR)
 			temp->type = WORD;
-		if (!temp->type)
+		if (!temp->type || temp->type == DQUOTES
+			|| temp->type == SQUOTES )
 		{
 			check_fd_type(temp);
 			check_if_bcommand(temp);
