@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   handle_cmd.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nalkhate <nalkhate@student.42.fr>          +#+  +:+       +#+        */
+/*   By: zaldhahe <zaldhahe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/20 16:30:08 by nalkhate          #+#    #+#             */
-/*   Updated: 2024/08/23 15:22:11 by nalkhate         ###   ########.fr       */
+/*   Updated: 2024/08/23 15:45:32 by zaldhahe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,11 @@ void read_in_out(t_token *temp,  t_data_bundle *bundle)
 		if (bundle->cmd_data->fd_out > -1)
 			close(bundle->cmd_data->fd_out);
 		bundle->cmd_data->fd_out = open_file(temp->next->content, temp->type);
+		if (bundle->cmd_data->fd_out == -1)
+		{
+			bundle->data->status = 1;
+			set_exitstatus(bundle->data);
+		}
 		*(bundle->head) = temp;
 	}
 	else if (temp->type == FD_IN)
@@ -40,7 +45,12 @@ void read_in_out(t_token *temp,  t_data_bundle *bundle)
 		if (bundle->cmd_data->fd_in > -1)
 			close(bundle->cmd_data->fd_in);
 		bundle->cmd_data->fd_in = open_file(temp->next->content, temp->type);
-		*(bundle->head) = temp;
+		if (bundle->cmd_data->fd_in == -1)
+		{
+			bundle->data->status = 1;
+			set_exitstatus(bundle->data);
+		}
+		*(bundle->head) = temp;	
 	}
 }
 int	handle_redirection(t_token *temp, char **command, t_data_bundle *bundle)

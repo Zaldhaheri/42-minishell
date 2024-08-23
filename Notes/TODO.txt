@@ -62,3 +62,5 @@ minishell# hello
 hello: command not found
 minishell(91470,0x10ef8ddc0) malloc: *** error for object 0x7fb9be400005: pointer being freed was not allocated
 minishell(91470,0x10ef8ddc0) malloc: *** set a breakpoint in malloc_error_break to debug
+
+ls > "hello world"
