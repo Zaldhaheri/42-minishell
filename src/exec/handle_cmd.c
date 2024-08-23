@@ -6,7 +6,7 @@
 /*   By: zaldhahe <zaldhahe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/20 16:30:08 by nalkhate          #+#    #+#             */
-/*   Updated: 2024/08/23 16:42:00 by zaldhahe         ###   ########.fr       */
+/*   Updated: 2024/08/23 17:05:06 by zaldhahe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,11 @@ void	handle_command(t_token *temp, char **command,
 	t_data *data, t_cmd_data *cmd_data)
 {
 	if (cmd_data->i == 0 && temp->type != BCOMMAND)
+	{
 		command[cmd_data->i] = ft_get_cmd_path(temp->content, data->myenvstr);
+		if (!command[cmd_data->i])
+			command[cmd_data->i] = ft_strdup(temp->content);
+	}
 	else if (cmd_data->i == 0 && (!command[cmd_data->i]
 			|| temp->type == BCOMMAND))
 		command[cmd_data->i] = ft_strdup(temp->content);

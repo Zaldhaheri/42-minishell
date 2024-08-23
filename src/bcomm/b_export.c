@@ -6,7 +6,7 @@
 /*   By: zaldhahe <zaldhahe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/21 18:20:57 by zaldhahe          #+#    #+#             */
-/*   Updated: 2024/08/21 18:21:38 by zaldhahe         ###   ########.fr       */
+/*   Updated: 2024/08/23 17:14:00 by zaldhahe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,13 +50,42 @@ void	b_sort(char **arr, int size)
 	}
 }
 
+char	**exp_to_array(t_env *myenv)
+{
+	int		size;
+	char	*temp;
+	char	**array;
+	t_env	*curr;
+	int		i;
+
+	i = 0;
+	size = ft_envsize(myenv);
+	if (size == 0)
+		return (NULL);
+	array = malloc((size + 1) * sizeof(char *));
+	curr = myenv;
+	while (i < size)
+	{
+		if (curr->key && curr->value && !curr->hide)
+		{
+			temp = ft_strjoin(curr->key, "=");
+			array[i] = ft_strjoin(temp, curr->value);
+			free(temp);
+			i++;
+		}
+		curr = curr->next;
+	}
+	array[size] = NULL;
+	return (array);
+}
+
 void	print_export(t_data *data)
 {
 	char	**tempenv;
 	int		i;
 
 	i = 0;
-	tempenv = env_to_array(data->myenv);
+	tempenv = exp_to_array(data->myenv);
 	b_sort(tempenv, ft_envsize(data->myenv));
 	while (tempenv[i])
 	{

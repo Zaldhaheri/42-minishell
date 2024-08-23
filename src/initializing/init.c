@@ -46,7 +46,7 @@ void	data_init(t_data *data)
 	data->myenvstr = env_to_array(data->myenv);
 }
 
-int	ft_envsize(t_env *myenv)
+int	ft_envfullsize(t_env *myenv)
 {
 	t_env	*curr;
 	int		i;
@@ -55,7 +55,7 @@ int	ft_envsize(t_env *myenv)
 	curr = myenv;
 	while (curr)
 	{
-		if (curr->key && curr->value && !curr->hide)
+		if (curr->key && curr->value)
 			i++;
 		curr = curr->next;
 	}
@@ -71,14 +71,14 @@ char	**env_to_array(t_env *myenv)
 	int		i;
 
 	i = 0;
-	size = ft_envsize(myenv);
+	size = ft_envfullsize(myenv);
 	if (size == 0)
 		return (NULL);
 	array = malloc((size + 1) * sizeof(char *));
 	curr = myenv;
 	while (i < size)
 	{
-		if (curr->key && curr->value && !curr->hide)
+		if (curr->key && curr->value)
 		{
 			temp = ft_strjoin(curr->key, "=");
 			array[i] = ft_strjoin(temp, curr->value);

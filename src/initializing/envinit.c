@@ -76,3 +76,19 @@ void	ft_envadd_back(t_env **lst, char *s, int hide)
 		temp->next = ft_envnew(s, hide);
 	}
 }
+
+int	ft_envsize(t_env *myenv)
+{
+	t_env	*curr;
+	int		i;
+
+	i = 0;
+	curr = myenv;
+	while (curr)
+	{
+		if (curr->key && curr->value && !curr->hide)
+			i++;
+		curr = curr->next;
+	}
+	return (i);
+}
