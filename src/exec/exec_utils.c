@@ -6,7 +6,7 @@
 /*   By: nalkhate <nalkhate@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/11 16:24:22 by nalkhate          #+#    #+#             */
-/*   Updated: 2024/08/22 20:05:32 by nalkhate         ###   ########.fr       */
+/*   Updated: 2024/08/23 15:17:32 by nalkhate         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,9 +37,7 @@ void	exec_child(t_command *cmd, t_data *data, t_child_params *params)
 	{
 		execve(cmd->command[0], cmd->command, data->myenvstr);
 		if (errno == ENOENT)
-		{
 			exit_status = exec_printerr(cmd->command[0]);
-		}
 		else
 		{
 			perror(cmd->command[0]);

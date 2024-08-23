@@ -6,7 +6,7 @@
 /*   By: nalkhate <nalkhate@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/20 16:30:08 by nalkhate          #+#    #+#             */
-/*   Updated: 2024/08/20 21:19:58 by nalkhate         ###   ########.fr       */
+/*   Updated: 2024/08/23 15:22:11 by nalkhate         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ void	handle_command(t_token *temp, char **command,
 
 void read_in_out(t_token *temp,  t_data_bundle *bundle)
 {
-	if (temp->type == FD_OUT)
+	if (temp->type == FD_OUT || temp->type == APPEND)
 	{
 		if (bundle->cmd_data->fd_out > -1)
 			close(bundle->cmd_data->fd_out);
