@@ -64,3 +64,8 @@ minishell(91470,0x10ef8ddc0) malloc: *** error for object 0x7fb9be400005: pointe
 minishell(91470,0x10ef8ddc0) malloc: *** set a breakpoint in malloc_error_break to debug
 
 ls > "hello world"
+
+brokeshell# cd a
+cd: No such file or directory
+brokeshell# echo $?
+0

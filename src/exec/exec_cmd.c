@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_cmd.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nalkhate <nalkhate@student.42.fr>          +#+  +:+       +#+        */
+/*   By: zaldhahe <zaldhahe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/21 09:43:08 by nalkhate          #+#    #+#             */
-/*   Updated: 2024/08/22 21:31:58 by nalkhate         ###   ########.fr       */
+/*   Updated: 2024/08/23 18:10:24 by zaldhahe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,9 @@ static void	child_proc(t_data *data, t_child_params	*params)
 	}
 	else
 		data->status = WEXITSTATUS(data->status);
+	if (data->sflag == 2)
+		data->status = 1;
+	data->sflag = 0;
 	close(params->saved_stdout);
 }
 

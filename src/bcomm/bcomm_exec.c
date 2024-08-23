@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   bcomm_exec.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nalkhate <nalkhate@student.42.fr>          +#+  +:+       +#+        */
+/*   By: zaldhahe <zaldhahe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/20 21:49:17 by nalkhate          #+#    #+#             */
-/*   Updated: 2024/08/22 17:24:04 by nalkhate         ###   ########.fr       */
+/*   Updated: 2024/08/23 18:13:17 by zaldhahe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,9 +33,9 @@ void	bcomm_exec(t_command *cmd, t_data *data, t_child_params	*params)
 		b_declare(data, cmd->command);
 	else
 	{
-		ft_putstr_fd("minishell: \n", 2);
+		ft_putstr_fd("minishell: ", 2);
 		ft_putstr_fd(cmd->command[0], 2);
-		ft_putstr_fd(" : command not found\n", 2);
+		ft_putstr_fd(": command not found\n", 2);
 		data->status = 256;
 		data->sflag = 1;
 	}

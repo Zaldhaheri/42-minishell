@@ -6,7 +6,7 @@
 /*   By: zaldhahe <zaldhahe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/21 17:23:47 by zaldhahe          #+#    #+#             */
-/*   Updated: 2024/08/22 19:47:38 by zaldhahe         ###   ########.fr       */
+/*   Updated: 2024/08/23 18:12:19 by zaldhahe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,7 +81,7 @@ void	b_cd(t_data *data, char **cmd)
 	else if (chdir(cmd[1]) == -1)
 	{
 		perror("cd");
-		data->status = 1;
+		data->sflag = 2;
 	}
 	temp = get_pwd();
 	curr_pwd = ft_strjoin("PWD=", temp);
