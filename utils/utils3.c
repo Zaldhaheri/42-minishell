@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils3.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: zaldhahe <zaldhahe@student.42.fr>          +#+  +:+       +#+        */
+/*   By: nalkhate <nalkhate@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/20 20:32:18 by zaldhahe          #+#    #+#             */
-/*   Updated: 2024/08/20 20:38:59 by zaldhahe         ###   ########.fr       */
+/*   Updated: 2024/08/23 16:43:59 by nalkhate         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,4 +46,24 @@ int	ft_isalnum(int c)
 {
 	return ((c >= 97 && c <= 122) || (c >= 65 && c <= 90)
 		|| (c >= 48 && c <= 57));
+}
+
+void	set_filename(t_token *tokens)
+{
+	t_token	*temp;
+
+	temp = tokens;
+	while (temp)
+	{
+		if (temp->next && (temp->type == FD_IN || temp->type == FD_OUT
+				|| temp->type == APPEND))
+		{
+			temp->next->type = FILENAME;
+		}
+		else if (temp->next && temp->type == HEREDOC)
+		{
+			temp->next->type = LIMITER;
+		}
+		temp = temp->next;
+	}
 }

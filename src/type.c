@@ -6,7 +6,7 @@
 /*   By: nalkhate <nalkhate@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/20 20:29:53 by nalkhate          #+#    #+#             */
-/*   Updated: 2024/08/23 16:06:32 by nalkhate         ###   ########.fr       */
+/*   Updated: 2024/08/23 16:42:35 by nalkhate         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,26 +91,6 @@ static void	token_type(t_token *temp, t_data *data)
 		temp->type = LIMITER;
 }
 
-void	set_filename(t_token *tokens)
-{
-	t_token *temp;
-
-	temp = tokens;
-	while(temp)
-	{
-		if (temp->next && (temp->type == FD_IN || temp->type == FD_OUT
-			|| temp->type == APPEND))
-		{
-			temp->next->type = FILENAME;
-		}
-		else if(temp->next && temp->type == HEREDOC)
-		{
-			temp->next->type = LIMITER;
-		}
-		temp = temp->next;
-	}
-}
-
 void	set_type(t_data *data)
 {
 	t_token	*temp;
@@ -132,5 +112,3 @@ void	set_type(t_data *data)
 	}
 	set_filename(data->tokens);
 }
-
-
