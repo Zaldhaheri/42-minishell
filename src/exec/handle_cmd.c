@@ -6,7 +6,7 @@
 /*   By: zaldhahe <zaldhahe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/20 16:30:08 by nalkhate          #+#    #+#             */
-/*   Updated: 2024/08/23 15:45:32 by zaldhahe         ###   ########.fr       */
+/*   Updated: 2024/08/23 16:42:00 by zaldhahe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,10 +23,9 @@ void	handle_command(t_token *temp, char **command,
 	else
 		command[cmd_data->i] = ft_strdup(temp->content);
 	cmd_data->i++;
-
 }
 
-void read_in_out(t_token *temp,  t_data_bundle *bundle)
+void	read_in_out(t_token *temp, t_data_bundle *bundle)
 {
 	if (temp->type == FD_OUT || temp->type == APPEND)
 	{
@@ -50,18 +49,19 @@ void read_in_out(t_token *temp,  t_data_bundle *bundle)
 			bundle->data->status = 1;
 			set_exitstatus(bundle->data);
 		}
-		*(bundle->head) = temp;	
+		*(bundle->head) = temp;
 	}
 }
+
 int	handle_redirection(t_token *temp, char **command, t_data_bundle *bundle)
 {
 	if (temp->next && temp->type != HEREDOC)
 	{
 		read_in_out(temp, bundle);
-		if(temp->type == FD_IN && !validate_fd(bundle->cmd_data->fd_in,
+		if (temp->type == FD_IN && !validate_fd(bundle->cmd_data->fd_in,
 				bundle->cmd_data->i, command))
 			return (0);
-		else if(temp->type == FD_OUT && !validate_fd(bundle->cmd_data->fd_out,
+		else if (temp->type == FD_OUT && !validate_fd(bundle->cmd_data->fd_out,
 				bundle->cmd_data->i, command))
 			return (0);
 	}
@@ -107,11 +107,4 @@ void	handle_syntax_error(t_data_bundle *bundle,
 		free_args(command);
 	}
 	bundle->head = &temp;
-}
-
-t_token	*handle_pipe(t_token *temp)
-{
-	if (temp && temp->type == PIPE)
-		temp = temp->next;
-	return (temp);
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   executor.h                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nalkhate <nalkhate@student.42.fr>          +#+  +:+       +#+        */
+/*   By: zaldhahe <zaldhahe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/11 16:24:18 by nalkhate          #+#    #+#             */
-/*   Updated: 2024/08/22 20:04:16 by nalkhate         ###   ########.fr       */
+/*   Updated: 2024/08/23 16:42:18 by zaldhahe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,7 @@ void		cd_home_path(char *home, char *cmd, t_data *data);
 typedef struct s_cmd_data
 {
 	int	fd_out;
-	int fd_in;
+	int	fd_in;
 	int	fd_type;
 	int	i;
 }	t_cmd_data;

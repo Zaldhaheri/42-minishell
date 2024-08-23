@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   executor.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nalkhate <nalkhate@student.42.fr>          +#+  +:+       +#+        */
+/*   By: zaldhahe <zaldhahe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/11 16:25:03 by nalkhate          #+#    #+#             */
-/*   Updated: 2024/08/22 21:29:42 by nalkhate         ###   ########.fr       */
+/*   Updated: 2024/08/23 16:38:07 by zaldhahe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,4 +86,11 @@ void	exec_line(t_data *data)
 	g_exit_code = 0;
 	set_exitstatus(data);
 	free_commands(&head);
+}
+
+t_token	*handle_pipe(t_token *temp)
+{
+	if (temp && temp->type == PIPE)
+		temp = temp->next;
+	return (temp);
 }

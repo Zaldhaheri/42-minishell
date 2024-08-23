@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cmd_utils.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nalkhate <nalkhate@student.42.fr>          +#+  +:+       +#+        */
+/*   By: zaldhahe <zaldhahe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/20 16:32:06 by nalkhate          #+#    #+#             */
-/*   Updated: 2024/08/23 14:46:30 by nalkhate         ###   ########.fr       */
+/*   Updated: 2024/08/23 16:42:55 by zaldhahe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,8 @@ t_command	*set_command(char **command, t_token *temp,
 	}
 	*head = handle_pipe(temp);
 	command[cmd_data.i] = NULL;
-	return (new_command(command, cmd_data.fd_in, cmd_data.fd_out, cmd_data.fd_type));
+	return (new_command(command, cmd_data.fd_in,
+			cmd_data.fd_out, cmd_data.fd_type));
 }
 
 int	handle_token_type(t_token *temp, char **command, t_data_bundle *bundle)
